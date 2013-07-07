@@ -1,0 +1,3 @@
+[submodule "submodules/libsf"]
+	path = submodules/libsf
+	url = https://github.com/donmccaughey/libsf.git

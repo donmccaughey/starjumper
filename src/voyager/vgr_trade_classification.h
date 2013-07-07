@@ -1,0 +1,45 @@
+#ifndef VOYAGER_VGR_TRADE_CLASSIFICATION_H_INCLUDED
+#define VOYAGER_VGR_TRADE_CLASSIFICATION_H_INCLUDED
+
+
+#include <voyager/vgr_defs.h>
+
+
+extern vgr_trade_classification_t vgr_trade_classification_agricultural;
+extern vgr_trade_classification_t vgr_trade_classification_asteroid_belt;
+extern vgr_trade_classification_t vgr_trade_classification_barren_world;
+extern vgr_trade_classification_t vgr_trade_classification_desert_world;
+extern vgr_trade_classification_t vgr_trade_classification_fluid_oceans;
+extern vgr_trade_classification_t vgr_trade_classification_high_population;
+extern vgr_trade_classification_t vgr_trade_classification_ice_capped;
+extern vgr_trade_classification_t vgr_trade_classification_industrial;
+extern vgr_trade_classification_t vgr_trade_classification_low_population;
+extern vgr_trade_classification_t vgr_trade_classification_non_agricultural;
+extern vgr_trade_classification_t vgr_trade_classification_non_industrial;
+extern vgr_trade_classification_t vgr_trade_classification_poor;
+extern vgr_trade_classification_t vgr_trade_classification_rich;
+extern vgr_trade_classification_t vgr_trade_classification_vacuum_world;
+extern vgr_trade_classification_t vgr_trade_classification_water_world;
+
+extern sf_array_t vgr_trade_classifications;
+extern sf_type_t vgr_trade_classification_type;
+
+
+sf_string_t
+vgr_trade_classification_abbreviation(vgr_trade_classification_t trade_classification);
+
+bool
+vgr_trade_classification_applies_to(vgr_trade_classification_t trade_classification,
+                                    vgr_world_t world);
+
+sf_string_t
+vgr_trade_classification_name(vgr_trade_classification_t trade_classification);
+
+sf_string_t
+vgr_trade_classification_short_name(vgr_trade_classification_t trade_classification);
+
+sf_list_t
+vgr_trade_classifications_for(vgr_world_t world);
+
+
+#endif
