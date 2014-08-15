@@ -3,6 +3,8 @@
 #include <assert.h>
 #include "vgr_dice_throw.h"
 #include "vgr_die_modifier.h"
+#include "vgr_hex_coordinate.h"
+#include "vgr_memory.h"
 #include "vgr_trade_classification.h"
 
 
@@ -10,7 +12,7 @@ struct _vgr_world
 {
   SF_OBJECT_FIELDS;
   sf_string_t name;
-  vgr_hex_coordinate_t hex_coordinate;
+  struct vgr_hex_coordinate hex_coordinate;
   char starport;
   bool naval_base;
   bool scout_base;
@@ -205,7 +207,6 @@ dealloc(sf_any_t self)
 {
   vgr_world_t world = self;
   
-  sf_release(world->hex_coordinate);
   sf_release(world->name);
   sf_release(world->trade_classifications);
 }
@@ -242,8 +243,9 @@ static sf_string_t
 string_from(sf_any_t self)
 {
   vgr_world_t world = self;
-
-  sf_string_t hex_coordinate = sf_string_from(world->hex_coordinate);
+  
+  char *hex_coordinate = vgr_string_alloc_from_hex_coordinate(world->hex_coordinate);
+  // TODO: handle alloc failure
   
   int const max_name_length = 18;
   int const max_classifications_length = 42;
@@ -259,8 +261,8 @@ string_from(sf_any_t self)
     }
   }
   
-  return sf_string_from_format("%*s %4s %c%c%c%c%c%c%c-%c %c %*s%c",
-      -max_name_length, sf_string_chars(world->name), sf_string_chars(hex_coordinate),
+  sf_string_t string = sf_string_from_format("%*s %4s %c%c%c%c%c%c%c-%c %c %*s%c",
+      -max_name_length, sf_string_chars(world->name), hex_coordinate,
       world->starport,
       hex_digit(world->size), hex_digit(world->atmosphere),
       hex_digit(world->hydrographics), hex_digit(world->population),
@@ -269,6 +271,8 @@ string_from(sf_any_t self)
       -max_classifications_length, sf_string_chars(classifications),
       (world->gas_giant ? 'G' : ' ')
   );
+  vgr_free(hex_coordinate);
+  return string;
 }
 
 
@@ -288,9 +292,9 @@ hex_digit(int value)
 
 vgr_world_t
 vgr_world(sf_string_t name,
-           vgr_hex_coordinate_t hex_coordinate,
-           sf_random_t random_in,
-           sf_random_t *random_out)
+          struct vgr_hex_coordinate const hex_coordinate,
+          sf_random_t random_in,
+          sf_random_t *random_out)
 {
   assert(random_out);
   
@@ -298,7 +302,7 @@ vgr_world(sf_string_t name,
   if ( ! world) return NULL;
   
   world->name = sf_retain(name);
-  world->hex_coordinate = sf_retain(hex_coordinate);
+  world->hex_coordinate = hex_coordinate;
   
   sf_random_t random = random_in;
   sf_list_t modifiers = NULL;
@@ -427,10 +431,10 @@ vgr_world_government(vgr_world_t world)
 }
 
 
-vgr_hex_coordinate_t
+struct vgr_hex_coordinate
 vgr_world_hex_coordinate(vgr_world_t world)
 {
-  return world ? world->hex_coordinate : NULL;
+  return world ? world->hex_coordinate : (struct vgr_hex_coordinate) { .horizontal=0, .vertical=0, };
 }
 
 

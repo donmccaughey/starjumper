@@ -6,6 +6,7 @@
 #include <voyager/vgr_dice_throw.h>
 #include <voyager/vgr_die_modifier.h>
 #include <voyager/vgr_hex_coordinate.h>
+#include <voyager/vgr_memory.h>
 #include <voyager/vgr_world.h>
 
 

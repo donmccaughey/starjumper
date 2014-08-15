@@ -1,4 +1,4 @@
-#import <getopt.h>
+#include <getopt.h>
 #include <libgen.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -9,7 +9,7 @@
 struct options
 {
   sf_string_t name;
-  vgr_hex_coordinate_t hex_coordinate;
+  struct vgr_hex_coordinate hex_coordinate;
 };
 
 
@@ -27,7 +27,7 @@ static void
 initialize_options(struct options *options)
 {
   options->name = sf_string("No Name");
-  options->hex_coordinate = vgr_hex_coordinate(1, 1);
+  options->hex_coordinate = (struct vgr_hex_coordinate) { .horizontal=1, .vertical=1, };
 }
 
 
@@ -46,6 +46,7 @@ main(int argc, char **argv)
   sf_string_t description = sf_string_from(world);
   fprintf(stdout, "%s\n", sf_string_chars(description));
   
+  vgr_memory_expect_alloc_count_zero();
   vgr_fin();
   return EXIT_SUCCESS;
 }
@@ -93,9 +94,8 @@ parse_options(int argc, char **argv, struct options *options)
         break;
       case 'x':
         {
-          sf_string_t argument = sf_string(optarg);
-          options->hex_coordinate = vgr_hex_coordinate_from_string(argument);
-          if ( ! options->hex_coordinate) {
+          bool valid = vgr_hex_coordinate_from_string(optarg, &options->hex_coordinate);
+          if ( ! valid) {
             fprintf(stderr, "ERROR: \"%s\" is not a valid hex coordinate\n", optarg);
             print_usage_and_exit(argc, argv);
           }

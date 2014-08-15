@@ -2,17 +2,21 @@
 #define VOYAGER_VGR_HEX_COORDINATE_H_INCLUDED
 
 
-#include <voyager/vgr_defs.h>
+#include <stdbool.h>
 
 
-extern sf_type_t vgr_hex_coordinate_type;
+struct vgr_hex_coordinate
+{
+  int horizontal;
+  int vertical;
+};
 
 
-vgr_hex_coordinate_t
-vgr_hex_coordinate(int horizontal, int vertical);
+bool
+vgr_hex_coordinate_from_string(char const *string, struct vgr_hex_coordinate *hex_coordinate);
 
-vgr_hex_coordinate_t
-vgr_hex_coordinate_from_string(sf_string_t string);
+char *
+vgr_string_alloc_from_hex_coordinate(struct vgr_hex_coordinate const hex_coordinate);
 
 
 #endif

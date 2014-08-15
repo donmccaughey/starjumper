@@ -5,12 +5,15 @@
 #include <voyager/vgr_defs.h>
 
 
+struct vgr_hex_coordinate;
+
+
 extern sf_type_t vgr_world_type;
 
 
 vgr_world_t
 vgr_world(sf_string_t name,
-          vgr_hex_coordinate_t hex_coordinate,
+          struct vgr_hex_coordinate const hex_coordinate,
           sf_random_t random_in,
           sf_random_t *random_out);
 
@@ -20,7 +23,7 @@ vgr_world_atmosphere(vgr_world_t world);
 int
 vgr_world_government(vgr_world_t world);
 
-vgr_hex_coordinate_t
+struct vgr_hex_coordinate
 vgr_world_hex_coordinate(vgr_world_t world);
 
 int

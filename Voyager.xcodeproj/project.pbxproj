@@ -23,6 +23,7 @@
 		D474B8931789C29E007C9259 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = D474B8921789C29E007C9259 /* main.c */; };
 		D474B89E1789C34F007C9259 /* libvoyager.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D474B82B1789BB63007C9259 /* libvoyager.a */; };
 		D474B89F1789C34F007C9259 /* libsf.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D474B8681789BD92007C9259 /* libsf.a */; };
+		D47DB4AC199DCBE800D4643F /* vgr_memory.c in Sources */ = {isa = PBXBuildFile; fileRef = D47DB4AB199DCBE800D4643F /* vgr_memory.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -108,6 +109,8 @@
 		D474B8901789C29E007C9259 /* worldgen */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = worldgen; sourceTree = BUILT_PRODUCTS_DIR; };
 		D474B8921789C29E007C9259 /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
 		D474B8991789C2DB007C9259 /* worldgen.6 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = worldgen.6; sourceTree = "<group>"; };
+		D47DB4A7199DCB8800D4643F /* vgr_memory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = vgr_memory.h; sourceTree = "<group>"; };
+		D47DB4AB199DCBE800D4643F /* vgr_memory.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vgr_memory.c; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -194,6 +197,8 @@
 				D474B8731789BD9D007C9259 /* vgr_die_modifier.c */,
 				D474B8761789BD9E007C9259 /* vgr_hex_coordinate.h */,
 				D474B8751789BD9D007C9259 /* vgr_hex_coordinate.c */,
+				D47DB4A7199DCB8800D4643F /* vgr_memory.h */,
+				D47DB4AB199DCBE800D4643F /* vgr_memory.c */,
 				D474B8781789BD9E007C9259 /* vgr_trade_classification.h */,
 				D474B8771789BD9E007C9259 /* vgr_trade_classification.c */,
 				D474B87A1789BD9E007C9259 /* vgr_world.h */,
@@ -276,7 +281,7 @@
 		D474B8231789BB63007C9259 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0460;
+				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = "Don McCaughey";
 			};
 			buildConfigurationList = D474B8261789BB63007C9259 /* Build configuration list for PBXProject "Voyager" */;
@@ -341,6 +346,7 @@
 			files = (
 				D474B87E1789BD9E007C9259 /* vgr_dice_throw.c in Sources */,
 				D474B8801789BD9E007C9259 /* vgr_die_modifier.c in Sources */,
+				D47DB4AC199DCBE800D4643F /* vgr_memory.c in Sources */,
 				D474B8821789BD9E007C9259 /* vgr_hex_coordinate.c in Sources */,
 				D474B8841789BD9E007C9259 /* vgr_trade_classification.c in Sources */,
 				D474B8861789BD9E007C9259 /* vgr_world.c in Sources */,
@@ -381,7 +387,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -414,7 +419,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -444,6 +448,10 @@
 					"$(SRCROOT)/src",
 					"$(SRCROOT)/submodules/libsf/src",
 				);
+				OTHER_CFLAGS = (
+					"-D",
+					VGR_COUNT_ALLOCS,
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -456,6 +464,7 @@
 					"$(SRCROOT)/src",
 					"$(SRCROOT)/submodules/libsf/src",
 				);
+				OTHER_CFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
