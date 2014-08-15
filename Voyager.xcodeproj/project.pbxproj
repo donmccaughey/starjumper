@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D433CF49199DE371001991AF /* vgr_string.c in Sources */ = {isa = PBXBuildFile; fileRef = D433CF48199DE371001991AF /* vgr_string.c */; };
+		D433CF4D199EB145001991AF /* vgr_strarray.c in Sources */ = {isa = PBXBuildFile; fileRef = D433CF4C199EB145001991AF /* vgr_strarray.c */; };
 		D474B87D1789BD9E007C9259 /* vgr_defs.h in Headers */ = {isa = PBXBuildFile; fileRef = D474B8701789BD9D007C9259 /* vgr_defs.h */; };
 		D474B87E1789BD9E007C9259 /* vgr_dice_throw.c in Sources */ = {isa = PBXBuildFile; fileRef = D474B8711789BD9D007C9259 /* vgr_dice_throw.c */; };
 		D474B87F1789BD9E007C9259 /* vgr_dice_throw.h in Headers */ = {isa = PBXBuildFile; fileRef = D474B8721789BD9D007C9259 /* vgr_dice_throw.h */; };
@@ -91,6 +93,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		D433CF48199DE371001991AF /* vgr_string.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vgr_string.c; sourceTree = "<group>"; };
+		D433CF4A199DE37F001991AF /* vgr_string.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = vgr_string.h; sourceTree = "<group>"; };
+		D433CF4B199EB11F001991AF /* vgr_strarray.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = vgr_strarray.h; sourceTree = "<group>"; };
+		D433CF4C199EB145001991AF /* vgr_strarray.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vgr_strarray.c; sourceTree = "<group>"; };
 		D474B82B1789BB63007C9259 /* libvoyager.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libvoyager.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		D474B8601789BD91007C9259 /* libsf.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = libsf.xcodeproj; path = submodules/libsf/libsf.xcodeproj; sourceTree = "<group>"; };
 		D474B8701789BD9D007C9259 /* vgr_defs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vgr_defs.h; sourceTree = "<group>"; };
@@ -199,6 +205,10 @@
 				D474B8751789BD9D007C9259 /* vgr_hex_coordinate.c */,
 				D47DB4A7199DCB8800D4643F /* vgr_memory.h */,
 				D47DB4AB199DCBE800D4643F /* vgr_memory.c */,
+				D433CF4B199EB11F001991AF /* vgr_strarray.h */,
+				D433CF4C199EB145001991AF /* vgr_strarray.c */,
+				D433CF4A199DE37F001991AF /* vgr_string.h */,
+				D433CF48199DE371001991AF /* vgr_string.c */,
 				D474B8781789BD9E007C9259 /* vgr_trade_classification.h */,
 				D474B8771789BD9E007C9259 /* vgr_trade_classification.c */,
 				D474B87A1789BD9E007C9259 /* vgr_world.h */,
@@ -346,8 +356,10 @@
 			files = (
 				D474B87E1789BD9E007C9259 /* vgr_dice_throw.c in Sources */,
 				D474B8801789BD9E007C9259 /* vgr_die_modifier.c in Sources */,
+				D433CF49199DE371001991AF /* vgr_string.c in Sources */,
 				D47DB4AC199DCBE800D4643F /* vgr_memory.c in Sources */,
 				D474B8821789BD9E007C9259 /* vgr_hex_coordinate.c in Sources */,
+				D433CF4D199EB145001991AF /* vgr_strarray.c in Sources */,
 				D474B8841789BD9E007C9259 /* vgr_trade_classification.c in Sources */,
 				D474B8861789BD9E007C9259 /* vgr_world.c in Sources */,
 				D474B8881789BD9E007C9259 /* voyager.c in Sources */,

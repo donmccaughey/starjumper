@@ -7,6 +7,9 @@
 
 
 void *
+vgr_calloc(size_t count, size_t size);
+
+void *
 vgr_malloc(size_t size);
 
 void *

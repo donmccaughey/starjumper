@@ -1,10 +1,14 @@
 #include "vgr_world.h"
 
 #include <assert.h>
+#include <string.h>
+
 #include "vgr_dice_throw.h"
 #include "vgr_die_modifier.h"
 #include "vgr_hex_coordinate.h"
 #include "vgr_memory.h"
+#include "vgr_strarray.h"
+#include "vgr_string.h"
 #include "vgr_trade_classification.h"
 
 
@@ -24,24 +28,25 @@ struct _vgr_world
   int government;
   int law_level;
   int tech_level;
-  sf_list_t trade_classifications;
+  struct vgr_trade_classification const **trade_classifications;
+  int trade_classifications_count;
 };
 
+
+static char *
+alloc_trade_classification_abbreviation(void const *item);
+
+static char *
+alloc_trade_classification_name(void const *item);
+
+static char *
+alloc_trade_classification_short_name(void const *item);
 
 static char
 base_code(vgr_world_t world);
 
 static void
 dealloc(sf_any_t self);
-
-static sf_any_t
-get_abbreviation(sf_any_t any, void *context);
-
-static sf_any_t
-get_name(sf_any_t any, void *context);
-
-static sf_any_t
-get_short_name(sf_any_t any, void *context);
 
 static sf_string_t 
 string_from(sf_any_t self);
@@ -189,6 +194,30 @@ _vgr_world_init(void)
 }
 
 
+static char *
+alloc_trade_classification_abbreviation(void const *item)
+{
+  struct vgr_trade_classification const *const *trade_classification = item;
+  return vgr_strdup((*trade_classification)->abbreviation);
+}
+
+
+static char *
+alloc_trade_classification_name(void const *item)
+{
+  struct vgr_trade_classification const *const *trade_classification = item;
+  return vgr_strdup((*trade_classification)->name);
+}
+
+
+static char *
+alloc_trade_classification_short_name(void const *item)
+{
+  struct vgr_trade_classification const *const *trade_classification = item;
+  return vgr_strdup((*trade_classification)->short_name);
+}
+
+
 static char
 base_code(vgr_world_t world)
 {
@@ -208,34 +237,7 @@ dealloc(sf_any_t self)
   vgr_world_t world = self;
   
   sf_release(world->name);
-  sf_release(world->trade_classifications);
-}
-
-
-static sf_any_t
-get_abbreviation(sf_any_t any, void *context)
-{
-  if ( ! any) return NULL;
-  vgr_trade_classification_t trade_classification = any;
-  return vgr_trade_classification_abbreviation(trade_classification);
-}
-
-
-static sf_any_t
-get_name(sf_any_t any, void *context)
-{
-  if ( ! any) return NULL;
-  vgr_trade_classification_t trade_classification = any;
-  return vgr_trade_classification_name(trade_classification);
-}
-
-
-static sf_any_t
-get_short_name(sf_any_t any, void *context)
-{
-  if ( ! any) return NULL;
-  vgr_trade_classification_t trade_classification = any;
-  return vgr_trade_classification_short_name(trade_classification);
+  vgr_free(world->trade_classifications);
 }
 
 
@@ -245,19 +247,38 @@ string_from(sf_any_t self)
   vgr_world_t world = self;
   
   char *hex_coordinate = vgr_string_alloc_from_hex_coordinate(world->hex_coordinate);
-  // TODO: handle alloc failure
   
   int const max_name_length = 18;
   int const max_classifications_length = 42;
-  sf_list_t classification_names = sf_collect(world->trade_classifications, get_name, NULL);
-  sf_string_t separator = sf_string(". ");
-  sf_string_t classifications = sf_string_from_suffix_and_collection(separator, classification_names);
-  if (sf_string_length(classifications) > max_classifications_length) {
-    sf_list_t classification_short_names = sf_collect(world->trade_classifications, get_short_name, NULL);
-    classifications = sf_string_from_suffix_and_collection(separator, classification_short_names);
-    if (sf_string_length(classifications) > max_classifications_length) {
-      sf_list_t classification_abbreviations = sf_collect(world->trade_classifications, get_abbreviation, NULL);
-      classifications = sf_string_from_suffix_and_collection(separator, classification_abbreviations);
+  char const separator[] = ". ";
+  
+  struct vgr_strarray *classification_names = vgr_strarray_alloc_collect_strings(world->trade_classifications,
+                                                                                 world->trade_classifications_count,
+                                                                                 sizeof world->trade_classifications[0],
+                                                                                 alloc_trade_classification_name);
+  char *classifications = vgr_string_alloc_join_strarray_with_suffix(classification_names,
+                                                                     separator);
+  vgr_strarray_free(classification_names);
+  
+  if (strlen(classifications) > max_classifications_length) {
+    vgr_free(classifications);
+    struct vgr_strarray *classification_short_names = vgr_strarray_alloc_collect_strings(world->trade_classifications,
+                                                                                         world->trade_classifications_count,
+                                                                                         sizeof world->trade_classifications[0],
+                                                                                         alloc_trade_classification_short_name);
+    classifications = vgr_string_alloc_join_strarray_with_suffix(classification_short_names,
+                                                                 separator);
+    vgr_strarray_free(classification_short_names);
+    
+    if (strlen(classifications) > max_classifications_length) {
+      vgr_free(classifications);
+      struct vgr_strarray *classification_abbreviations = vgr_strarray_alloc_collect_strings(world->trade_classifications,
+                                                                                             world->trade_classifications_count,
+                                                                                             sizeof world->trade_classifications[0],
+                                                                                             alloc_trade_classification_abbreviation);
+      classifications = vgr_string_alloc_join_strarray_with_suffix(classification_abbreviations,
+                                                                   separator);
+      vgr_strarray_free(classification_abbreviations);
     }
   }
   
@@ -268,9 +289,11 @@ string_from(sf_any_t self)
       hex_digit(world->hydrographics), hex_digit(world->population),
       hex_digit(world->government), hex_digit(world->law_level),
       hex_digit(world->tech_level), base_code(world),
-      -max_classifications_length, sf_string_chars(classifications),
+      -max_classifications_length, classifications,
       (world->gas_giant ? 'G' : ' ')
   );
+  
+  vgr_free(classifications);
   vgr_free(hex_coordinate);
   return string;
 }
@@ -410,7 +433,7 @@ vgr_world(sf_string_t name,
     if (world->tech_level < 0) world->tech_level = 0;
   }
   
-  world->trade_classifications = sf_retain(vgr_trade_classifications_for(world));
+  world->trade_classifications = vgr_world_alloc_trade_classifications(world, &world->trade_classifications_count);
   
   *random_out = random;
   return sf_move_to_temp_pool(world);

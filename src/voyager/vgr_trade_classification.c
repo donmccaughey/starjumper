@@ -1,23 +1,8 @@
 #include "vgr_trade_classification.h"
 
+#include "vgr_memory.h"
 #include "vgr_world.h"
 
-
-struct _vgr_trade_classification
-{
-  SF_OBJECT_FIELDS;
-  sf_string_t name;
-  sf_string_t short_name;
-  sf_string_t abbreviation;
-  bool (*applies_to)(vgr_world_t);
-};
-
-
-static void
-dealloc(sf_any_t self);
-
-static bool
-has_trade_classification(sf_any_t any, void *context);
 
 static bool
 is_agricultural(vgr_world_t world);
@@ -64,95 +49,132 @@ is_vacuum_world(vgr_world_t world);
 static bool
 is_water_world(vgr_world_t world);
 
-static sf_string_t 
-string_from(sf_any_t self);
 
-static vgr_trade_classification_t
-trade_classification(char const *name, char const *short_name, char const *abbreviation, bool (*applies_to)(vgr_world_t));
+struct vgr_trade_classification const vgr_trade_classification_agricultural = {
+  .name="Agricultural",
+  .short_name="Ag",
+  .abbreviation="Ag",
+  .applies_to=is_agricultural,
+};
 
+struct vgr_trade_classification const vgr_trade_classification_asteroid_belt = {
+  .name="Asteroid Belt",
+  .short_name="Asteroids",
+  .abbreviation="As",
+  .applies_to=is_asteroid_belt,
+};
 
-vgr_trade_classification_t vgr_trade_classification_agricultural;
-vgr_trade_classification_t vgr_trade_classification_asteroid_belt;
-vgr_trade_classification_t vgr_trade_classification_barren_world;
-vgr_trade_classification_t vgr_trade_classification_desert_world;
-vgr_trade_classification_t vgr_trade_classification_fluid_oceans;
-vgr_trade_classification_t vgr_trade_classification_high_population;
-vgr_trade_classification_t vgr_trade_classification_ice_capped;
-vgr_trade_classification_t vgr_trade_classification_industrial;
-vgr_trade_classification_t vgr_trade_classification_low_population;
-vgr_trade_classification_t vgr_trade_classification_non_agricultural;
-vgr_trade_classification_t vgr_trade_classification_non_industrial;
-vgr_trade_classification_t vgr_trade_classification_poor;
-vgr_trade_classification_t vgr_trade_classification_rich;
-vgr_trade_classification_t vgr_trade_classification_vacuum_world;
-vgr_trade_classification_t vgr_trade_classification_water_world;
+struct vgr_trade_classification const vgr_trade_classification_barren_world = {
+  .name="Barren World",
+  .short_name="Barren",
+  .abbreviation="Ba",
+  .applies_to=is_barren_world,
+};
 
-sf_array_t vgr_trade_classifications;
-sf_type_t vgr_trade_classification_type;
+struct vgr_trade_classification const vgr_trade_classification_desert_world = {
+  .name="Desert World",
+  .short_name="Desert",
+  .abbreviation="De",
+  .applies_to=is_desert_world,
+};
 
+struct vgr_trade_classification const vgr_trade_classification_fluid_oceans = {
+  .name="Fluid Oceans",
+  .short_name="Fluid Oceans",
+  .abbreviation="Fl",
+  .applies_to=is_fluid_oceans,
+};
 
-void
-_vgr_trade_classification_init(void)
-{
-  vgr_trade_classification_type = sf_type("vgr_trade_classification_t", dealloc, string_from, NULL, NULL, NULL, NULL);
-  
-  vgr_trade_classification_agricultural = trade_classification("Agricultural",     "Ag",             "Ag", is_agricultural);
-  vgr_trade_classification_asteroid_belt = trade_classification("Asteroid Belt",    "Asteroids",      "As", is_asteroid_belt);
-  vgr_trade_classification_barren_world = trade_classification("Barren World",     "Barren",         "Ba", is_barren_world);
-  vgr_trade_classification_desert_world = trade_classification("Desert World",     "Desert",         "De", is_desert_world);
-  vgr_trade_classification_fluid_oceans = trade_classification("Fluid Oceans",     "Fluid Oceans",   "Fl", is_fluid_oceans);
-  vgr_trade_classification_high_population = trade_classification("High Population",  "High Pop",       "Hi", is_high_population);
-  vgr_trade_classification_ice_capped = trade_classification("Ice-capped",       "Ice-capped",     "Ic", is_ice_capped);
-  vgr_trade_classification_industrial = trade_classification("Industrial",       "Industrial",     "In", is_industrial);
-  vgr_trade_classification_low_population = trade_classification("Low Population",   "Low Pop",        "Lo", is_low_population);
-  vgr_trade_classification_non_agricultural = trade_classification("Non-agricultural", "Non-ag",         "Na", is_non_agricultural);
-  vgr_trade_classification_non_industrial = trade_classification("Non-industrial",   "Non-industrial", "Ni", is_non_industrial);
-  vgr_trade_classification_poor = trade_classification("Poor",             "Poor",           "Po", is_poor);
-  vgr_trade_classification_rich = trade_classification("Rich",             "Rich",           "Ri", is_rich);
-  vgr_trade_classification_vacuum_world = trade_classification("Vacuum World",     "Vacuum",         "Va", is_vacuum_world);
-  vgr_trade_classification_water_world = trade_classification("Water World",      "Water World",    "Wa", is_water_world);
-  
-  vgr_trade_classifications = sf_array_from_items(
-  vgr_trade_classification_agricultural,
-  vgr_trade_classification_asteroid_belt,
-  vgr_trade_classification_barren_world,
-  vgr_trade_classification_desert_world,
-  vgr_trade_classification_fluid_oceans,
-  vgr_trade_classification_high_population,
-  vgr_trade_classification_ice_capped,
-  vgr_trade_classification_industrial,
-  vgr_trade_classification_low_population,
-  vgr_trade_classification_non_agricultural,
-  vgr_trade_classification_non_industrial,
-  vgr_trade_classification_poor,
-  vgr_trade_classification_rich,
-  vgr_trade_classification_vacuum_world,
-  vgr_trade_classification_water_world
-  );
-}
+struct vgr_trade_classification const vgr_trade_classification_high_population = {
+  .name="High Population",
+  .short_name="High Pop",
+  .abbreviation="Hi",
+  .applies_to=is_high_population,
+};
 
+struct vgr_trade_classification const vgr_trade_classification_ice_capped = {
+  .name="Ice-capped",
+  .short_name="Ice-capped",
+  .abbreviation="Ic",
+  .applies_to=is_ice_capped,
+};
 
-static void
-dealloc(sf_any_t self)
-{
-  vgr_trade_classification_t trade_classification = self;
-  
-  sf_release(trade_classification->name);
-  sf_release(trade_classification->short_name);
-  sf_release(trade_classification->abbreviation);
-}
+struct vgr_trade_classification const vgr_trade_classification_industrial = {
+  .name="Industrial",
+  .short_name="Industrial",
+  .abbreviation="In",
+  .applies_to=is_industrial,
+};
 
+struct vgr_trade_classification const vgr_trade_classification_low_population = {
+  .name="Low Population",
+  .short_name="Low Pop",
+  .abbreviation="Lo",
+  .applies_to=is_low_population,
+};
 
-static bool
-has_trade_classification(sf_any_t any, void *context)
-{
-  if ( ! any) return false;
-  if ( ! context) return false;
+struct vgr_trade_classification const vgr_trade_classification_non_agricultural = {
+  .name="Non-agricultural",
+  .short_name="Non-ag",
+  .abbreviation="Na",
+  .applies_to=is_non_agricultural,
+};
 
-  vgr_trade_classification_t trade_classification = any;
-  vgr_world_t world = context;
-  return vgr_trade_classification_applies_to(trade_classification, world);
-}
+struct vgr_trade_classification const vgr_trade_classification_non_industrial = {
+  .name="Non-industrial",
+  .short_name="Non-industrial",
+  .abbreviation="Ni",
+  .applies_to=is_non_industrial,
+};
+
+struct vgr_trade_classification const vgr_trade_classification_poor = {
+  .name="Poor",
+  .short_name="Poor",
+  .abbreviation="Po",
+  .applies_to=is_poor,
+};
+
+struct vgr_trade_classification const vgr_trade_classification_rich = {
+  .name="Rich",
+  .short_name="Rich",
+  .abbreviation="Ri",
+  .applies_to=is_rich,
+};
+
+struct vgr_trade_classification const vgr_trade_classification_vacuum_world = {
+  .name="Vacuum World",
+  .short_name="Vacuum",
+  .abbreviation="Va",
+  .applies_to=is_vacuum_world,
+};
+
+struct vgr_trade_classification const vgr_trade_classification_water_world = {
+  .name="Water World",
+  .short_name="Water World",
+  .abbreviation="Wa",
+  .applies_to=is_water_world,
+};
+
+static struct vgr_trade_classification const *all_trade_classifications[] = {
+    &vgr_trade_classification_agricultural,
+    &vgr_trade_classification_asteroid_belt,
+    &vgr_trade_classification_barren_world,
+    &vgr_trade_classification_desert_world,
+    &vgr_trade_classification_fluid_oceans,
+    &vgr_trade_classification_high_population,
+    &vgr_trade_classification_ice_capped,
+    &vgr_trade_classification_industrial,
+    &vgr_trade_classification_low_population,
+    &vgr_trade_classification_non_agricultural,
+    &vgr_trade_classification_non_industrial,
+    &vgr_trade_classification_poor,
+    &vgr_trade_classification_rich,
+    &vgr_trade_classification_vacuum_world,
+    &vgr_trade_classification_water_world,
+};
+
+static int all_trade_classifications_count = sizeof all_trade_classifications
+                                           / sizeof all_trade_classifications[0];
 
 
 static bool
@@ -388,63 +410,22 @@ is_water_world(vgr_world_t world)
 }
 
 
-static sf_string_t 
-string_from(sf_any_t self)
+struct vgr_trade_classification const **
+vgr_world_alloc_trade_classifications(vgr_world_t world, int *count)
 {
-  vgr_trade_classification_t trade_classification = self;
-  return sf_copy_to_temp_pool(trade_classification->name);
-}
-
-
-static vgr_trade_classification_t
-trade_classification(char const *name, char const *short_name, char const *abbreviation, bool (*applies_to)(vgr_world_t))
-{
-  struct _vgr_trade_classification *trade_classification = sf_object_calloc(sizeof(struct _vgr_trade_classification), vgr_trade_classification_type);
-  if ( ! trade_classification) return NULL;
+  size_t max_count = all_trade_classifications_count + 1;
+  size_t item_size = sizeof all_trade_classifications[0];
+  struct vgr_trade_classification const **classifications_for_world = vgr_calloc(max_count, item_size);
   
-  trade_classification->name = sf_retain(sf_string(name));
-  trade_classification->short_name = sf_retain(sf_string(short_name));
-  trade_classification->abbreviation = sf_retain(sf_string(abbreviation));
-  trade_classification->applies_to = applies_to;
+  *count = 0;
+  for (int i = 0; i < all_trade_classifications_count; ++i) {
+    if (all_trade_classifications[i]->applies_to(world)) {
+      int next_index = *count;
+      classifications_for_world[next_index] = all_trade_classifications[i];
+      ++*count;
+    }
+  }
   
-  return sf_move_to_temp_pool(trade_classification);
-}
-
-
-sf_string_t 
-vgr_trade_classification_abbreviation(vgr_trade_classification_t trade_classification)
-{
-  return trade_classification ? sf_copy_to_temp_pool(trade_classification->abbreviation) : NULL;
-}
-
-
-bool
-vgr_trade_classification_applies_to(vgr_trade_classification_t trade_classification,
-                                     vgr_world_t world)
-{
-  if ( ! trade_classification) return false;
-  if ( ! world) return false;
-  
-  return trade_classification->applies_to(world);
-}
-
-
-sf_string_t 
-vgr_trade_classification_name(vgr_trade_classification_t trade_classification)
-{
-  return trade_classification ? sf_copy_to_temp_pool(trade_classification->name) : NULL;
-}
-
-
-sf_string_t 
-vgr_trade_classification_short_name(vgr_trade_classification_t trade_classification)
-{
-  return trade_classification ? sf_copy_to_temp_pool(trade_classification->short_name) : NULL;
-}
-
-
-sf_list_t
-vgr_trade_classifications_for(vgr_world_t world)
-{
-  return sf_filter(vgr_trade_classifications, has_trade_classification, (void *) world);
+  size_t final_size = (*count + 1) * item_size;
+  return vgr_realloc(classifications_for_world, final_size);
 }

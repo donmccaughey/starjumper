@@ -41,6 +41,16 @@ fail_and_exit(void)
 
 
 void *
+vgr_calloc(size_t count, size_t size)
+{
+  void *memory = calloc(count, size);
+  if ( ! memory) fail_and_exit();
+  INCREMENT_ALLOC_COUNT();
+  return memory;
+}
+
+
+void *
 vgr_malloc(size_t size)
 {
   void *memory = malloc(size);

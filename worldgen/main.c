@@ -46,8 +46,8 @@ main(int argc, char **argv)
   sf_string_t description = sf_string_from(world);
   fprintf(stdout, "%s\n", sf_string_chars(description));
   
-  vgr_memory_expect_alloc_count_zero();
   vgr_fin();
+  vgr_memory_expect_alloc_count_zero();
   return EXIT_SUCCESS;
 }
 
