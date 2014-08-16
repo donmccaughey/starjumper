@@ -7,25 +7,29 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		D433CF49199DE371001991AF /* vgr_string.c in Sources */ = {isa = PBXBuildFile; fileRef = D433CF48199DE371001991AF /* vgr_string.c */; };
-		D433CF4D199EB145001991AF /* vgr_strarray.c in Sources */ = {isa = PBXBuildFile; fileRef = D433CF4C199EB145001991AF /* vgr_strarray.c */; };
-		D474B87D1789BD9E007C9259 /* vgr_defs.h in Headers */ = {isa = PBXBuildFile; fileRef = D474B8701789BD9D007C9259 /* vgr_defs.h */; };
-		D474B87E1789BD9E007C9259 /* vgr_dice_throw.c in Sources */ = {isa = PBXBuildFile; fileRef = D474B8711789BD9D007C9259 /* vgr_dice_throw.c */; };
-		D474B87F1789BD9E007C9259 /* vgr_dice_throw.h in Headers */ = {isa = PBXBuildFile; fileRef = D474B8721789BD9D007C9259 /* vgr_dice_throw.h */; };
-		D474B8801789BD9E007C9259 /* vgr_die_modifier.c in Sources */ = {isa = PBXBuildFile; fileRef = D474B8731789BD9D007C9259 /* vgr_die_modifier.c */; };
-		D474B8811789BD9E007C9259 /* vgr_die_modifier.h in Headers */ = {isa = PBXBuildFile; fileRef = D474B8741789BD9D007C9259 /* vgr_die_modifier.h */; };
-		D474B8821789BD9E007C9259 /* vgr_hex_coordinate.c in Sources */ = {isa = PBXBuildFile; fileRef = D474B8751789BD9D007C9259 /* vgr_hex_coordinate.c */; };
-		D474B8831789BD9E007C9259 /* vgr_hex_coordinate.h in Headers */ = {isa = PBXBuildFile; fileRef = D474B8761789BD9E007C9259 /* vgr_hex_coordinate.h */; };
-		D474B8841789BD9E007C9259 /* vgr_trade_classification.c in Sources */ = {isa = PBXBuildFile; fileRef = D474B8771789BD9E007C9259 /* vgr_trade_classification.c */; };
-		D474B8851789BD9E007C9259 /* vgr_trade_classification.h in Headers */ = {isa = PBXBuildFile; fileRef = D474B8781789BD9E007C9259 /* vgr_trade_classification.h */; };
-		D474B8861789BD9E007C9259 /* vgr_world.c in Sources */ = {isa = PBXBuildFile; fileRef = D474B8791789BD9E007C9259 /* vgr_world.c */; };
-		D474B8871789BD9E007C9259 /* vgr_world.h in Headers */ = {isa = PBXBuildFile; fileRef = D474B87A1789BD9E007C9259 /* vgr_world.h */; };
-		D474B8881789BD9E007C9259 /* voyager.c in Sources */ = {isa = PBXBuildFile; fileRef = D474B87B1789BD9E007C9259 /* voyager.c */; };
-		D474B8891789BD9E007C9259 /* voyager.h in Headers */ = {isa = PBXBuildFile; fileRef = D474B87C1789BD9E007C9259 /* voyager.h */; };
 		D474B8931789C29E007C9259 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = D474B8921789C29E007C9259 /* main.c */; };
 		D474B89E1789C34F007C9259 /* libstarjumper.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D474B82B1789BB63007C9259 /* libstarjumper.a */; };
 		D474B89F1789C34F007C9259 /* libsf.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D474B8681789BD92007C9259 /* libsf.a */; };
-		D47DB4AC199DCBE800D4643F /* vgr_memory.c in Sources */ = {isa = PBXBuildFile; fileRef = D47DB4AB199DCBE800D4643F /* vgr_memory.c */; };
+		D4AA1DCF19A012C000F9F30E /* vgr_defs.h in Headers */ = {isa = PBXBuildFile; fileRef = D4AA1DB919A012C000F9F30E /* vgr_defs.h */; };
+		D4AA1DD019A012C000F9F30E /* vgr_dice_throw.c in Sources */ = {isa = PBXBuildFile; fileRef = D4AA1DBA19A012C000F9F30E /* vgr_dice_throw.c */; };
+		D4AA1DD119A012C000F9F30E /* vgr_dice_throw.h in Headers */ = {isa = PBXBuildFile; fileRef = D4AA1DBB19A012C000F9F30E /* vgr_dice_throw.h */; };
+		D4AA1DD219A012C000F9F30E /* vgr_die_modifier.c in Sources */ = {isa = PBXBuildFile; fileRef = D4AA1DBC19A012C000F9F30E /* vgr_die_modifier.c */; };
+		D4AA1DD319A012C000F9F30E /* vgr_die_modifier.h in Headers */ = {isa = PBXBuildFile; fileRef = D4AA1DBD19A012C000F9F30E /* vgr_die_modifier.h */; };
+		D4AA1DD419A012C000F9F30E /* vgr_hex_coordinate.c in Sources */ = {isa = PBXBuildFile; fileRef = D4AA1DBE19A012C000F9F30E /* vgr_hex_coordinate.c */; };
+		D4AA1DD519A012C000F9F30E /* vgr_hex_coordinate.h in Headers */ = {isa = PBXBuildFile; fileRef = D4AA1DBF19A012C000F9F30E /* vgr_hex_coordinate.h */; };
+		D4AA1DD619A012C000F9F30E /* vgr_memory.c in Sources */ = {isa = PBXBuildFile; fileRef = D4AA1DC019A012C000F9F30E /* vgr_memory.c */; };
+		D4AA1DD719A012C000F9F30E /* vgr_memory.h in Headers */ = {isa = PBXBuildFile; fileRef = D4AA1DC119A012C000F9F30E /* vgr_memory.h */; };
+		D4AA1DD819A012C000F9F30E /* vgr_strarray.c in Sources */ = {isa = PBXBuildFile; fileRef = D4AA1DC219A012C000F9F30E /* vgr_strarray.c */; };
+		D4AA1DD919A012C000F9F30E /* vgr_strarray.h in Headers */ = {isa = PBXBuildFile; fileRef = D4AA1DC319A012C000F9F30E /* vgr_strarray.h */; };
+		D4AA1DDA19A012C000F9F30E /* vgr_string.c in Sources */ = {isa = PBXBuildFile; fileRef = D4AA1DC419A012C000F9F30E /* vgr_string.c */; };
+		D4AA1DDB19A012C000F9F30E /* vgr_string.h in Headers */ = {isa = PBXBuildFile; fileRef = D4AA1DC519A012C000F9F30E /* vgr_string.h */; };
+		D4AA1DDC19A012C000F9F30E /* vgr_trade_classification.c in Sources */ = {isa = PBXBuildFile; fileRef = D4AA1DC619A012C000F9F30E /* vgr_trade_classification.c */; };
+		D4AA1DDD19A012C000F9F30E /* vgr_trade_classification.h in Headers */ = {isa = PBXBuildFile; fileRef = D4AA1DC719A012C000F9F30E /* vgr_trade_classification.h */; };
+		D4AA1DDE19A012C000F9F30E /* vgr_world.c in Sources */ = {isa = PBXBuildFile; fileRef = D4AA1DC819A012C000F9F30E /* vgr_world.c */; };
+		D4AA1DDF19A012C000F9F30E /* vgr_world.h in Headers */ = {isa = PBXBuildFile; fileRef = D4AA1DC919A012C000F9F30E /* vgr_world.h */; };
+		D4AA1DE019A012C000F9F30E /* voyager.c in Sources */ = {isa = PBXBuildFile; fileRef = D4AA1DCA19A012C000F9F30E /* voyager.c */; };
+		D4AA1DE119A012C000F9F30E /* voyager.h in Headers */ = {isa = PBXBuildFile; fileRef = D4AA1DCB19A012C000F9F30E /* voyager.h */; };
+		D4AA1DE219A012C000F9F30E /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = D4AA1DCD19A012C000F9F30E /* main.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -93,31 +97,33 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		D433CF48199DE371001991AF /* vgr_string.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vgr_string.c; sourceTree = "<group>"; };
-		D433CF4A199DE37F001991AF /* vgr_string.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = vgr_string.h; sourceTree = "<group>"; };
-		D433CF4B199EB11F001991AF /* vgr_strarray.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = vgr_strarray.h; sourceTree = "<group>"; };
-		D433CF4C199EB145001991AF /* vgr_strarray.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vgr_strarray.c; sourceTree = "<group>"; };
 		D474B82B1789BB63007C9259 /* libstarjumper.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libstarjumper.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		D474B8601789BD91007C9259 /* libsf.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = libsf.xcodeproj; path = submodules/libsf/libsf.xcodeproj; sourceTree = "<group>"; };
-		D474B8701789BD9D007C9259 /* vgr_defs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vgr_defs.h; sourceTree = "<group>"; };
-		D474B8711789BD9D007C9259 /* vgr_dice_throw.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vgr_dice_throw.c; sourceTree = "<group>"; };
-		D474B8721789BD9D007C9259 /* vgr_dice_throw.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vgr_dice_throw.h; sourceTree = "<group>"; };
-		D474B8731789BD9D007C9259 /* vgr_die_modifier.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vgr_die_modifier.c; sourceTree = "<group>"; };
-		D474B8741789BD9D007C9259 /* vgr_die_modifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vgr_die_modifier.h; sourceTree = "<group>"; };
-		D474B8751789BD9D007C9259 /* vgr_hex_coordinate.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vgr_hex_coordinate.c; sourceTree = "<group>"; };
-		D474B8761789BD9E007C9259 /* vgr_hex_coordinate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vgr_hex_coordinate.h; sourceTree = "<group>"; };
-		D474B8771789BD9E007C9259 /* vgr_trade_classification.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vgr_trade_classification.c; sourceTree = "<group>"; };
-		D474B8781789BD9E007C9259 /* vgr_trade_classification.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vgr_trade_classification.h; sourceTree = "<group>"; };
-		D474B8791789BD9E007C9259 /* vgr_world.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vgr_world.c; sourceTree = "<group>"; };
-		D474B87A1789BD9E007C9259 /* vgr_world.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vgr_world.h; sourceTree = "<group>"; };
-		D474B87B1789BD9E007C9259 /* voyager.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = voyager.c; sourceTree = "<group>"; };
-		D474B87C1789BD9E007C9259 /* voyager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = voyager.h; sourceTree = "<group>"; };
 		D474B8901789C29E007C9259 /* worldgen */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = worldgen; sourceTree = BUILT_PRODUCTS_DIR; };
 		D474B8921789C29E007C9259 /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
 		D474B8991789C2DB007C9259 /* worldgen.6 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = worldgen.6; sourceTree = "<group>"; };
-		D47DB4A7199DCB8800D4643F /* vgr_memory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = vgr_memory.h; sourceTree = "<group>"; };
-		D47DB4AB199DCBE800D4643F /* vgr_memory.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vgr_memory.c; sourceTree = "<group>"; };
 		D4AA1DB219A0112700F9F30E /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		D4AA1DB919A012C000F9F30E /* vgr_defs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vgr_defs.h; sourceTree = "<group>"; };
+		D4AA1DBA19A012C000F9F30E /* vgr_dice_throw.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vgr_dice_throw.c; sourceTree = "<group>"; };
+		D4AA1DBB19A012C000F9F30E /* vgr_dice_throw.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vgr_dice_throw.h; sourceTree = "<group>"; };
+		D4AA1DBC19A012C000F9F30E /* vgr_die_modifier.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vgr_die_modifier.c; sourceTree = "<group>"; };
+		D4AA1DBD19A012C000F9F30E /* vgr_die_modifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vgr_die_modifier.h; sourceTree = "<group>"; };
+		D4AA1DBE19A012C000F9F30E /* vgr_hex_coordinate.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vgr_hex_coordinate.c; sourceTree = "<group>"; };
+		D4AA1DBF19A012C000F9F30E /* vgr_hex_coordinate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vgr_hex_coordinate.h; sourceTree = "<group>"; };
+		D4AA1DC019A012C000F9F30E /* vgr_memory.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vgr_memory.c; sourceTree = "<group>"; };
+		D4AA1DC119A012C000F9F30E /* vgr_memory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vgr_memory.h; sourceTree = "<group>"; };
+		D4AA1DC219A012C000F9F30E /* vgr_strarray.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vgr_strarray.c; sourceTree = "<group>"; };
+		D4AA1DC319A012C000F9F30E /* vgr_strarray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vgr_strarray.h; sourceTree = "<group>"; };
+		D4AA1DC419A012C000F9F30E /* vgr_string.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vgr_string.c; sourceTree = "<group>"; };
+		D4AA1DC519A012C000F9F30E /* vgr_string.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vgr_string.h; sourceTree = "<group>"; };
+		D4AA1DC619A012C000F9F30E /* vgr_trade_classification.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vgr_trade_classification.c; sourceTree = "<group>"; };
+		D4AA1DC719A012C000F9F30E /* vgr_trade_classification.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vgr_trade_classification.h; sourceTree = "<group>"; };
+		D4AA1DC819A012C000F9F30E /* vgr_world.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vgr_world.c; sourceTree = "<group>"; };
+		D4AA1DC919A012C000F9F30E /* vgr_world.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vgr_world.h; sourceTree = "<group>"; };
+		D4AA1DCA19A012C000F9F30E /* voyager.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = voyager.c; sourceTree = "<group>"; };
+		D4AA1DCB19A012C000F9F30E /* voyager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = voyager.h; sourceTree = "<group>"; };
+		D4AA1DCD19A012C000F9F30E /* main.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
+		D4AA1DCE19A012C000F9F30E /* worldgen.6 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = worldgen.6; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -143,8 +149,8 @@
 		D474B8221789BB63007C9259 = {
 			isa = PBXGroup;
 			children = (
+				D4AA1DB719A012C000F9F30E /* libstarjumper */,
 				D4AA1DB219A0112700F9F30E /* README.md */,
-				D474B85C1789BD61007C9259 /* src */,
 				D474B85D1789BD74007C9259 /* test */,
 				D474B85F1789BD80007C9259 /* submodules */,
 				D474B8911789C29E007C9259 /* worldgen */,
@@ -159,14 +165,6 @@
 				D474B8901789C29E007C9259 /* worldgen */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		D474B85C1789BD61007C9259 /* src */ = {
-			isa = PBXGroup;
-			children = (
-				D474B86F1789BD9D007C9259 /* voyager */,
-			);
-			path = src;
 			sourceTree = "<group>";
 		};
 		D474B85D1789BD74007C9259 /* test */ = {
@@ -195,37 +193,55 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		D474B86F1789BD9D007C9259 /* voyager */ = {
-			isa = PBXGroup;
-			children = (
-				D474B8701789BD9D007C9259 /* vgr_defs.h */,
-				D474B8721789BD9D007C9259 /* vgr_dice_throw.h */,
-				D474B8711789BD9D007C9259 /* vgr_dice_throw.c */,
-				D474B8741789BD9D007C9259 /* vgr_die_modifier.h */,
-				D474B8731789BD9D007C9259 /* vgr_die_modifier.c */,
-				D474B8761789BD9E007C9259 /* vgr_hex_coordinate.h */,
-				D474B8751789BD9D007C9259 /* vgr_hex_coordinate.c */,
-				D47DB4A7199DCB8800D4643F /* vgr_memory.h */,
-				D47DB4AB199DCBE800D4643F /* vgr_memory.c */,
-				D433CF4B199EB11F001991AF /* vgr_strarray.h */,
-				D433CF4C199EB145001991AF /* vgr_strarray.c */,
-				D433CF4A199DE37F001991AF /* vgr_string.h */,
-				D433CF48199DE371001991AF /* vgr_string.c */,
-				D474B8781789BD9E007C9259 /* vgr_trade_classification.h */,
-				D474B8771789BD9E007C9259 /* vgr_trade_classification.c */,
-				D474B87A1789BD9E007C9259 /* vgr_world.h */,
-				D474B8791789BD9E007C9259 /* vgr_world.c */,
-				D474B87C1789BD9E007C9259 /* voyager.h */,
-				D474B87B1789BD9E007C9259 /* voyager.c */,
-			);
-			path = voyager;
-			sourceTree = "<group>";
-		};
 		D474B8911789C29E007C9259 /* worldgen */ = {
 			isa = PBXGroup;
 			children = (
 				D474B8921789C29E007C9259 /* main.c */,
 				D474B8991789C2DB007C9259 /* worldgen.6 */,
+			);
+			path = worldgen;
+			sourceTree = "<group>";
+		};
+		D4AA1DB719A012C000F9F30E /* libstarjumper */ = {
+			isa = PBXGroup;
+			children = (
+				D4AA1DB819A012C000F9F30E /* voyager */,
+				D4AA1DCC19A012C000F9F30E /* worldgen */,
+			);
+			path = libstarjumper;
+			sourceTree = "<group>";
+		};
+		D4AA1DB819A012C000F9F30E /* voyager */ = {
+			isa = PBXGroup;
+			children = (
+				D4AA1DB919A012C000F9F30E /* vgr_defs.h */,
+				D4AA1DBA19A012C000F9F30E /* vgr_dice_throw.c */,
+				D4AA1DBB19A012C000F9F30E /* vgr_dice_throw.h */,
+				D4AA1DBC19A012C000F9F30E /* vgr_die_modifier.c */,
+				D4AA1DBD19A012C000F9F30E /* vgr_die_modifier.h */,
+				D4AA1DBE19A012C000F9F30E /* vgr_hex_coordinate.c */,
+				D4AA1DBF19A012C000F9F30E /* vgr_hex_coordinate.h */,
+				D4AA1DC019A012C000F9F30E /* vgr_memory.c */,
+				D4AA1DC119A012C000F9F30E /* vgr_memory.h */,
+				D4AA1DC219A012C000F9F30E /* vgr_strarray.c */,
+				D4AA1DC319A012C000F9F30E /* vgr_strarray.h */,
+				D4AA1DC419A012C000F9F30E /* vgr_string.c */,
+				D4AA1DC519A012C000F9F30E /* vgr_string.h */,
+				D4AA1DC619A012C000F9F30E /* vgr_trade_classification.c */,
+				D4AA1DC719A012C000F9F30E /* vgr_trade_classification.h */,
+				D4AA1DC819A012C000F9F30E /* vgr_world.c */,
+				D4AA1DC919A012C000F9F30E /* vgr_world.h */,
+				D4AA1DCA19A012C000F9F30E /* voyager.c */,
+				D4AA1DCB19A012C000F9F30E /* voyager.h */,
+			);
+			path = voyager;
+			sourceTree = "<group>";
+		};
+		D4AA1DCC19A012C000F9F30E /* worldgen */ = {
+			isa = PBXGroup;
+			children = (
+				D4AA1DCD19A012C000F9F30E /* main.c */,
+				D4AA1DCE19A012C000F9F30E /* worldgen.6 */,
 			);
 			path = worldgen;
 			sourceTree = "<group>";
@@ -237,13 +253,16 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D474B87D1789BD9E007C9259 /* vgr_defs.h in Headers */,
-				D474B87F1789BD9E007C9259 /* vgr_dice_throw.h in Headers */,
-				D474B8811789BD9E007C9259 /* vgr_die_modifier.h in Headers */,
-				D474B8831789BD9E007C9259 /* vgr_hex_coordinate.h in Headers */,
-				D474B8851789BD9E007C9259 /* vgr_trade_classification.h in Headers */,
-				D474B8871789BD9E007C9259 /* vgr_world.h in Headers */,
-				D474B8891789BD9E007C9259 /* voyager.h in Headers */,
+				D4AA1DD119A012C000F9F30E /* vgr_dice_throw.h in Headers */,
+				D4AA1DD719A012C000F9F30E /* vgr_memory.h in Headers */,
+				D4AA1DCF19A012C000F9F30E /* vgr_defs.h in Headers */,
+				D4AA1DDD19A012C000F9F30E /* vgr_trade_classification.h in Headers */,
+				D4AA1DDF19A012C000F9F30E /* vgr_world.h in Headers */,
+				D4AA1DD919A012C000F9F30E /* vgr_strarray.h in Headers */,
+				D4AA1DDB19A012C000F9F30E /* vgr_string.h in Headers */,
+				D4AA1DD319A012C000F9F30E /* vgr_die_modifier.h in Headers */,
+				D4AA1DE119A012C000F9F30E /* voyager.h in Headers */,
+				D4AA1DD519A012C000F9F30E /* vgr_hex_coordinate.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -356,15 +375,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D474B87E1789BD9E007C9259 /* vgr_dice_throw.c in Sources */,
-				D474B8801789BD9E007C9259 /* vgr_die_modifier.c in Sources */,
-				D433CF49199DE371001991AF /* vgr_string.c in Sources */,
-				D47DB4AC199DCBE800D4643F /* vgr_memory.c in Sources */,
-				D474B8821789BD9E007C9259 /* vgr_hex_coordinate.c in Sources */,
-				D433CF4D199EB145001991AF /* vgr_strarray.c in Sources */,
-				D474B8841789BD9E007C9259 /* vgr_trade_classification.c in Sources */,
-				D474B8861789BD9E007C9259 /* vgr_world.c in Sources */,
-				D474B8881789BD9E007C9259 /* voyager.c in Sources */,
+				D4AA1DD619A012C000F9F30E /* vgr_memory.c in Sources */,
+				D4AA1DE219A012C000F9F30E /* main.c in Sources */,
+				D4AA1DDC19A012C000F9F30E /* vgr_trade_classification.c in Sources */,
+				D4AA1DD419A012C000F9F30E /* vgr_hex_coordinate.c in Sources */,
+				D4AA1DDA19A012C000F9F30E /* vgr_string.c in Sources */,
+				D4AA1DD819A012C000F9F30E /* vgr_strarray.c in Sources */,
+				D4AA1DD019A012C000F9F30E /* vgr_dice_throw.c in Sources */,
+				D4AA1DDE19A012C000F9F30E /* vgr_world.c in Sources */,
+				D4AA1DE019A012C000F9F30E /* voyager.c in Sources */,
+				D4AA1DD219A012C000F9F30E /* vgr_die_modifier.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -460,7 +480,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				EXECUTABLE_PREFIX = "";
 				HEADER_SEARCH_PATHS = (
-					"$(SRCROOT)/src",
+					"$(SRCROOT)/libstarjumper",
 					"$(SRCROOT)/submodules/libsf/src",
 				);
 				OTHER_CFLAGS = (
@@ -477,7 +497,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				EXECUTABLE_PREFIX = "";
 				HEADER_SEARCH_PATHS = (
-					"$(SRCROOT)/src",
+					"$(SRCROOT)/libstarjumper",
 					"$(SRCROOT)/submodules/libsf/src",
 				);
 				OTHER_CFLAGS = "";
@@ -489,7 +509,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				HEADER_SEARCH_PATHS = (
-					"$(SRCROOT)/src",
+					"$(SRCROOT)/libstarjumper",
 					"$(SRCROOT)/submodules/libsf/src",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -500,7 +520,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				HEADER_SEARCH_PATHS = (
-					"$(SRCROOT)/src",
+					"$(SRCROOT)/libstarjumper",
 					"$(SRCROOT)/submodules/libsf/src",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
