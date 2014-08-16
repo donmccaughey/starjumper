@@ -23,7 +23,7 @@
 		D474B8881789BD9E007C9259 /* voyager.c in Sources */ = {isa = PBXBuildFile; fileRef = D474B87B1789BD9E007C9259 /* voyager.c */; };
 		D474B8891789BD9E007C9259 /* voyager.h in Headers */ = {isa = PBXBuildFile; fileRef = D474B87C1789BD9E007C9259 /* voyager.h */; };
 		D474B8931789C29E007C9259 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = D474B8921789C29E007C9259 /* main.c */; };
-		D474B89E1789C34F007C9259 /* libvoyager.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D474B82B1789BB63007C9259 /* libvoyager.a */; };
+		D474B89E1789C34F007C9259 /* libstarjumper.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D474B82B1789BB63007C9259 /* libstarjumper.a */; };
 		D474B89F1789C34F007C9259 /* libsf.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D474B8681789BD92007C9259 /* libsf.a */; };
 		D47DB4AC199DCBE800D4643F /* vgr_memory.c in Sources */ = {isa = PBXBuildFile; fileRef = D47DB4AB199DCBE800D4643F /* vgr_memory.c */; };
 /* End PBXBuildFile section */
@@ -97,7 +97,7 @@
 		D433CF4A199DE37F001991AF /* vgr_string.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = vgr_string.h; sourceTree = "<group>"; };
 		D433CF4B199EB11F001991AF /* vgr_strarray.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = vgr_strarray.h; sourceTree = "<group>"; };
 		D433CF4C199EB145001991AF /* vgr_strarray.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vgr_strarray.c; sourceTree = "<group>"; };
-		D474B82B1789BB63007C9259 /* libvoyager.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libvoyager.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		D474B82B1789BB63007C9259 /* libstarjumper.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libstarjumper.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		D474B8601789BD91007C9259 /* libsf.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = libsf.xcodeproj; path = submodules/libsf/libsf.xcodeproj; sourceTree = "<group>"; };
 		D474B8701789BD9D007C9259 /* vgr_defs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vgr_defs.h; sourceTree = "<group>"; };
 		D474B8711789BD9D007C9259 /* vgr_dice_throw.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vgr_dice_throw.c; sourceTree = "<group>"; };
@@ -117,6 +117,7 @@
 		D474B8991789C2DB007C9259 /* worldgen.6 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = worldgen.6; sourceTree = "<group>"; };
 		D47DB4A7199DCB8800D4643F /* vgr_memory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = vgr_memory.h; sourceTree = "<group>"; };
 		D47DB4AB199DCBE800D4643F /* vgr_memory.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vgr_memory.c; sourceTree = "<group>"; };
+		D4AA1DB219A0112700F9F30E /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -131,7 +132,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D474B89E1789C34F007C9259 /* libvoyager.a in Frameworks */,
+				D474B89E1789C34F007C9259 /* libstarjumper.a in Frameworks */,
 				D474B89F1789C34F007C9259 /* libsf.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -142,6 +143,7 @@
 		D474B8221789BB63007C9259 = {
 			isa = PBXGroup;
 			children = (
+				D4AA1DB219A0112700F9F30E /* README.md */,
 				D474B85C1789BD61007C9259 /* src */,
 				D474B85D1789BD74007C9259 /* test */,
 				D474B85F1789BD80007C9259 /* submodules */,
@@ -153,7 +155,7 @@
 		D474B82C1789BB63007C9259 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				D474B82B1789BB63007C9259 /* libvoyager.a */,
+				D474B82B1789BB63007C9259 /* libstarjumper.a */,
 				D474B8901789C29E007C9259 /* worldgen */,
 			);
 			name = Products;
@@ -248,9 +250,9 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		D474B82A1789BB63007C9259 /* libvoyager */ = {
+		D474B82A1789BB63007C9259 /* libstarjumper */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = D474B82F1789BB63007C9259 /* Build configuration list for PBXNativeTarget "libvoyager" */;
+			buildConfigurationList = D474B82F1789BB63007C9259 /* Build configuration list for PBXNativeTarget "libstarjumper" */;
 			buildPhases = (
 				D474B8271789BB63007C9259 /* Sources */,
 				D474B8281789BB63007C9259 /* Frameworks */,
@@ -261,9 +263,9 @@
 			dependencies = (
 				D474B88B1789BDC2007C9259 /* PBXTargetDependency */,
 			);
-			name = libvoyager;
+			name = libstarjumper;
 			productName = Voyager;
-			productReference = D474B82B1789BB63007C9259 /* libvoyager.a */;
+			productReference = D474B82B1789BB63007C9259 /* libstarjumper.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 		D474B88F1789C29E007C9259 /* worldgen */ = {
@@ -291,10 +293,10 @@
 		D474B8231789BB63007C9259 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0510;
+				LastUpgradeCheck = 0600;
 				ORGANIZATIONNAME = "Don McCaughey";
 			};
-			buildConfigurationList = D474B8261789BB63007C9259 /* Build configuration list for PBXProject "Voyager" */;
+			buildConfigurationList = D474B8261789BB63007C9259 /* Build configuration list for PBXProject "Starjumper" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -312,7 +314,7 @@
 			);
 			projectRoot = "";
 			targets = (
-				D474B82A1789BB63007C9259 /* libvoyager */,
+				D474B82A1789BB63007C9259 /* libstarjumper */,
 				D474B88F1789C29E007C9259 /* worldgen */,
 			);
 		};
@@ -384,7 +386,7 @@
 		};
 		D474B89B1789C348007C9259 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = D474B82A1789BB63007C9259 /* libvoyager */;
+			target = D474B82A1789BB63007C9259 /* libstarjumper */;
 			targetProxy = D474B89A1789C348007C9259 /* PBXContainerItemProxy */;
 		};
 		D474B89D1789C348007C9259 /* PBXTargetDependency */ = {
@@ -455,6 +457,7 @@
 		D474B8301789BB63007C9259 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				EXECUTABLE_PREFIX = "";
 				HEADER_SEARCH_PATHS = (
 					"$(SRCROOT)/src",
@@ -471,6 +474,7 @@
 		D474B8311789BB63007C9259 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				EXECUTABLE_PREFIX = "";
 				HEADER_SEARCH_PATHS = (
 					"$(SRCROOT)/src",
@@ -506,7 +510,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		D474B8261789BB63007C9259 /* Build configuration list for PBXProject "Voyager" */ = {
+		D474B8261789BB63007C9259 /* Build configuration list for PBXProject "Starjumper" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				D474B82D1789BB63007C9259 /* Debug */,
@@ -515,7 +519,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		D474B82F1789BB63007C9259 /* Build configuration list for PBXNativeTarget "libvoyager" */ = {
+		D474B82F1789BB63007C9259 /* Build configuration list for PBXNativeTarget "libstarjumper" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				D474B8301789BB63007C9259 /* Debug */,
