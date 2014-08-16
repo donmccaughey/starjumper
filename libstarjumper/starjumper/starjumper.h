@@ -7,6 +7,7 @@
 #include <starjumper/sj_die_modifier.h>
 #include <starjumper/sj_hex_coordinate.h>
 #include <starjumper/sj_memory.h>
+#include <starjumper/sj_string_array.h>
 #include <starjumper/sj_world.h>
 
 

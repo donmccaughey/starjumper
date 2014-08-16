@@ -5,12 +5,12 @@
 #include <stddef.h>
 
 
-struct sj_strarray;
+struct sj_string_array;
 
 
 char *
-sj_string_alloc_join_strarray_with_suffix(struct sj_strarray const *strarray,
-                                          char const *suffix);
+sj_string_alloc_join_string_array_with_suffix(struct sj_string_array const *string_array,
+                                              char const *suffix);
 
 char *
 sj_string_alloc_join_strings_with_suffix(char const *const strings[],

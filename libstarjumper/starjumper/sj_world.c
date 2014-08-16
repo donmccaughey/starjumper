@@ -7,7 +7,7 @@
 #include "sj_die_modifier.h"
 #include "sj_hex_coordinate.h"
 #include "sj_memory.h"
-#include "sj_strarray.h"
+#include "sj_string_array.h"
 #include "sj_string.h"
 #include "sj_trade_classification.h"
 
@@ -252,33 +252,39 @@ string_from(sf_any_t self)
   int const max_classifications_length = 42;
   char const separator[] = ". ";
   
-  struct sj_strarray *classification_names = sj_strarray_alloc_collect_strings(world->trade_classifications,
-                                                                                 world->trade_classifications_count,
-                                                                                 sizeof world->trade_classifications[0],
-                                                                                 alloc_trade_classification_name);
-  char *classifications = sj_string_alloc_join_strarray_with_suffix(classification_names,
-                                                                     separator);
-  sj_strarray_free(classification_names);
+  struct sj_string_array *classification_names = sj_string_array_alloc_collect_strings(
+      world->trade_classifications,
+      world->trade_classifications_count,
+      sizeof world->trade_classifications[0],
+      alloc_trade_classification_name
+  );
+  char *classifications = sj_string_alloc_join_string_array_with_suffix(classification_names,
+                                                                        separator);
+  sj_string_array_free(classification_names);
   
   if (strlen(classifications) > max_classifications_length) {
     sj_free(classifications);
-    struct sj_strarray *classification_short_names = sj_strarray_alloc_collect_strings(world->trade_classifications,
-                                                                                         world->trade_classifications_count,
-                                                                                         sizeof world->trade_classifications[0],
-                                                                                         alloc_trade_classification_short_name);
-    classifications = sj_string_alloc_join_strarray_with_suffix(classification_short_names,
-                                                                 separator);
-    sj_strarray_free(classification_short_names);
+    struct sj_string_array *classification_short_names = sj_string_array_alloc_collect_strings(
+        world->trade_classifications,
+        world->trade_classifications_count,
+        sizeof world->trade_classifications[0],
+        alloc_trade_classification_short_name
+    );
+    classifications = sj_string_alloc_join_string_array_with_suffix(classification_short_names,
+                                                                    separator);
+    sj_string_array_free(classification_short_names);
     
     if (strlen(classifications) > max_classifications_length) {
       sj_free(classifications);
-      struct sj_strarray *classification_abbreviations = sj_strarray_alloc_collect_strings(world->trade_classifications,
-                                                                                             world->trade_classifications_count,
-                                                                                             sizeof world->trade_classifications[0],
-                                                                                             alloc_trade_classification_abbreviation);
-      classifications = sj_string_alloc_join_strarray_with_suffix(classification_abbreviations,
-                                                                   separator);
-      sj_strarray_free(classification_abbreviations);
+      struct sj_string_array *classification_abbreviations = sj_string_array_alloc_collect_strings(
+          world->trade_classifications,
+          world->trade_classifications_count,
+          sizeof world->trade_classifications[0],
+          alloc_trade_classification_abbreviation
+      );
+      classifications = sj_string_alloc_join_string_array_with_suffix(classification_abbreviations,
+                                                                      separator);
+      sj_string_array_free(classification_abbreviations);
     }
   }
   
