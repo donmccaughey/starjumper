@@ -9,7 +9,7 @@
 struct options
 {
   sf_string_t name;
-  struct vgr_hex_coordinate hex_coordinate;
+  struct sj_hex_coordinate hex_coordinate;
 };
 
 
@@ -27,27 +27,27 @@ static void
 initialize_options(struct options *options)
 {
   options->name = sf_string("No Name");
-  options->hex_coordinate = (struct vgr_hex_coordinate) { .horizontal=1, .vertical=1, };
+  options->hex_coordinate = (struct sj_hex_coordinate) { .horizontal=1, .vertical=1, };
 }
 
 
 int
 main(int argc, char **argv)
 {
-  vgr_init();
+  sj_init();
   
   struct options options;
   initialize_options(&options);
   parse_options(argc, argv, &options);
   
   sf_random_t random = sf_random_from_random_state();
-  vgr_world_t world = vgr_world(options.name, options.hex_coordinate, random, &random);
+  sj_world_t world = sj_world(options.name, options.hex_coordinate, random, &random);
   
   sf_string_t description = sf_string_from(world);
   fprintf(stdout, "%s\n", sf_string_chars(description));
   
-  vgr_fin();
-  vgr_memory_expect_alloc_count_zero();
+  sj_fin();
+  sj_memory_expect_alloc_count_zero();
   return EXIT_SUCCESS;
 }
 
@@ -94,7 +94,7 @@ parse_options(int argc, char **argv, struct options *options)
         break;
       case 'x':
         {
-          bool valid = vgr_hex_coordinate_from_string(optarg, &options->hex_coordinate);
+          bool valid = sj_hex_coordinate_from_string(optarg, &options->hex_coordinate);
           if ( ! valid) {
             fprintf(stderr, "ERROR: \"%s\" is not a valid hex coordinate\n", optarg);
             print_usage_and_exit(argc, argv);

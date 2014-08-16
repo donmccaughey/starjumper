@@ -1,7 +1,7 @@
-#include "vgr_dice_throw.h"
+#include "sj_dice_throw.h"
 
 #include <assert.h>
-#include "vgr_die_modifier.h"
+#include "sj_die_modifier.h"
 
 
 static void
@@ -14,7 +14,7 @@ static sf_string_t
 string_from(sf_any_t self);
 
 
-struct _vgr_dice_throw
+struct _sj_dice_throw
 {
   SF_OBJECT_FIELDS;
   int count;
@@ -24,20 +24,20 @@ struct _vgr_dice_throw
 };
 
 
-sf_type_t vgr_dice_throw_type;
+sf_type_t sj_dice_throw_type;
 
 
 void
-_vgr_dice_throw_init(void)
+_sj_dice_throw_init(void)
 {
-  vgr_dice_throw_type = sf_type("vgr_dice_throw_t", dealloc, string_from, NULL, NULL, NULL, NULL);
+  sj_dice_throw_type = sf_type("sj_dice_throw_t", dealloc, string_from, NULL, NULL, NULL, NULL);
 }
 
 
 static void
 dealloc(sf_any_t self)
 {
-  vgr_dice_throw_t dice_throw = self;
+  sj_dice_throw_t dice_throw = self;
   sf_release(dice_throw->die_modifiers);
   sf_release(dice_throw->die_rolls);
 }
@@ -54,7 +54,7 @@ get_die_roll_value_string(sf_any_t any, void *context)
 static sf_string_t 
 string_from(sf_any_t self)
 {
-  vgr_dice_throw_t dice_throw = self;
+  sj_dice_throw_t dice_throw = self;
   
   sf_string_t dice = sf_string_from_format("%iD%i", dice_throw->count, dice_throw->sides);
   sf_list_t parts = sf_list(dice, NULL);
@@ -77,18 +77,18 @@ string_from(sf_any_t self)
 }
 
 
-vgr_dice_throw_t
-vgr_dice_throw(int count,
-               int sides,
-               sf_list_t die_modifiers,
-               sf_random_t random_in,
-               sf_random_t *random_out)
+sj_dice_throw_t
+sj_dice_throw(int count,
+              int sides,
+              sf_list_t die_modifiers,
+              sf_random_t random_in,
+              sf_random_t *random_out)
 {
   assert(count > 0);
   assert(sides > 1);
   assert(random_out);
   
-  struct _vgr_dice_throw *dice_throw = sf_object_calloc(sizeof(struct _vgr_dice_throw), vgr_dice_throw_type);
+  struct _sj_dice_throw *dice_throw = sf_object_calloc(sizeof(struct _sj_dice_throw), sj_dice_throw_type);
   if ( ! dice_throw) return NULL;
   
   dice_throw->count = count;
@@ -110,28 +110,28 @@ vgr_dice_throw(int count,
 
 
 int
-vgr_dice_throw_count(vgr_dice_throw_t dice_throw)
+sj_dice_throw_count(sj_dice_throw_t dice_throw)
 {
   return dice_throw ? dice_throw->count : 0;
 }
 
 
 sf_list_t 
-vgr_dice_throw_modifiers(vgr_dice_throw_t dice_throw)
+sj_dice_throw_modifiers(sj_dice_throw_t dice_throw)
 {
   return dice_throw ? dice_throw->die_modifiers : NULL;
 }
 
 
 int
-vgr_dice_throw_sides(vgr_dice_throw_t dice_throw)
+sj_dice_throw_sides(sj_dice_throw_t dice_throw)
 {
   return dice_throw ? dice_throw->sides : 0;
 }
 
 
 int
-vgr_dice_throw_total(vgr_dice_throw_t dice_throw)
+sj_dice_throw_total(sj_dice_throw_t dice_throw)
 {
   if ( ! dice_throw) return 0;
   
@@ -145,7 +145,7 @@ vgr_dice_throw_total(vgr_dice_throw_t dice_throw)
   
   sf_list_t die_modifiers = dice_throw->die_modifiers;
   while (die_modifiers) {
-    total += vgr_die_modifier_value(sf_list_head(die_modifiers));
+    total += sj_die_modifier_value(sf_list_head(die_modifiers));
     die_modifiers = sf_list_tail(die_modifiers);
   }
   

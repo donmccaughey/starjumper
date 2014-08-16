@@ -2,19 +2,19 @@
 #define STARJUMPER_STARJUMPER_H_INCLUDED
 
 
-#include <starjumper/vgr_defs.h>
-#include <starjumper/vgr_dice_throw.h>
-#include <starjumper/vgr_die_modifier.h>
-#include <starjumper/vgr_hex_coordinate.h>
-#include <starjumper/vgr_memory.h>
-#include <starjumper/vgr_world.h>
+#include <starjumper/sj_defs.h>
+#include <starjumper/sj_dice_throw.h>
+#include <starjumper/sj_die_modifier.h>
+#include <starjumper/sj_hex_coordinate.h>
+#include <starjumper/sj_memory.h>
+#include <starjumper/sj_world.h>
 
 
 void
-vgr_init(void);
+sj_init(void);
 
 void
-vgr_fin(void);
+sj_fin(void);
 
 
 #endif

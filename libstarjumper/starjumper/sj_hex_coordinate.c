@@ -1,15 +1,15 @@
-#include "vgr_hex_coordinate.h"
+#include "sj_hex_coordinate.h"
 
 #include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
-#include "vgr_memory.h"
+#include "sj_memory.h"
 
 
 bool
-vgr_hex_coordinate_from_string(char const *string, struct vgr_hex_coordinate *hex_coordinate)
+sj_hex_coordinate_from_string(char const *string, struct sj_hex_coordinate *hex_coordinate)
 {
   if (4 != strlen(string)) return false;
   
@@ -34,9 +34,9 @@ vgr_hex_coordinate_from_string(char const *string, struct vgr_hex_coordinate *he
 
 
 char *
-vgr_string_alloc_from_hex_coordinate(struct vgr_hex_coordinate const hex_coordinate)
+sj_string_alloc_from_hex_coordinate(struct sj_hex_coordinate const hex_coordinate)
 {
   char *string;
-  vgr_asprintf(&string, "%02i%02i", hex_coordinate.horizontal, hex_coordinate.vertical);
+  sj_asprintf(&string, "%02i%02i", hex_coordinate.horizontal, hex_coordinate.vertical);
   return string;
 }

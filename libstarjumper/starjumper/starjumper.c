@@ -2,27 +2,27 @@
 
 
 void
-_vgr_dice_throw_init(void);
+_sj_dice_throw_init(void);
 
 void
-_vgr_die_modifier_init(void);
+_sj_die_modifier_init(void);
 
 void
-_vgr_world_init(void);
+_sj_world_init(void);
 
 
 void
-vgr_init(void)
+sj_init(void)
 {
   sf_init();
-  _vgr_dice_throw_init();
-  _vgr_die_modifier_init();
-  _vgr_world_init();
+  _sj_dice_throw_init();
+  _sj_die_modifier_init();
+  _sj_world_init();
 }
 
 
 void
-vgr_fin(void)
+sj_fin(void)
 {
   sf_fin();
 }

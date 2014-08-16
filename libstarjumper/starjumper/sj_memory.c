@@ -1,4 +1,4 @@
-#include "vgr_memory.h"
+#include "sj_memory.h"
 
 #include <errno.h>
 #include <stdio.h>
@@ -41,7 +41,7 @@ fail_and_exit(void)
 
 
 void *
-vgr_calloc(size_t count, size_t size)
+sj_calloc(size_t count, size_t size)
 {
   void *memory = calloc(count, size);
   if ( ! memory) fail_and_exit();
@@ -51,7 +51,7 @@ vgr_calloc(size_t count, size_t size)
 
 
 void *
-vgr_malloc(size_t size)
+sj_malloc(size_t size)
 {
   void *memory = malloc(size);
   if ( ! memory) fail_and_exit();
@@ -61,16 +61,16 @@ vgr_malloc(size_t size)
 
 
 void *
-vgr_memdup(void const *memory, size_t size)
+sj_memdup(void const *memory, size_t size)
 {
-  void *dupe = vgr_malloc(size);
+  void *dupe = sj_malloc(size);
   memcpy(dupe, memory, size);
   return dupe;
 }
 
 
 void *
-vgr_realloc(void *memory, size_t size)
+sj_realloc(void *memory, size_t size)
 {
   void *new_memory = realloc(memory, size);
   if ( ! new_memory) fail_and_exit();
@@ -80,7 +80,7 @@ vgr_realloc(void *memory, size_t size)
 
 
 char *
-vgr_strdup(char const *string)
+sj_strdup(char const *string)
 {
   char *dupe = strdup(string);
   if ( ! dupe) fail_and_exit();
@@ -91,18 +91,18 @@ vgr_strdup(char const *string)
 
 
 int
-vgr_asprintf(char **string, char const *format, ...)
+sj_asprintf(char **string, char const *format, ...)
 {
   va_list arguments;
   va_start(arguments, format);
-  int result = vgr_vasprintf(string, format, arguments);
+  int result = sj_vasprintf(string, format, arguments);
   va_end(arguments);
   return result;
 }
 
 
 int
-vgr_vasprintf(char **string, const char *format, va_list arguments)
+sj_vasprintf(char **string, const char *format, va_list arguments)
 {
   int result = vasprintf(string, format, arguments);
   if (-1 == result) fail_and_exit();
@@ -112,7 +112,7 @@ vgr_vasprintf(char **string, const char *format, va_list arguments)
 
 
 void
-vgr_free(void *memory)
+sj_free(void *memory)
 {
   free(memory);
   DECREMENT_ALLOC_COUNT();
@@ -120,7 +120,7 @@ vgr_free(void *memory)
 
 
 void
-vgr_memory_expect_alloc_count_zero(void)
+sj_memory_expect_alloc_count_zero(void)
 {
   EXPECT_ALLOC_COUNT_ZERO();
 }
