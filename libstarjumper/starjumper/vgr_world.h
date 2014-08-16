@@ -1,8 +1,8 @@
-#ifndef VOYAGER_VGR_WORLD_H_INCLUDED
-#define VOYAGER_VGR_WORLD_H_INCLUDED
+#ifndef STARJUMPER_VGR_WORLD_H_INCLUDED
+#define STARJUMPER_VGR_WORLD_H_INCLUDED
 
 
-#include <voyager/vgr_defs.h>
+#include <starjumper/vgr_defs.h>
 
 
 struct vgr_hex_coordinate;

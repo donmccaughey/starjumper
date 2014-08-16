@@ -10,25 +10,25 @@
 		D474B8931789C29E007C9259 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = D474B8921789C29E007C9259 /* main.c */; };
 		D474B89E1789C34F007C9259 /* libstarjumper.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D474B82B1789BB63007C9259 /* libstarjumper.a */; };
 		D474B89F1789C34F007C9259 /* libsf.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D474B8681789BD92007C9259 /* libsf.a */; };
-		D4AA1DCF19A012C000F9F30E /* vgr_defs.h in Headers */ = {isa = PBXBuildFile; fileRef = D4AA1DB919A012C000F9F30E /* vgr_defs.h */; };
-		D4AA1DD019A012C000F9F30E /* vgr_dice_throw.c in Sources */ = {isa = PBXBuildFile; fileRef = D4AA1DBA19A012C000F9F30E /* vgr_dice_throw.c */; };
-		D4AA1DD119A012C000F9F30E /* vgr_dice_throw.h in Headers */ = {isa = PBXBuildFile; fileRef = D4AA1DBB19A012C000F9F30E /* vgr_dice_throw.h */; };
-		D4AA1DD219A012C000F9F30E /* vgr_die_modifier.c in Sources */ = {isa = PBXBuildFile; fileRef = D4AA1DBC19A012C000F9F30E /* vgr_die_modifier.c */; };
-		D4AA1DD319A012C000F9F30E /* vgr_die_modifier.h in Headers */ = {isa = PBXBuildFile; fileRef = D4AA1DBD19A012C000F9F30E /* vgr_die_modifier.h */; };
-		D4AA1DD419A012C000F9F30E /* vgr_hex_coordinate.c in Sources */ = {isa = PBXBuildFile; fileRef = D4AA1DBE19A012C000F9F30E /* vgr_hex_coordinate.c */; };
-		D4AA1DD519A012C000F9F30E /* vgr_hex_coordinate.h in Headers */ = {isa = PBXBuildFile; fileRef = D4AA1DBF19A012C000F9F30E /* vgr_hex_coordinate.h */; };
-		D4AA1DD619A012C000F9F30E /* vgr_memory.c in Sources */ = {isa = PBXBuildFile; fileRef = D4AA1DC019A012C000F9F30E /* vgr_memory.c */; };
-		D4AA1DD719A012C000F9F30E /* vgr_memory.h in Headers */ = {isa = PBXBuildFile; fileRef = D4AA1DC119A012C000F9F30E /* vgr_memory.h */; };
-		D4AA1DD819A012C000F9F30E /* vgr_strarray.c in Sources */ = {isa = PBXBuildFile; fileRef = D4AA1DC219A012C000F9F30E /* vgr_strarray.c */; };
-		D4AA1DD919A012C000F9F30E /* vgr_strarray.h in Headers */ = {isa = PBXBuildFile; fileRef = D4AA1DC319A012C000F9F30E /* vgr_strarray.h */; };
-		D4AA1DDA19A012C000F9F30E /* vgr_string.c in Sources */ = {isa = PBXBuildFile; fileRef = D4AA1DC419A012C000F9F30E /* vgr_string.c */; };
-		D4AA1DDB19A012C000F9F30E /* vgr_string.h in Headers */ = {isa = PBXBuildFile; fileRef = D4AA1DC519A012C000F9F30E /* vgr_string.h */; };
-		D4AA1DDC19A012C000F9F30E /* vgr_trade_classification.c in Sources */ = {isa = PBXBuildFile; fileRef = D4AA1DC619A012C000F9F30E /* vgr_trade_classification.c */; };
-		D4AA1DDD19A012C000F9F30E /* vgr_trade_classification.h in Headers */ = {isa = PBXBuildFile; fileRef = D4AA1DC719A012C000F9F30E /* vgr_trade_classification.h */; };
-		D4AA1DDE19A012C000F9F30E /* vgr_world.c in Sources */ = {isa = PBXBuildFile; fileRef = D4AA1DC819A012C000F9F30E /* vgr_world.c */; };
-		D4AA1DDF19A012C000F9F30E /* vgr_world.h in Headers */ = {isa = PBXBuildFile; fileRef = D4AA1DC919A012C000F9F30E /* vgr_world.h */; };
-		D4AA1DE019A012C000F9F30E /* voyager.c in Sources */ = {isa = PBXBuildFile; fileRef = D4AA1DCA19A012C000F9F30E /* voyager.c */; };
-		D4AA1DE119A012C000F9F30E /* voyager.h in Headers */ = {isa = PBXBuildFile; fileRef = D4AA1DCB19A012C000F9F30E /* voyager.h */; };
+		D4E2EC0E19A014CD00483573 /* vgr_defs.h in Headers */ = {isa = PBXBuildFile; fileRef = D4E2EBFB19A014CD00483573 /* vgr_defs.h */; };
+		D4E2EC0F19A014CD00483573 /* vgr_dice_throw.c in Sources */ = {isa = PBXBuildFile; fileRef = D4E2EBFC19A014CD00483573 /* vgr_dice_throw.c */; };
+		D4E2EC1019A014CD00483573 /* vgr_dice_throw.h in Headers */ = {isa = PBXBuildFile; fileRef = D4E2EBFD19A014CD00483573 /* vgr_dice_throw.h */; };
+		D4E2EC1119A014CD00483573 /* vgr_die_modifier.c in Sources */ = {isa = PBXBuildFile; fileRef = D4E2EBFE19A014CD00483573 /* vgr_die_modifier.c */; };
+		D4E2EC1219A014CD00483573 /* vgr_die_modifier.h in Headers */ = {isa = PBXBuildFile; fileRef = D4E2EBFF19A014CD00483573 /* vgr_die_modifier.h */; };
+		D4E2EC1319A014CD00483573 /* vgr_hex_coordinate.c in Sources */ = {isa = PBXBuildFile; fileRef = D4E2EC0019A014CD00483573 /* vgr_hex_coordinate.c */; };
+		D4E2EC1419A014CD00483573 /* vgr_hex_coordinate.h in Headers */ = {isa = PBXBuildFile; fileRef = D4E2EC0119A014CD00483573 /* vgr_hex_coordinate.h */; };
+		D4E2EC1519A014CD00483573 /* vgr_memory.c in Sources */ = {isa = PBXBuildFile; fileRef = D4E2EC0219A014CD00483573 /* vgr_memory.c */; };
+		D4E2EC1619A014CD00483573 /* vgr_memory.h in Headers */ = {isa = PBXBuildFile; fileRef = D4E2EC0319A014CD00483573 /* vgr_memory.h */; };
+		D4E2EC1719A014CD00483573 /* vgr_strarray.c in Sources */ = {isa = PBXBuildFile; fileRef = D4E2EC0419A014CD00483573 /* vgr_strarray.c */; };
+		D4E2EC1819A014CD00483573 /* vgr_strarray.h in Headers */ = {isa = PBXBuildFile; fileRef = D4E2EC0519A014CD00483573 /* vgr_strarray.h */; };
+		D4E2EC1919A014CD00483573 /* vgr_string.c in Sources */ = {isa = PBXBuildFile; fileRef = D4E2EC0619A014CD00483573 /* vgr_string.c */; };
+		D4E2EC1A19A014CD00483573 /* vgr_string.h in Headers */ = {isa = PBXBuildFile; fileRef = D4E2EC0719A014CD00483573 /* vgr_string.h */; };
+		D4E2EC1B19A014CD00483573 /* vgr_trade_classification.c in Sources */ = {isa = PBXBuildFile; fileRef = D4E2EC0819A014CD00483573 /* vgr_trade_classification.c */; };
+		D4E2EC1C19A014CD00483573 /* vgr_trade_classification.h in Headers */ = {isa = PBXBuildFile; fileRef = D4E2EC0919A014CD00483573 /* vgr_trade_classification.h */; };
+		D4E2EC1D19A014CD00483573 /* vgr_world.c in Sources */ = {isa = PBXBuildFile; fileRef = D4E2EC0A19A014CD00483573 /* vgr_world.c */; };
+		D4E2EC1E19A014CD00483573 /* vgr_world.h in Headers */ = {isa = PBXBuildFile; fileRef = D4E2EC0B19A014CD00483573 /* vgr_world.h */; };
+		D4E2EC1F19A014CD00483573 /* starjumper.c in Sources */ = {isa = PBXBuildFile; fileRef = D4E2EC0C19A014CD00483573 /* starjumper.c */; };
+		D4E2EC2019A014CD00483573 /* starjumper.h in Headers */ = {isa = PBXBuildFile; fileRef = D4E2EC0D19A014CD00483573 /* starjumper.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -102,25 +102,25 @@
 		D474B8921789C29E007C9259 /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
 		D474B8991789C2DB007C9259 /* worldgen.6 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = worldgen.6; sourceTree = "<group>"; };
 		D4AA1DB219A0112700F9F30E /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
-		D4AA1DB919A012C000F9F30E /* vgr_defs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vgr_defs.h; sourceTree = "<group>"; };
-		D4AA1DBA19A012C000F9F30E /* vgr_dice_throw.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vgr_dice_throw.c; sourceTree = "<group>"; };
-		D4AA1DBB19A012C000F9F30E /* vgr_dice_throw.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vgr_dice_throw.h; sourceTree = "<group>"; };
-		D4AA1DBC19A012C000F9F30E /* vgr_die_modifier.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vgr_die_modifier.c; sourceTree = "<group>"; };
-		D4AA1DBD19A012C000F9F30E /* vgr_die_modifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vgr_die_modifier.h; sourceTree = "<group>"; };
-		D4AA1DBE19A012C000F9F30E /* vgr_hex_coordinate.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vgr_hex_coordinate.c; sourceTree = "<group>"; };
-		D4AA1DBF19A012C000F9F30E /* vgr_hex_coordinate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vgr_hex_coordinate.h; sourceTree = "<group>"; };
-		D4AA1DC019A012C000F9F30E /* vgr_memory.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vgr_memory.c; sourceTree = "<group>"; };
-		D4AA1DC119A012C000F9F30E /* vgr_memory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vgr_memory.h; sourceTree = "<group>"; };
-		D4AA1DC219A012C000F9F30E /* vgr_strarray.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vgr_strarray.c; sourceTree = "<group>"; };
-		D4AA1DC319A012C000F9F30E /* vgr_strarray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vgr_strarray.h; sourceTree = "<group>"; };
-		D4AA1DC419A012C000F9F30E /* vgr_string.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vgr_string.c; sourceTree = "<group>"; };
-		D4AA1DC519A012C000F9F30E /* vgr_string.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vgr_string.h; sourceTree = "<group>"; };
-		D4AA1DC619A012C000F9F30E /* vgr_trade_classification.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vgr_trade_classification.c; sourceTree = "<group>"; };
-		D4AA1DC719A012C000F9F30E /* vgr_trade_classification.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vgr_trade_classification.h; sourceTree = "<group>"; };
-		D4AA1DC819A012C000F9F30E /* vgr_world.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vgr_world.c; sourceTree = "<group>"; };
-		D4AA1DC919A012C000F9F30E /* vgr_world.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vgr_world.h; sourceTree = "<group>"; };
-		D4AA1DCA19A012C000F9F30E /* voyager.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = voyager.c; sourceTree = "<group>"; };
-		D4AA1DCB19A012C000F9F30E /* voyager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = voyager.h; sourceTree = "<group>"; };
+		D4E2EBFB19A014CD00483573 /* vgr_defs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vgr_defs.h; sourceTree = "<group>"; };
+		D4E2EBFC19A014CD00483573 /* vgr_dice_throw.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vgr_dice_throw.c; sourceTree = "<group>"; };
+		D4E2EBFD19A014CD00483573 /* vgr_dice_throw.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vgr_dice_throw.h; sourceTree = "<group>"; };
+		D4E2EBFE19A014CD00483573 /* vgr_die_modifier.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vgr_die_modifier.c; sourceTree = "<group>"; };
+		D4E2EBFF19A014CD00483573 /* vgr_die_modifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vgr_die_modifier.h; sourceTree = "<group>"; };
+		D4E2EC0019A014CD00483573 /* vgr_hex_coordinate.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vgr_hex_coordinate.c; sourceTree = "<group>"; };
+		D4E2EC0119A014CD00483573 /* vgr_hex_coordinate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vgr_hex_coordinate.h; sourceTree = "<group>"; };
+		D4E2EC0219A014CD00483573 /* vgr_memory.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vgr_memory.c; sourceTree = "<group>"; };
+		D4E2EC0319A014CD00483573 /* vgr_memory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vgr_memory.h; sourceTree = "<group>"; };
+		D4E2EC0419A014CD00483573 /* vgr_strarray.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vgr_strarray.c; sourceTree = "<group>"; };
+		D4E2EC0519A014CD00483573 /* vgr_strarray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vgr_strarray.h; sourceTree = "<group>"; };
+		D4E2EC0619A014CD00483573 /* vgr_string.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vgr_string.c; sourceTree = "<group>"; };
+		D4E2EC0719A014CD00483573 /* vgr_string.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vgr_string.h; sourceTree = "<group>"; };
+		D4E2EC0819A014CD00483573 /* vgr_trade_classification.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vgr_trade_classification.c; sourceTree = "<group>"; };
+		D4E2EC0919A014CD00483573 /* vgr_trade_classification.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vgr_trade_classification.h; sourceTree = "<group>"; };
+		D4E2EC0A19A014CD00483573 /* vgr_world.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vgr_world.c; sourceTree = "<group>"; };
+		D4E2EC0B19A014CD00483573 /* vgr_world.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vgr_world.h; sourceTree = "<group>"; };
+		D4E2EC0C19A014CD00483573 /* starjumper.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = starjumper.c; sourceTree = "<group>"; };
+		D4E2EC0D19A014CD00483573 /* starjumper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = starjumper.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -202,35 +202,35 @@
 		D4AA1DB719A012C000F9F30E /* libstarjumper */ = {
 			isa = PBXGroup;
 			children = (
-				D4AA1DB819A012C000F9F30E /* voyager */,
+				D4E2EBFA19A014CD00483573 /* starjumper */,
 			);
 			path = libstarjumper;
 			sourceTree = "<group>";
 		};
-		D4AA1DB819A012C000F9F30E /* voyager */ = {
+		D4E2EBFA19A014CD00483573 /* starjumper */ = {
 			isa = PBXGroup;
 			children = (
-				D4AA1DB919A012C000F9F30E /* vgr_defs.h */,
-				D4AA1DBA19A012C000F9F30E /* vgr_dice_throw.c */,
-				D4AA1DBB19A012C000F9F30E /* vgr_dice_throw.h */,
-				D4AA1DBC19A012C000F9F30E /* vgr_die_modifier.c */,
-				D4AA1DBD19A012C000F9F30E /* vgr_die_modifier.h */,
-				D4AA1DBE19A012C000F9F30E /* vgr_hex_coordinate.c */,
-				D4AA1DBF19A012C000F9F30E /* vgr_hex_coordinate.h */,
-				D4AA1DC019A012C000F9F30E /* vgr_memory.c */,
-				D4AA1DC119A012C000F9F30E /* vgr_memory.h */,
-				D4AA1DC219A012C000F9F30E /* vgr_strarray.c */,
-				D4AA1DC319A012C000F9F30E /* vgr_strarray.h */,
-				D4AA1DC419A012C000F9F30E /* vgr_string.c */,
-				D4AA1DC519A012C000F9F30E /* vgr_string.h */,
-				D4AA1DC619A012C000F9F30E /* vgr_trade_classification.c */,
-				D4AA1DC719A012C000F9F30E /* vgr_trade_classification.h */,
-				D4AA1DC819A012C000F9F30E /* vgr_world.c */,
-				D4AA1DC919A012C000F9F30E /* vgr_world.h */,
-				D4AA1DCA19A012C000F9F30E /* voyager.c */,
-				D4AA1DCB19A012C000F9F30E /* voyager.h */,
+				D4E2EBFB19A014CD00483573 /* vgr_defs.h */,
+				D4E2EBFC19A014CD00483573 /* vgr_dice_throw.c */,
+				D4E2EBFD19A014CD00483573 /* vgr_dice_throw.h */,
+				D4E2EBFE19A014CD00483573 /* vgr_die_modifier.c */,
+				D4E2EBFF19A014CD00483573 /* vgr_die_modifier.h */,
+				D4E2EC0019A014CD00483573 /* vgr_hex_coordinate.c */,
+				D4E2EC0119A014CD00483573 /* vgr_hex_coordinate.h */,
+				D4E2EC0219A014CD00483573 /* vgr_memory.c */,
+				D4E2EC0319A014CD00483573 /* vgr_memory.h */,
+				D4E2EC0419A014CD00483573 /* vgr_strarray.c */,
+				D4E2EC0519A014CD00483573 /* vgr_strarray.h */,
+				D4E2EC0619A014CD00483573 /* vgr_string.c */,
+				D4E2EC0719A014CD00483573 /* vgr_string.h */,
+				D4E2EC0819A014CD00483573 /* vgr_trade_classification.c */,
+				D4E2EC0919A014CD00483573 /* vgr_trade_classification.h */,
+				D4E2EC0A19A014CD00483573 /* vgr_world.c */,
+				D4E2EC0B19A014CD00483573 /* vgr_world.h */,
+				D4E2EC0C19A014CD00483573 /* starjumper.c */,
+				D4E2EC0D19A014CD00483573 /* starjumper.h */,
 			);
-			path = voyager;
+			path = starjumper;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -240,16 +240,16 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D4AA1DD119A012C000F9F30E /* vgr_dice_throw.h in Headers */,
-				D4AA1DD719A012C000F9F30E /* vgr_memory.h in Headers */,
-				D4AA1DCF19A012C000F9F30E /* vgr_defs.h in Headers */,
-				D4AA1DDD19A012C000F9F30E /* vgr_trade_classification.h in Headers */,
-				D4AA1DDF19A012C000F9F30E /* vgr_world.h in Headers */,
-				D4AA1DD919A012C000F9F30E /* vgr_strarray.h in Headers */,
-				D4AA1DDB19A012C000F9F30E /* vgr_string.h in Headers */,
-				D4AA1DD319A012C000F9F30E /* vgr_die_modifier.h in Headers */,
-				D4AA1DE119A012C000F9F30E /* voyager.h in Headers */,
-				D4AA1DD519A012C000F9F30E /* vgr_hex_coordinate.h in Headers */,
+				D4E2EC1419A014CD00483573 /* vgr_hex_coordinate.h in Headers */,
+				D4E2EC1C19A014CD00483573 /* vgr_trade_classification.h in Headers */,
+				D4E2EC1619A014CD00483573 /* vgr_memory.h in Headers */,
+				D4E2EC1A19A014CD00483573 /* vgr_string.h in Headers */,
+				D4E2EC1E19A014CD00483573 /* vgr_world.h in Headers */,
+				D4E2EC1019A014CD00483573 /* vgr_dice_throw.h in Headers */,
+				D4E2EC2019A014CD00483573 /* starjumper.h in Headers */,
+				D4E2EC0E19A014CD00483573 /* vgr_defs.h in Headers */,
+				D4E2EC1819A014CD00483573 /* vgr_strarray.h in Headers */,
+				D4E2EC1219A014CD00483573 /* vgr_die_modifier.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -362,15 +362,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D4AA1DD619A012C000F9F30E /* vgr_memory.c in Sources */,
-				D4AA1DDC19A012C000F9F30E /* vgr_trade_classification.c in Sources */,
-				D4AA1DD419A012C000F9F30E /* vgr_hex_coordinate.c in Sources */,
-				D4AA1DDA19A012C000F9F30E /* vgr_string.c in Sources */,
-				D4AA1DD819A012C000F9F30E /* vgr_strarray.c in Sources */,
-				D4AA1DD019A012C000F9F30E /* vgr_dice_throw.c in Sources */,
-				D4AA1DDE19A012C000F9F30E /* vgr_world.c in Sources */,
-				D4AA1DE019A012C000F9F30E /* voyager.c in Sources */,
-				D4AA1DD219A012C000F9F30E /* vgr_die_modifier.c in Sources */,
+				D4E2EC1519A014CD00483573 /* vgr_memory.c in Sources */,
+				D4E2EC1319A014CD00483573 /* vgr_hex_coordinate.c in Sources */,
+				D4E2EC1D19A014CD00483573 /* vgr_world.c in Sources */,
+				D4E2EC0F19A014CD00483573 /* vgr_dice_throw.c in Sources */,
+				D4E2EC1119A014CD00483573 /* vgr_die_modifier.c in Sources */,
+				D4E2EC1919A014CD00483573 /* vgr_string.c in Sources */,
+				D4E2EC1F19A014CD00483573 /* starjumper.c in Sources */,
+				D4E2EC1B19A014CD00483573 /* vgr_trade_classification.c in Sources */,
+				D4E2EC1719A014CD00483573 /* vgr_strarray.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

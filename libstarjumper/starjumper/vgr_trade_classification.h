@@ -1,8 +1,8 @@
-#ifndef VOYAGER_VGR_TRADE_CLASSIFICATION_H_INCLUDED
-#define VOYAGER_VGR_TRADE_CLASSIFICATION_H_INCLUDED
+#ifndef STARJUMPER_VGR_TRADE_CLASSIFICATION_H_INCLUDED
+#define STARJUMPER_VGR_TRADE_CLASSIFICATION_H_INCLUDED
 
 
-#include <voyager/vgr_defs.h>
+#include <starjumper/vgr_defs.h>
 
 
 struct vgr_trade_classification

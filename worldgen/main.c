@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <sf/sf.h>
-#include <voyager/voyager.h>
+#include <starjumper/starjumper.h>
 
 
 struct options
