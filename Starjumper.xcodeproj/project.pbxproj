@@ -29,7 +29,6 @@
 		D4AA1DDF19A012C000F9F30E /* vgr_world.h in Headers */ = {isa = PBXBuildFile; fileRef = D4AA1DC919A012C000F9F30E /* vgr_world.h */; };
 		D4AA1DE019A012C000F9F30E /* voyager.c in Sources */ = {isa = PBXBuildFile; fileRef = D4AA1DCA19A012C000F9F30E /* voyager.c */; };
 		D4AA1DE119A012C000F9F30E /* voyager.h in Headers */ = {isa = PBXBuildFile; fileRef = D4AA1DCB19A012C000F9F30E /* voyager.h */; };
-		D4AA1DE219A012C000F9F30E /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = D4AA1DCD19A012C000F9F30E /* main.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -122,8 +121,6 @@
 		D4AA1DC919A012C000F9F30E /* vgr_world.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vgr_world.h; sourceTree = "<group>"; };
 		D4AA1DCA19A012C000F9F30E /* voyager.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = voyager.c; sourceTree = "<group>"; };
 		D4AA1DCB19A012C000F9F30E /* voyager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = voyager.h; sourceTree = "<group>"; };
-		D4AA1DCD19A012C000F9F30E /* main.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
-		D4AA1DCE19A012C000F9F30E /* worldgen.6 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = worldgen.6; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -206,7 +203,6 @@
 			isa = PBXGroup;
 			children = (
 				D4AA1DB819A012C000F9F30E /* voyager */,
-				D4AA1DCC19A012C000F9F30E /* worldgen */,
 			);
 			path = libstarjumper;
 			sourceTree = "<group>";
@@ -235,15 +231,6 @@
 				D4AA1DCB19A012C000F9F30E /* voyager.h */,
 			);
 			path = voyager;
-			sourceTree = "<group>";
-		};
-		D4AA1DCC19A012C000F9F30E /* worldgen */ = {
-			isa = PBXGroup;
-			children = (
-				D4AA1DCD19A012C000F9F30E /* main.c */,
-				D4AA1DCE19A012C000F9F30E /* worldgen.6 */,
-			);
-			path = worldgen;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -376,7 +363,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				D4AA1DD619A012C000F9F30E /* vgr_memory.c in Sources */,
-				D4AA1DE219A012C000F9F30E /* main.c in Sources */,
 				D4AA1DDC19A012C000F9F30E /* vgr_trade_classification.c in Sources */,
 				D4AA1DD419A012C000F9F30E /* vgr_hex_coordinate.c in Sources */,
 				D4AA1DDA19A012C000F9F30E /* vgr_string.c in Sources */,
