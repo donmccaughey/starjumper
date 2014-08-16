@@ -146,8 +146,8 @@
 		D474B8221789BB63007C9259 = {
 			isa = PBXGroup;
 			children = (
-				D4AA1DB719A012C000F9F30E /* libstarjumper */,
 				D4AA1DB219A0112700F9F30E /* README.md */,
+				D4AA1DB719A012C000F9F30E /* libstarjumper */,
 				D474B85D1789BD74007C9259 /* test */,
 				D474B85F1789BD80007C9259 /* submodules */,
 				D474B8911789C29E007C9259 /* worldgen */,
