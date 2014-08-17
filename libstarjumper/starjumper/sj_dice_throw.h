@@ -9,23 +9,29 @@ struct sj_die_modifier_array;
 struct sj_random;
 
 
-extern sf_type_t sj_dice_throw_type;
+struct sj_dice_throw
+{
+  int count;
+  int sides;
+  struct sj_die_modifier_array *die_modifier_array;
+  int *die_rolls;
+};
 
 
-sj_dice_throw_t
-sj_dice_throw(int count,
-              int sides,
-              struct sj_die_modifier_array *die_modifier_array,
-              struct sj_random *random);
+struct sj_dice_throw *
+sj_dice_throw_alloc(int count,
+                    int sides,
+                    struct sj_die_modifier_array *die_modifier_array,
+                    struct sj_random *random);
+
+void
+sj_dice_throw_free(struct sj_dice_throw *dice_throw);
 
 int
-sj_dice_throw_count(sj_dice_throw_t dice_throw);
+sj_dice_throw_total(struct sj_dice_throw *dice_throw);
 
-int
-sj_dice_throw_sides(sj_dice_throw_t dice_throw);
-
-int
-sj_dice_throw_total(sj_dice_throw_t dice_throw);
+char *
+sj_string_alloc_from_dice_throw(struct sj_dice_throw const *dice_throw);
 
 
 #endif

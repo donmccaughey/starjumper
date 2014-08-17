@@ -9,7 +9,7 @@ struct sj_die_modifier
 
 
 char *
-sj_string_alloc_from_die_modifier(struct sj_die_modifier const die_modifier);
+sj_string_alloc_from_die_modifier(struct sj_die_modifier die_modifier);
 
 
 #endif

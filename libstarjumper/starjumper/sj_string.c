@@ -6,6 +6,17 @@
 #include "sj_string_array.h"
 
 
+char *
+sj_string_alloc_join_string_array_with_separator(struct sj_string_array const *string_array,
+                                                 char const *separator)
+{
+  return sj_string_alloc_join_strings_with_separator(
+      (char const *const *) string_array->elements,
+      string_array->count,
+      separator
+  );
+}
+
 
 char *
 sj_string_alloc_join_string_array_with_suffix(struct sj_string_array const *string_array,
@@ -16,6 +27,27 @@ sj_string_alloc_join_string_array_with_suffix(struct sj_string_array const *stri
       string_array->count,
       suffix
   );
+}
+
+
+char *
+sj_string_alloc_join_strings_with_separator(char const *const strings[],
+                                            int count,
+                                            char const *separator)
+{
+  size_t size = 1;
+  size_t separator_size = strlen(separator);
+  for (int i = 0; i < count; ++i) {
+    if (i) size += separator_size;
+    size += strlen(strings[i]);
+  }
+  char *joined = sj_malloc(size);
+  char *end = joined;
+  for (int i = 0; i < count; ++i) {
+    if (i) end = stpcpy(end, separator);
+    end = stpcpy(end, strings[i]);
+  }
+  return joined;
 }
 
 
