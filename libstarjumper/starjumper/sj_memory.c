@@ -15,9 +15,9 @@ static int alloc_count = 0;
 #define DECREMENT_ALLOC_COUNT() (--alloc_count)
 
 #define EXPECT_ALLOC_COUNT_ZERO() \
-if (alloc_count) { \
-fprintf(stderr, "WARNING: %i memory allocations were not freed.\n", alloc_count); \
-}
+    if (alloc_count) { \
+      fprintf(stderr, "WARNING: %i memory allocations were not freed.\n", alloc_count); \
+    }
 
 #else
 
@@ -26,6 +26,24 @@ fprintf(stderr, "WARNING: %i memory allocations were not freed.\n", alloc_count)
 #define EXPECT_ALLOC_COUNT_ZERO()
 
 #endif
+
+
+static size_t
+array_size(size_t count, size_t element_size);
+
+static void
+fail_and_exit(void);
+
+
+static size_t
+array_size(size_t count, size_t element_size)
+{
+  if (element_size && count > SIZE_MAX / element_size) {
+    errno = EOVERFLOW;
+    fail_and_exit();
+  }
+  return count * element_size;
+}
 
 
 static void
@@ -63,7 +81,7 @@ sj_malloc(size_t size)
 void *
 sj_arraydup(void const *memory, size_t count, size_t element_size)
 {
-  size_t size = count * element_size;
+  size_t size = array_size(count, element_size);
   return sj_memdup(memory, size);
 }
 
@@ -90,7 +108,7 @@ sj_realloc(void *memory, size_t size)
 void *
 sj_reallocarray(void *memory, size_t count, size_t element_size)
 {
-  size_t size = count * element_size;
+  size_t size = array_size(count, element_size);
   return sj_realloc(memory, size);
 }
 
@@ -103,7 +121,6 @@ sj_strdup(char const *string)
   INCREMENT_ALLOC_COUNT();
   return dupe;
 }
-
 
 
 int

@@ -1,7 +1,5 @@
 #include "sj_dice_throw.h"
 
-#include <assert.h>
-
 #include "sj_die_modifier.h"
 #include "sj_die_modifier_array.h"
 #include "sj_memory.h"
@@ -23,8 +21,10 @@ get_die_roll_value_string(sf_any_t any, void *context);
 static char *
 alloc_die_modifier_string(void const *item)
 {
-  struct sj_die_modifier const *die_modifier = item;
-  return sj_string_alloc_from_die_modifier(*die_modifier);
+  int const *modifier = item;
+  char *string;
+  sj_asprintf(&string, "%+i", *modifier);
+  return string;
 }
 
 
@@ -52,21 +52,21 @@ sj_dice_throw_alloc(int count,
                     struct sj_die_modifier_array *die_modifier_array,
                     struct sj_random *random)
 {
-  assert(count > 0);
-  assert(sides > 1);
-  assert(die_modifier_array);
-  assert(random);
-  
   struct sj_dice_throw *dice_throw = sj_malloc(sizeof(struct sj_dice_throw));
   
   dice_throw->count = count;
   dice_throw->sides = sides;
-  dice_throw->die_modifier_array = die_modifier_array;
   
   dice_throw->die_rolls = sj_malloc(count * sizeof(int));
   for (int i = 0; i < count; ++i) {
     dice_throw->die_rolls[i] = 1 + sj_random_next_value_in_range(random, sides);
   }
+  
+  dice_throw->modifiers = sj_reallocarray(NULL, die_modifier_array->count, sizeof dice_throw->modifiers[0]);
+  for (int i = 0; i < die_modifier_array->count; ++i) {
+    dice_throw->modifiers[i] = die_modifier_array->elements[i].value;
+  }
+  dice_throw->modifiers_count = die_modifier_array->count;
   
   return dice_throw;
 }
@@ -75,8 +75,8 @@ sj_dice_throw_alloc(int count,
 void
 sj_dice_throw_free(struct sj_dice_throw *dice_throw)
 {
-  sj_die_modifier_array_free(dice_throw->die_modifier_array);
   sj_free(dice_throw->die_rolls);
+  sj_free(dice_throw->modifiers);
   sj_free(dice_throw);
 }
 
@@ -89,8 +89,8 @@ sj_dice_throw_total(struct sj_dice_throw *dice_throw)
     total += dice_throw->die_rolls[i];
   }
   
-  for (int i = 0; i < dice_throw->die_modifier_array->count; ++i) {
-    total += dice_throw->die_modifier_array->elements[i].value;
+  for (int i = 0; i < dice_throw->modifiers_count; ++i) {
+    total += dice_throw->modifiers[i];
   }
   
   return total;
@@ -113,9 +113,9 @@ sj_string_alloc_from_dice_throw(struct sj_dice_throw const *dice_throw)
   sj_string_array_free(die_rolls_array);
   
   struct sj_string_array *die_modifiers_array = sj_string_array_alloc_collect_strings(
-      dice_throw->die_modifier_array->elements,
-      dice_throw->die_modifier_array->count,
-      sizeof dice_throw->die_modifier_array->elements[0],
+      dice_throw->modifiers,
+      dice_throw->modifiers_count,
+      sizeof dice_throw->modifiers[0],
       alloc_die_modifier_string
   );
   char *die_modifiers = sj_string_alloc_join_string_array_with_separator(die_modifiers_array, ", ");

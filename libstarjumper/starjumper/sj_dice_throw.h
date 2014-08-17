@@ -11,10 +11,11 @@ struct sj_random;
 
 struct sj_dice_throw
 {
+  int *die_rolls;
   int count;
   int sides;
-  struct sj_die_modifier_array *die_modifier_array;
-  int *die_rolls;
+  int *modifiers;
+  int modifiers_count;
 };
 
 
