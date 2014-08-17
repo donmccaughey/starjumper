@@ -17,6 +17,9 @@
 static int
 fake_next_value_in_range(void *data, long range);
 
+static void
+free_data(void *data);
+
 static int
 nrand48_next_value_in_range(void *data, long range);
 
@@ -27,7 +30,22 @@ seed_nrand48_state(unsigned short state[3]);
 static int
 fake_next_value_in_range(void *data, long range)
 {
-  return (int) (range / 2);
+  enum sj_random_fake_type *type = data;
+  switch (*type) {
+    case sj_random_fake_type_min: return 0;
+    case sj_random_fake_type_average: return (int) (range / 2);
+    case sj_random_fake_type_max: return (int) (range - 1);
+    default:
+      fprintf(stderr, "ERROR: unrecognized sj_random_fake_type %i\n", (int) *type);
+      exit(EXIT_FAILURE);
+  }
+}
+
+
+static void
+free_data(void *data)
+{
+  sj_free(data);
 }
 
 
@@ -75,12 +93,13 @@ seed_nrand48_state(unsigned short state[3])
 
 
 struct sj_random *
-sj_random_alloc_fake(void)
+sj_random_alloc_fake(enum sj_random_fake_type type)
 {
   struct sj_random *random = sj_malloc(sizeof(struct sj_random));
   
-  random->data = NULL;
+  random->data = sj_arraydup(&type, 1, sizeof type);
   random->next_value_in_range = fake_next_value_in_range;
+  random->free_data = free_data;
   
   return random;
 }
@@ -96,22 +115,16 @@ sj_random_alloc_nrand48(void)
   
   random->data = sj_arraydup(state, 3, sizeof state[0]);
   random->next_value_in_range = nrand48_next_value_in_range;
+  random->free_data = free_data;
   
   return random;
 }
 
 
 void
-sj_random_free_fake(struct sj_random *random)
+sj_random_free(struct sj_random *random)
 {
-  sj_free(random);
-}
-
-
-void
-sj_random_free_nrand48(struct sj_random *random)
-{
-  sj_free(random->data);
+  random->free_data(random->data);
   sj_free(random);
 }
 

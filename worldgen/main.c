@@ -46,7 +46,7 @@ main(int argc, char **argv)
   sf_string_t description = sf_string_from(world);
   fprintf(stdout, "%s\n", sf_string_chars(description));
   
-  sj_random_free_nrand48(random);
+  sj_random_free(random);
   sj_fin();
   sj_memory_expect_alloc_count_zero();
   return EXIT_SUCCESS;
