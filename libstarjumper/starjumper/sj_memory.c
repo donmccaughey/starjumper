@@ -41,9 +41,9 @@ fail_and_exit(void)
 
 
 void *
-sj_calloc(size_t count, size_t size)
+sj_calloc(size_t count, size_t element_size)
 {
-  void *memory = calloc(count, size);
+  void *memory = calloc(count, element_size);
   if ( ! memory) fail_and_exit();
   INCREMENT_ALLOC_COUNT();
   return memory;
@@ -57,6 +57,14 @@ sj_malloc(size_t size)
   if ( ! memory) fail_and_exit();
   INCREMENT_ALLOC_COUNT();
   return memory;
+}
+
+
+void *
+sj_arraydup(void const *memory, size_t count, size_t element_size)
+{
+  size_t size = count * element_size;
+  return sj_memdup(memory, size);
 }
 
 
@@ -76,6 +84,14 @@ sj_realloc(void *memory, size_t size)
   if ( ! new_memory) fail_and_exit();
   if ( ! memory) INCREMENT_ALLOC_COUNT();
   return new_memory;
+}
+
+
+void *
+sj_reallocarray(void *memory, size_t count, size_t element_size)
+{
+  size_t size = count * element_size;
+  return sj_realloc(memory, size);
 }
 
 

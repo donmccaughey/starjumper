@@ -7,16 +7,22 @@
 
 
 void *
-sj_calloc(size_t count, size_t size);
+sj_calloc(size_t count, size_t element_size);
 
 void *
 sj_malloc(size_t size);
+
+void *
+sj_arraydup(void const *memory, size_t count, size_t element_size);
 
 void *
 sj_memdup(void const *memory, size_t size);
 
 void *
 sj_realloc(void *memory, size_t size);
+
+void *
+sj_reallocarray(void *memory, size_t count, size_t element_size);
 
 char *
 sj_strdup(char const *string);

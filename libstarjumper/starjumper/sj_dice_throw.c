@@ -2,6 +2,8 @@
 
 #include <assert.h>
 #include "sj_die_modifier.h"
+#include "sj_die_modifier_array.h"
+#include "sj_memory.h"
 
 
 static void
@@ -19,7 +21,7 @@ struct _sj_dice_throw
   SF_OBJECT_FIELDS;
   int count;
   int sides;
-  sf_list_t die_modifiers;
+  struct sj_die_modifier_array *die_modifier_array;
   sf_list_t die_rolls;
 };
 
@@ -38,7 +40,7 @@ static void
 dealloc(sf_any_t self)
 {
   sj_dice_throw_t dice_throw = self;
-  sf_release(dice_throw->die_modifiers);
+  sj_die_modifier_array_free(dice_throw->die_modifier_array);
   sf_release(dice_throw->die_rolls);
 }
 
@@ -66,10 +68,11 @@ string_from(sf_any_t self)
     parts = sf_list(die_rolls_string, parts);
   }
   
-  if (sf_count(dice_throw->die_modifiers)) {
-    sf_list_t die_modifiers = sf_collect_strings(dice_throw->die_modifiers);
-    sf_string_t die_modifiers_string = sf_string_from_separator_and_collection(sf_string(", "), die_modifiers);
-    parts = sf_list(die_modifiers_string, parts);
+  for (int i = 0; i < dice_throw->die_modifier_array->count; ++i) {
+    if (i) parts = sf_list(sf_string(", "), parts);
+    char *die_modifier_string = sj_string_alloc_from_die_modifier(dice_throw->die_modifier_array->elements[i]);
+    parts = sf_list(sf_string(die_modifier_string), parts);
+    sj_free(die_modifier_string);
   }
   
   parts = sf_list_reversed(parts);
@@ -80,7 +83,7 @@ string_from(sf_any_t self)
 sj_dice_throw_t
 sj_dice_throw(int count,
               int sides,
-              sf_list_t die_modifiers,
+              struct sj_die_modifier_array *die_modifier_array,
               sf_random_t random_in,
               sf_random_t *random_out)
 {
@@ -93,7 +96,7 @@ sj_dice_throw(int count,
   
   dice_throw->count = count;
   dice_throw->sides = sides;
-  dice_throw->die_modifiers = sf_retain(die_modifiers);
+  dice_throw->die_modifier_array = die_modifier_array;
   dice_throw->die_rolls = NULL;
   
   sf_random_t random = random_in;
@@ -113,13 +116,6 @@ int
 sj_dice_throw_count(sj_dice_throw_t dice_throw)
 {
   return dice_throw ? dice_throw->count : 0;
-}
-
-
-sf_list_t 
-sj_dice_throw_modifiers(sj_dice_throw_t dice_throw)
-{
-  return dice_throw ? dice_throw->die_modifiers : NULL;
 }
 
 
@@ -143,10 +139,8 @@ sj_dice_throw_total(sj_dice_throw_t dice_throw)
     die_rolls = sf_list_tail(die_rolls);
   }
   
-  sf_list_t die_modifiers = dice_throw->die_modifiers;
-  while (die_modifiers) {
-    total += sj_die_modifier_value(sf_list_head(die_modifiers));
-    die_modifiers = sf_list_tail(die_modifiers);
+  for (int i = 0; i < dice_throw->die_modifier_array->count; ++i) {
+    total += dice_throw->die_modifier_array->elements[i].value;
   }
   
   return total;

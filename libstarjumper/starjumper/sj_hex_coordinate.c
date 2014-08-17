@@ -34,7 +34,7 @@ sj_hex_coordinate_from_string(char const *string, struct sj_hex_coordinate *hex_
 
 
 char *
-sj_string_alloc_from_hex_coordinate(struct sj_hex_coordinate const hex_coordinate)
+sj_string_alloc_from_hex_coordinate(struct sj_hex_coordinate hex_coordinate)
 {
   char *string;
   sj_asprintf(&string, "%02i%02i", hex_coordinate.horizontal, hex_coordinate.vertical);

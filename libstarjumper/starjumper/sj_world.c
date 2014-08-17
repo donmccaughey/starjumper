@@ -5,6 +5,7 @@
 
 #include "sj_dice_throw.h"
 #include "sj_die_modifier.h"
+#include "sj_die_modifier_array.h"
 #include "sj_hex_coordinate.h"
 #include "sj_memory.h"
 #include "sj_string_array.h"
@@ -334,46 +335,49 @@ sj_world(sf_string_t name,
   world->hex_coordinate = hex_coordinate;
   
   sf_random_t random = random_in;
-  sf_list_t modifiers = NULL;
   sj_dice_throw_t dice_throw = NULL;
   
-  dice_throw = sj_dice_throw(2, 6, NULL, random, &random);
+  dice_throw = sj_dice_throw(2, 6, sj_die_modifier_array_alloc_empty(), random, &random);
   int starport_index = sj_dice_throw_total(dice_throw);
   world->starport = starport_table[starport_index];
   
   if ('A' == world->starport || 'B' == world->starport) {
-    dice_throw = sj_dice_throw(2, 6, NULL, random, &random);
+    dice_throw = sj_dice_throw(2, 6, sj_die_modifier_array_alloc_empty(), random, &random);
     int naval_base_index = sj_dice_throw_total(dice_throw);
     world->naval_base = naval_base_table[naval_base_index];
   }
   
-  if ('E' != world->starport && 'X' != world->starport) {    
-    modifiers = NULL;
+  if ('E' != world->starport && 'X' != world->starport) {
+    struct sj_die_modifier_array *die_modifiers = sj_die_modifier_array_alloc_empty();
     if ('C' == world->starport) {
-      modifiers = sf_list(sj_die_modifier(-1), NULL);
+      sj_die_modifier_array_add(die_modifiers, (struct sj_die_modifier) {.value=-1});
     } else if ('B' == world->starport) {
-      modifiers = sf_list(sj_die_modifier(-2), NULL);
+      sj_die_modifier_array_add(die_modifiers, (struct sj_die_modifier) {.value=-2});
     } else if ('A' == world->starport) {
-      modifiers = sf_list(sj_die_modifier(-3), NULL);
+      sj_die_modifier_array_add(die_modifiers, (struct sj_die_modifier) {.value=-3});
     }
-    dice_throw = sj_dice_throw(2, 6, modifiers, random, &random);
+    dice_throw = sj_dice_throw(2, 6, die_modifiers, random, &random);
     int scout_base_index = sj_dice_throw_total(dice_throw);
     world->scout_base = scout_base_table[scout_base_index];
   }
   
-  dice_throw = sj_dice_throw(2, 6, NULL, random, &random);
+  dice_throw = sj_dice_throw(2, 6, sj_die_modifier_array_alloc_empty(), random, &random);
   int gas_giant_index = sj_dice_throw_total(dice_throw);
   world->gas_giant = gas_giant_table[gas_giant_index];
   
-  modifiers = sf_list(sj_die_modifier(-2), NULL);
-  dice_throw = sj_dice_throw(2, 6, modifiers, random, &random);
+  struct sj_die_modifier_array *die_modifiers = sj_die_modifier_array_alloc(
+      (struct sj_die_modifier[]) {{.value=-2}}, 1
+  );
+  dice_throw = sj_dice_throw(2, 6, die_modifiers, random, &random);
   world->size = sj_dice_throw_total(dice_throw);
   
   if (0 == world->size) {
     world->atmosphere = 0;
   } else {
-    modifiers = sf_list_from_items(sj_die_modifier(-7), sj_die_modifier(world->size));
-    dice_throw = sj_dice_throw(2, 6, modifiers, random, &random);
+    struct sj_die_modifier_array *die_modifiers = sj_die_modifier_array_alloc(
+        (struct sj_die_modifier[]) {{.value=-7}, {.value=world->size}}, 2
+    );
+    dice_throw = sj_dice_throw(2, 6, die_modifiers, random, &random);
     world->atmosphere = sj_dice_throw_total(dice_throw);
     if (world->atmosphere < 0) world->atmosphere = 0;
   }
@@ -381,25 +385,31 @@ sj_world(sf_string_t name,
   if (0 == world->size) {
     world->hydrographics = 0;
   } else {
-    modifiers = sf_list_from_items(sj_die_modifier(-7), sj_die_modifier(world->atmosphere));
+    struct sj_die_modifier_array *die_modifiers = sj_die_modifier_array_alloc(
+        (struct sj_die_modifier[]) {{.value=-7}, {.value=world->atmosphere}}, 2
+    );
     if (0 == world->atmosphere || 1 == world->atmosphere || world->atmosphere >= 10) {
-      modifiers = sf_list(sj_die_modifier(-4), modifiers);
+      sj_die_modifier_array_add(die_modifiers, (struct sj_die_modifier) {.value=-4});
     }
-    dice_throw = sj_dice_throw(2, 6, modifiers, random, &random);
+    dice_throw = sj_dice_throw(2, 6, die_modifiers, random, &random);
     world->hydrographics = sj_dice_throw_total(dice_throw);
     if (world->hydrographics < 0) world->hydrographics = 0;
     if (world->hydrographics > 10) world->hydrographics = 10;
   }
   
-  modifiers = sf_list(sj_die_modifier(-2), NULL);
-  dice_throw = sj_dice_throw(2, 6, modifiers, random, &random);
+  die_modifiers = sj_die_modifier_array_alloc(
+      (struct sj_die_modifier[]) {{.value=-2}}, 1
+  );
+  dice_throw = sj_dice_throw(2, 6, die_modifiers, random, &random);
   world->population = sj_dice_throw_total(dice_throw);
   
   if (0 == world->population) {
     world->government = 0;
   } else {
-    modifiers = sf_list_from_items(sj_die_modifier(-7), sj_die_modifier(world->population));
-    dice_throw = sj_dice_throw(2, 6, modifiers, random, &random);
+    struct sj_die_modifier_array *die_modifiers = sj_die_modifier_array_alloc(
+        (struct sj_die_modifier[]) {{.value=-7}, {.value=world->population}}, 2
+    );
+    dice_throw = sj_dice_throw(2, 6, die_modifiers, random, &random);
     world->government = sj_dice_throw_total(dice_throw);
     if (world->government < 0) world->government = 0;
   }
@@ -407,8 +417,10 @@ sj_world(sf_string_t name,
   if (0 == world->population) {
     world->law_level = 0;
   } else {
-    modifiers = sf_list_from_items(sj_die_modifier(-7), sj_die_modifier(world->government));
-    dice_throw = sj_dice_throw(2, 6, modifiers, random, &random);
+    struct sj_die_modifier_array *die_modifiers = sj_die_modifier_array_alloc(
+        (struct sj_die_modifier[]) {{.value=-7}, {.value=world->government}}, 2
+    );
+    dice_throw = sj_dice_throw(2, 6, die_modifiers, random, &random);
     world->law_level = sj_dice_throw_total(dice_throw);
     if (world->law_level < 0) world->law_level = 0;
   }
@@ -416,25 +428,25 @@ sj_world(sf_string_t name,
   // TODO: adjust starport if 0 == population
   
   if (world->population) {
-    modifiers = NULL;
+    struct sj_die_modifier_array *die_modifiers = sj_die_modifier_array_alloc_empty();
     
     if ('A' == world->starport) {
-      modifiers = sf_list(sj_die_modifier(+6), modifiers);
+      sj_die_modifier_array_add(die_modifiers, (struct sj_die_modifier) {.value=+6});
     } else if ('B' == world->starport) {
-      modifiers = sf_list(sj_die_modifier(+4), modifiers);
+      sj_die_modifier_array_add(die_modifiers, (struct sj_die_modifier) {.value=+4});
     } else if ('C' == world->starport) {
-      modifiers = sf_list(sj_die_modifier(+2), modifiers);
+      sj_die_modifier_array_add(die_modifiers, (struct sj_die_modifier) {.value=+2});
     } else if ('X' == world->starport) {
-      modifiers = sf_list(sj_die_modifier(-4), modifiers);
+      sj_die_modifier_array_add(die_modifiers, (struct sj_die_modifier) {.value=-4});
     }
     
-    modifiers = sf_list(sj_die_modifier(tech_level_size_table[world->size]), modifiers);
-    modifiers = sf_list(sj_die_modifier(tech_level_atmosphere_table[world->atmosphere]), modifiers);
-    modifiers = sf_list(sj_die_modifier(tech_level_hydrographics_table[world->hydrographics]), modifiers);
-    modifiers = sf_list(sj_die_modifier(tech_level_population_table[world->population]), modifiers);
-    modifiers = sf_list(sj_die_modifier(tech_level_government_table[world->government]), modifiers);
+    sj_die_modifier_array_add(die_modifiers, (struct sj_die_modifier) {.value=tech_level_size_table[world->size]});
+    sj_die_modifier_array_add(die_modifiers, (struct sj_die_modifier) {.value=tech_level_atmosphere_table[world->atmosphere]});
+    sj_die_modifier_array_add(die_modifiers, (struct sj_die_modifier) {.value=tech_level_hydrographics_table[world->hydrographics]});
+    sj_die_modifier_array_add(die_modifiers, (struct sj_die_modifier) {.value=tech_level_population_table[world->population]});
+    sj_die_modifier_array_add(die_modifiers, (struct sj_die_modifier) {.value=tech_level_government_table[world->government]});
     
-    dice_throw = sj_dice_throw(1, 6, modifiers, random, &random);
+    dice_throw = sj_dice_throw(1, 6, die_modifiers, random, &random);
     world->tech_level = sj_dice_throw_total(dice_throw);
     if (world->tech_level < 0) world->tech_level = 0;
   }
