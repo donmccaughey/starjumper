@@ -6,6 +6,7 @@
 
 
 struct sj_hex_coordinate;
+struct sj_random;
 
 
 extern sf_type_t sj_world_type;
@@ -14,8 +15,7 @@ extern sf_type_t sj_world_type;
 sj_world_t
 sj_world(sf_string_t name,
          struct sj_hex_coordinate const hex_coordinate,
-         sf_random_t random_in,
-         sf_random_t *random_out);
+         struct sj_random *random);
 
 int
 sj_world_atmosphere(sj_world_t world);

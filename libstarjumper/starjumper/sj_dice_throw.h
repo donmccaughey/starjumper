@@ -6,6 +6,7 @@
 
 
 struct sj_die_modifier_array;
+struct sj_random;
 
 
 extern sf_type_t sj_dice_throw_type;
@@ -15,8 +16,7 @@ sj_dice_throw_t
 sj_dice_throw(int count,
               int sides,
               struct sj_die_modifier_array *die_modifier_array,
-              sf_random_t random_in,
-              sf_random_t *random_out);
+              struct sj_random *random);
 
 int
 sj_dice_throw_count(sj_dice_throw_t dice_throw);

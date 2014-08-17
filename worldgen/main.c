@@ -40,12 +40,13 @@ main(int argc, char **argv)
   initialize_options(&options);
   parse_options(argc, argv, &options);
   
-  sf_random_t random = sf_random_from_random_state();
-  sj_world_t world = sj_world(options.name, options.hex_coordinate, random, &random);
+  struct sj_random *random = sj_random_alloc_nrand48();
+  sj_world_t world = sj_world(options.name, options.hex_coordinate, random);
   
   sf_string_t description = sf_string_from(world);
   fprintf(stdout, "%s\n", sf_string_chars(description));
   
+  sj_random_free_nrand48(random);
   sj_fin();
   sj_memory_expect_alloc_count_zero();
   return EXIT_SUCCESS;

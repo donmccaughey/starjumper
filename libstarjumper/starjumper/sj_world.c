@@ -323,26 +323,22 @@ hex_digit(int value)
 sj_world_t
 sj_world(sf_string_t name,
          struct sj_hex_coordinate const hex_coordinate,
-         sf_random_t random_in,
-         sf_random_t *random_out)
+         struct sj_random *random)
 {
-  assert(random_out);
-  
   struct _sj_world *world = sf_object_calloc(sizeof(struct _sj_world), sj_world_type);
   if ( ! world) return NULL;
   
   world->name = sf_retain(name);
   world->hex_coordinate = hex_coordinate;
   
-  sf_random_t random = random_in;
   sj_dice_throw_t dice_throw = NULL;
   
-  dice_throw = sj_dice_throw(2, 6, sj_die_modifier_array_alloc_empty(), random, &random);
+  dice_throw = sj_dice_throw(2, 6, sj_die_modifier_array_alloc_empty(), random);
   int starport_index = sj_dice_throw_total(dice_throw);
   world->starport = starport_table[starport_index];
   
   if ('A' == world->starport || 'B' == world->starport) {
-    dice_throw = sj_dice_throw(2, 6, sj_die_modifier_array_alloc_empty(), random, &random);
+    dice_throw = sj_dice_throw(2, 6, sj_die_modifier_array_alloc_empty(), random);
     int naval_base_index = sj_dice_throw_total(dice_throw);
     world->naval_base = naval_base_table[naval_base_index];
   }
@@ -356,19 +352,19 @@ sj_world(sf_string_t name,
     } else if ('A' == world->starport) {
       sj_die_modifier_array_add(die_modifiers, (struct sj_die_modifier) {.value=-3});
     }
-    dice_throw = sj_dice_throw(2, 6, die_modifiers, random, &random);
+    dice_throw = sj_dice_throw(2, 6, die_modifiers, random);
     int scout_base_index = sj_dice_throw_total(dice_throw);
     world->scout_base = scout_base_table[scout_base_index];
   }
   
-  dice_throw = sj_dice_throw(2, 6, sj_die_modifier_array_alloc_empty(), random, &random);
+  dice_throw = sj_dice_throw(2, 6, sj_die_modifier_array_alloc_empty(), random);
   int gas_giant_index = sj_dice_throw_total(dice_throw);
   world->gas_giant = gas_giant_table[gas_giant_index];
   
   struct sj_die_modifier_array *die_modifiers = sj_die_modifier_array_alloc(
       (struct sj_die_modifier[]) {{.value=-2}}, 1
   );
-  dice_throw = sj_dice_throw(2, 6, die_modifiers, random, &random);
+  dice_throw = sj_dice_throw(2, 6, die_modifiers, random);
   world->size = sj_dice_throw_total(dice_throw);
   
   if (0 == world->size) {
@@ -377,7 +373,7 @@ sj_world(sf_string_t name,
     struct sj_die_modifier_array *die_modifiers = sj_die_modifier_array_alloc(
         (struct sj_die_modifier[]) {{.value=-7}, {.value=world->size}}, 2
     );
-    dice_throw = sj_dice_throw(2, 6, die_modifiers, random, &random);
+    dice_throw = sj_dice_throw(2, 6, die_modifiers, random);
     world->atmosphere = sj_dice_throw_total(dice_throw);
     if (world->atmosphere < 0) world->atmosphere = 0;
   }
@@ -391,7 +387,7 @@ sj_world(sf_string_t name,
     if (0 == world->atmosphere || 1 == world->atmosphere || world->atmosphere >= 10) {
       sj_die_modifier_array_add(die_modifiers, (struct sj_die_modifier) {.value=-4});
     }
-    dice_throw = sj_dice_throw(2, 6, die_modifiers, random, &random);
+    dice_throw = sj_dice_throw(2, 6, die_modifiers, random);
     world->hydrographics = sj_dice_throw_total(dice_throw);
     if (world->hydrographics < 0) world->hydrographics = 0;
     if (world->hydrographics > 10) world->hydrographics = 10;
@@ -400,7 +396,7 @@ sj_world(sf_string_t name,
   die_modifiers = sj_die_modifier_array_alloc(
       (struct sj_die_modifier[]) {{.value=-2}}, 1
   );
-  dice_throw = sj_dice_throw(2, 6, die_modifiers, random, &random);
+  dice_throw = sj_dice_throw(2, 6, die_modifiers, random);
   world->population = sj_dice_throw_total(dice_throw);
   
   if (0 == world->population) {
@@ -409,7 +405,7 @@ sj_world(sf_string_t name,
     struct sj_die_modifier_array *die_modifiers = sj_die_modifier_array_alloc(
         (struct sj_die_modifier[]) {{.value=-7}, {.value=world->population}}, 2
     );
-    dice_throw = sj_dice_throw(2, 6, die_modifiers, random, &random);
+    dice_throw = sj_dice_throw(2, 6, die_modifiers, random);
     world->government = sj_dice_throw_total(dice_throw);
     if (world->government < 0) world->government = 0;
   }
@@ -420,7 +416,7 @@ sj_world(sf_string_t name,
     struct sj_die_modifier_array *die_modifiers = sj_die_modifier_array_alloc(
         (struct sj_die_modifier[]) {{.value=-7}, {.value=world->government}}, 2
     );
-    dice_throw = sj_dice_throw(2, 6, die_modifiers, random, &random);
+    dice_throw = sj_dice_throw(2, 6, die_modifiers, random);
     world->law_level = sj_dice_throw_total(dice_throw);
     if (world->law_level < 0) world->law_level = 0;
   }
@@ -446,14 +442,13 @@ sj_world(sf_string_t name,
     sj_die_modifier_array_add(die_modifiers, (struct sj_die_modifier) {.value=tech_level_population_table[world->population]});
     sj_die_modifier_array_add(die_modifiers, (struct sj_die_modifier) {.value=tech_level_government_table[world->government]});
     
-    dice_throw = sj_dice_throw(1, 6, die_modifiers, random, &random);
+    dice_throw = sj_dice_throw(1, 6, die_modifiers, random);
     world->tech_level = sj_dice_throw_total(dice_throw);
     if (world->tech_level < 0) world->tech_level = 0;
   }
   
   world->trade_classifications = sj_world_alloc_trade_classifications(world, &world->trade_classifications_count);
   
-  *random_out = random;
   return sf_move_to_temp_pool(world);
 }
 

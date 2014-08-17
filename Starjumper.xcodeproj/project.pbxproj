@@ -30,6 +30,7 @@
 		D4E2EC1F19A014CD00483573 /* starjumper.c in Sources */ = {isa = PBXBuildFile; fileRef = D4E2EC0C19A014CD00483573 /* starjumper.c */; };
 		D4E2EC2019A014CD00483573 /* starjumper.h in Headers */ = {isa = PBXBuildFile; fileRef = D4E2EC0D19A014CD00483573 /* starjumper.h */; };
 		D4E2EC2A19A0304000483573 /* sj_die_modifier_array.c in Sources */ = {isa = PBXBuildFile; fileRef = D4E2EC2919A0304000483573 /* sj_die_modifier_array.c */; };
+		D4E2EC2D19A05DB300483573 /* sj_random.c in Sources */ = {isa = PBXBuildFile; fileRef = D4E2EC2C19A05DB300483573 /* sj_random.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -124,6 +125,8 @@
 		D4E2EC0D19A014CD00483573 /* starjumper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = starjumper.h; sourceTree = "<group>"; };
 		D4E2EC2819A0301400483573 /* sj_die_modifier_array.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = sj_die_modifier_array.h; sourceTree = "<group>"; };
 		D4E2EC2919A0304000483573 /* sj_die_modifier_array.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = sj_die_modifier_array.c; sourceTree = "<group>"; };
+		D4E2EC2B19A05DA800483573 /* sj_random.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = sj_random.h; sourceTree = "<group>"; };
+		D4E2EC2C19A05DB300483573 /* sj_random.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = sj_random.c; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -224,6 +227,8 @@
 				D4E2EC0019A014CD00483573 /* sj_hex_coordinate.c */,
 				D4E2EC0319A014CD00483573 /* sj_memory.h */,
 				D4E2EC0219A014CD00483573 /* sj_memory.c */,
+				D4E2EC2B19A05DA800483573 /* sj_random.h */,
+				D4E2EC2C19A05DB300483573 /* sj_random.c */,
 				D4E2EC0719A014CD00483573 /* sj_string.h */,
 				D4E2EC0619A014CD00483573 /* sj_string.c */,
 				D4E2EC0519A014CD00483573 /* sj_string_array.h */,
@@ -371,6 +376,7 @@
 				D4E2EC1319A014CD00483573 /* sj_hex_coordinate.c in Sources */,
 				D4E2EC1D19A014CD00483573 /* sj_world.c in Sources */,
 				D4E2EC0F19A014CD00483573 /* sj_dice_throw.c in Sources */,
+				D4E2EC2D19A05DB300483573 /* sj_random.c in Sources */,
 				D4E2EC1119A014CD00483573 /* sj_die_modifier.c in Sources */,
 				D4E2EC1919A014CD00483573 /* sj_string.c in Sources */,
 				D4E2EC1F19A014CD00483573 /* starjumper.c in Sources */,
