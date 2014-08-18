@@ -5,7 +5,6 @@
 #include <starjumper/sj_defs.h>
 
 
-struct sj_die_modifier_array;
 struct sj_random;
 
 
@@ -19,10 +18,12 @@ struct sj_dice_throw
 };
 
 
+void
+sj_dice_throw_add_modifier(struct sj_dice_throw *dice_throw, int modifier);
+
 struct sj_dice_throw *
 sj_dice_throw_alloc(int count,
                     int sides,
-                    struct sj_die_modifier_array *die_modifier_array,
                     struct sj_random *random);
 
 void

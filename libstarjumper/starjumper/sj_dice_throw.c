@@ -1,7 +1,5 @@
 #include "sj_dice_throw.h"
 
-#include "sj_die_modifier.h"
-#include "sj_die_modifier_array.h"
 #include "sj_memory.h"
 #include "sj_random.h"
 #include "sj_string.h"
@@ -13,9 +11,6 @@ alloc_die_modifier_string(void const *item);
 
 static char *
 alloc_die_roll_string(void const *item);
-
-static sf_any_t
-get_die_roll_value_string(sf_any_t any, void *context);
 
 
 static char *
@@ -38,18 +33,21 @@ alloc_die_roll_string(void const *item)
 }
 
 
-static sf_any_t
-get_die_roll_value_string(sf_any_t any, void *context)
+void
+sj_dice_throw_add_modifier(struct sj_dice_throw *dice_throw, int modifier)
 {
-  int value = sf_random_value(any);
-  return sf_string_from_format("%i", value);
+  int next_index = dice_throw->modifiers_count;
+  ++dice_throw->modifiers_count;
+  dice_throw->modifiers = sj_reallocarray(dice_throw->modifiers,
+                                          dice_throw->modifiers_count,
+                                          sizeof dice_throw->modifiers[0]);
+  dice_throw->modifiers[next_index] = modifier;
 }
 
 
 struct sj_dice_throw *
 sj_dice_throw_alloc(int count,
                     int sides,
-                    struct sj_die_modifier_array *die_modifier_array,
                     struct sj_random *random)
 {
   struct sj_dice_throw *dice_throw = sj_malloc(sizeof(struct sj_dice_throw));
@@ -62,11 +60,8 @@ sj_dice_throw_alloc(int count,
     dice_throw->die_rolls[i] = 1 + sj_random_next_value_in_range(random, sides);
   }
   
-  dice_throw->modifiers = sj_reallocarray(NULL, die_modifier_array->count, sizeof dice_throw->modifiers[0]);
-  for (int i = 0; i < die_modifier_array->count; ++i) {
-    dice_throw->modifiers[i] = die_modifier_array->elements[i].value;
-  }
-  dice_throw->modifiers_count = die_modifier_array->count;
+  dice_throw->modifiers = NULL;
+  dice_throw->modifiers_count = 0;
   
   return dice_throw;
 }

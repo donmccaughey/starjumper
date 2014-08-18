@@ -4,8 +4,6 @@
 
 #include <starjumper/sj_defs.h>
 #include <starjumper/sj_dice_throw.h>
-#include <starjumper/sj_die_modifier.h>
-#include <starjumper/sj_die_modifier_array.h>
 #include <starjumper/sj_hex_coordinate.h>
 #include <starjumper/sj_memory.h>
 #include <starjumper/sj_random.h>
