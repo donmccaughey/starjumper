@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		D474B8931789C29E007C9259 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = D474B8921789C29E007C9259 /* main.c */; };
 		D474B89E1789C34F007C9259 /* libstarjumper.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D474B82B1789BB63007C9259 /* libstarjumper.a */; };
-		D474B89F1789C34F007C9259 /* libsf.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D474B8681789BD92007C9259 /* libsf.a */; };
 		D4E2EC0F19A014CD00483573 /* sj_dice_throw.c in Sources */ = {isa = PBXBuildFile; fileRef = D4E2EBFC19A014CD00483573 /* sj_dice_throw.c */; };
 		D4E2EC1019A014CD00483573 /* sj_dice_throw.h in Headers */ = {isa = PBXBuildFile; fileRef = D4E2EBFD19A014CD00483573 /* sj_dice_throw.h */; };
 		D4E2EC1319A014CD00483573 /* sj_hex_coordinate.c in Sources */ = {isa = PBXBuildFile; fileRef = D4E2EC0019A014CD00483573 /* sj_hex_coordinate.c */; };
@@ -29,54 +28,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		D474B8671789BD92007C9259 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D474B8601789BD91007C9259 /* libsf.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = D4AA22591785505E00A80BBF;
-			remoteInfo = libsf;
-		};
-		D474B8691789BD92007C9259 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D474B8601789BD91007C9259 /* libsf.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = D4F083CF17855239007BABBC;
-			remoteInfo = libsf_test;
-		};
-		D474B86B1789BD92007C9259 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D474B8601789BD91007C9259 /* libsf.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = D4F084C61785554C007BABBC;
-			remoteInfo = stress_tests;
-		};
-		D474B86D1789BD92007C9259 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D474B8601789BD91007C9259 /* libsf.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = D4F08474178554A9007BABBC;
-			remoteInfo = unit_tests;
-		};
-		D474B88A1789BDC2007C9259 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D474B8601789BD91007C9259 /* libsf.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = D4AA22581785505E00A80BBF;
-			remoteInfo = libsf;
-		};
 		D474B89A1789C348007C9259 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D474B8231789BB63007C9259 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = D474B82A1789BB63007C9259;
 			remoteInfo = libvoyager;
-		};
-		D474B89C1789C348007C9259 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D474B8601789BD91007C9259 /* libsf.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = D4AA22581785505E00A80BBF;
-			remoteInfo = libsf;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -94,7 +51,6 @@
 
 /* Begin PBXFileReference section */
 		D474B82B1789BB63007C9259 /* libstarjumper.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libstarjumper.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		D474B8601789BD91007C9259 /* libsf.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = libsf.xcodeproj; path = submodules/libsf/libsf.xcodeproj; sourceTree = "<group>"; };
 		D474B8901789C29E007C9259 /* worldgen */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = worldgen; sourceTree = BUILT_PRODUCTS_DIR; };
 		D474B8921789C29E007C9259 /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
 		D474B8991789C2DB007C9259 /* worldgen.6 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = worldgen.6; sourceTree = "<group>"; };
@@ -131,7 +87,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				D474B89E1789C34F007C9259 /* libstarjumper.a in Frameworks */,
-				D474B89F1789C34F007C9259 /* libsf.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -144,7 +99,6 @@
 				D4AA1DB219A0112700F9F30E /* README.md */,
 				D4AA1DB719A012C000F9F30E /* libstarjumper */,
 				D474B85D1789BD74007C9259 /* test */,
-				D474B85F1789BD80007C9259 /* submodules */,
 				D474B8911789C29E007C9259 /* worldgen */,
 				D474B82C1789BB63007C9259 /* Products */,
 			);
@@ -164,25 +118,6 @@
 			children = (
 			);
 			name = test;
-			sourceTree = "<group>";
-		};
-		D474B85F1789BD80007C9259 /* submodules */ = {
-			isa = PBXGroup;
-			children = (
-				D474B8601789BD91007C9259 /* libsf.xcodeproj */,
-			);
-			name = submodules;
-			sourceTree = "<group>";
-		};
-		D474B8611789BD91007C9259 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				D474B8681789BD92007C9259 /* libsf.a */,
-				D474B86A1789BD92007C9259 /* libsf_test.a */,
-				D474B86C1789BD92007C9259 /* stress_tests */,
-				D474B86E1789BD92007C9259 /* unit_tests */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 		D474B8911789C29E007C9259 /* worldgen */ = {
@@ -258,7 +193,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				D474B88B1789BDC2007C9259 /* PBXTargetDependency */,
 			);
 			name = libstarjumper;
 			productName = Voyager;
@@ -277,7 +211,6 @@
 			);
 			dependencies = (
 				D474B89B1789C348007C9259 /* PBXTargetDependency */,
-				D474B89D1789C348007C9259 /* PBXTargetDependency */,
 			);
 			name = worldgen;
 			productName = worldgen;
@@ -303,12 +236,6 @@
 			mainGroup = D474B8221789BB63007C9259;
 			productRefGroup = D474B82C1789BB63007C9259 /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = D474B8611789BD91007C9259 /* Products */;
-					ProjectRef = D474B8601789BD91007C9259 /* libsf.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				D474B82A1789BB63007C9259 /* libstarjumper */,
@@ -316,37 +243,6 @@
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXReferenceProxy section */
-		D474B8681789BD92007C9259 /* libsf.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libsf.a;
-			remoteRef = D474B8671789BD92007C9259 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		D474B86A1789BD92007C9259 /* libsf_test.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libsf_test.a;
-			remoteRef = D474B8691789BD92007C9259 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		D474B86C1789BD92007C9259 /* stress_tests */ = {
-			isa = PBXReferenceProxy;
-			fileType = "compiled.mach-o.executable";
-			path = stress_tests;
-			remoteRef = D474B86B1789BD92007C9259 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		D474B86E1789BD92007C9259 /* unit_tests */ = {
-			isa = PBXReferenceProxy;
-			fileType = "compiled.mach-o.executable";
-			path = unit_tests;
-			remoteRef = D474B86D1789BD92007C9259 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
 
 /* Begin PBXSourcesBuildPhase section */
 		D474B8271789BB63007C9259 /* Sources */ = {
@@ -375,20 +271,10 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		D474B88B1789BDC2007C9259 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = libsf;
-			targetProxy = D474B88A1789BDC2007C9259 /* PBXContainerItemProxy */;
-		};
 		D474B89B1789C348007C9259 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = D474B82A1789BB63007C9259 /* libstarjumper */;
 			targetProxy = D474B89A1789C348007C9259 /* PBXContainerItemProxy */;
-		};
-		D474B89D1789C348007C9259 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = libsf;
-			targetProxy = D474B89C1789C348007C9259 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 

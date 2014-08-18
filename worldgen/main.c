@@ -2,19 +2,21 @@
 #include <libgen.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <sf/sf.h>
 #include <starjumper/starjumper.h>
 
 
 struct options
 {
-  sf_string_t name;
+  char *name;
   struct sj_hex_coordinate hex_coordinate;
 };
 
 
 static void
 initialize_options(struct options *options);
+
+static void
+finalize_options(struct options *options);
 
 static void
 parse_options(int argc, char **argv, struct options *options);
@@ -26,29 +28,33 @@ print_usage_and_exit(int argc, char **argv);
 static void
 initialize_options(struct options *options)
 {
-  options->name = sf_string("No Name");
+  options->name = sj_strdup("No Name");
   options->hex_coordinate = (struct sj_hex_coordinate) { .horizontal=1, .vertical=1, };
+}
+
+
+static void
+finalize_options(struct options *options)
+{
+  sj_free(options->name);
 }
 
 
 int
 main(int argc, char **argv)
 {
-  sf_init();
-  
   struct options options;
   initialize_options(&options);
   parse_options(argc, argv, &options);
   
   struct sj_random *random = sj_random_alloc_nrand48();
-  struct sj_world *world = sj_world_alloc(sf_string_chars(options.name), options.hex_coordinate, random);
+  struct sj_world *world = sj_world_alloc(options.name, options.hex_coordinate, random);
   
   char *description = sj_string_from_world(world);
   fprintf(stdout, "%s\n", description);
   sj_free(description);
   
   sj_random_free(random);
-  sf_fin();
   sj_memory_expect_alloc_count_zero();
   return EXIT_SUCCESS;
 }
@@ -92,7 +98,8 @@ parse_options(int argc, char **argv, struct options *options)
         print_usage_and_exit(argc, argv);
         break;
       case 'n':
-        options->name = sf_string(optarg);
+        sj_free(options->name);
+        options->name = sj_strdup(optarg);
         break;
       case 'x':
         {
@@ -126,6 +133,5 @@ print_usage_and_exit(int argc, char **argv)
           ,
           basename(argv[0])
           );
-  sf_temp_pool_release();
   exit(EXIT_FAILURE);
 }
