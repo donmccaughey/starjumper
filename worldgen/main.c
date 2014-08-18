@@ -55,6 +55,7 @@ main(int argc, char **argv)
   sj_free(description);
   
   sj_random_free(random);
+  finalize_options(&options);
   sj_memory_expect_alloc_count_zero();
   return EXIT_SUCCESS;
 }
