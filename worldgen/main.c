@@ -34,7 +34,7 @@ initialize_options(struct options *options)
 int
 main(int argc, char **argv)
 {
-  sj_init();
+  sf_init();
   
   struct options options;
   initialize_options(&options);
@@ -48,7 +48,7 @@ main(int argc, char **argv)
   sj_free(description);
   
   sj_random_free(random);
-  sj_fin();
+  sf_fin();
   sj_memory_expect_alloc_count_zero();
   return EXIT_SUCCESS;
 }
