@@ -148,7 +148,7 @@ void
 sj_free(void *memory)
 {
   free(memory);
-  DECREMENT_ALLOC_COUNT();
+  if (memory) DECREMENT_ALLOC_COUNT();
 }
 
 
