@@ -329,59 +329,43 @@ sj_world(sf_string_t name,
   world->name = sf_retain(name);
   world->hex_coordinate = hex_coordinate;
   
-  struct sj_dice_throw *dice_throw = NULL;
-  
-  dice_throw = sj_dice_throw_alloc(2, 6, random);
-  int starport_index = sj_dice_throw_total(dice_throw);
-  sj_dice_throw_free(dice_throw);
+  int starport_index = sj_dice_throw(2, 6, NULL, 0, random);
   world->starport = starport_table[starport_index];
   
   if ('A' == world->starport || 'B' == world->starport) {
-    dice_throw = sj_dice_throw_alloc(2, 6, random);
-    int naval_base_index = sj_dice_throw_total(dice_throw);
-    sj_dice_throw_free(dice_throw);
+    int naval_base_index = sj_dice_throw(2, 6, NULL, 0, random);
     world->naval_base = naval_base_table[naval_base_index];
   }
   
   if ('E' != world->starport && 'X' != world->starport) {
-    dice_throw = sj_dice_throw_alloc(2, 6, random);
+    int modifier = 0;
     if ('C' == world->starport) {
-      sj_dice_throw_add_modifier(dice_throw, -1);
+      modifier = -1;
     } else if ('B' == world->starport) {
-      sj_dice_throw_add_modifier(dice_throw, -2);
+      modifier = -2;
     } else if ('A' == world->starport) {
-      sj_dice_throw_add_modifier(dice_throw, -3);
+      modifier = -3;
     }
-    int scout_base_index = sj_dice_throw_total(dice_throw);
-    sj_dice_throw_free(dice_throw);
+    int scout_base_index = sj_dice_throw(2, 6, (int[]) { modifier }, 1, random);
     world->scout_base = scout_base_table[scout_base_index];
   }
   
-  dice_throw = sj_dice_throw_alloc(2, 6, random);
-  int gas_giant_index = sj_dice_throw_total(dice_throw);
-  sj_dice_throw_free(dice_throw);
+  int gas_giant_index = sj_dice_throw(2, 6, NULL, 0, random);
   world->gas_giant = gas_giant_table[gas_giant_index];
   
-  dice_throw = sj_dice_throw_alloc(2, 6, random);
-  sj_dice_throw_add_modifier(dice_throw, -2);
-  world->size = sj_dice_throw_total(dice_throw);
-  sj_dice_throw_free(dice_throw);
+  world->size = sj_dice_throw(2, 6, (int[]) { -2 }, 1, random);
   
   if (0 == world->size) {
     world->atmosphere = 0;
   } else {
-    dice_throw = sj_dice_throw_alloc(2, 6, random);
-    sj_dice_throw_add_modifier(dice_throw, -7);
-    sj_dice_throw_add_modifier(dice_throw, world->size);
-    world->atmosphere = sj_dice_throw_total(dice_throw);
-    sj_dice_throw_free(dice_throw);
+    world->atmosphere = sj_dice_throw(2, 6, (int[]) { -7, world->size }, 2, random);
     if (world->atmosphere < 0) world->atmosphere = 0;
   }
   
   if (0 == world->size) {
     world->hydrographics = 0;
   } else {
-    dice_throw = sj_dice_throw_alloc(2, 6, random);
+    struct sj_dice_throw *dice_throw = sj_dice_throw_alloc(2, 6, random);
     sj_dice_throw_add_modifier(dice_throw, -7);
     sj_dice_throw_add_modifier(dice_throw, world->atmosphere);
     if (0 == world->atmosphere || 1 == world->atmosphere || world->atmosphere >= 10) {
@@ -393,37 +377,26 @@ sj_world(sf_string_t name,
     if (world->hydrographics > 10) world->hydrographics = 10;
   }
   
-  dice_throw = sj_dice_throw_alloc(2, 6, random);
-  sj_dice_throw_add_modifier(dice_throw, -2);
-  world->population = sj_dice_throw_total(dice_throw);
-  sj_dice_throw_free(dice_throw);
+  world->population = sj_dice_throw(2, 6, (int[]) { -2 }, 1, random);
   
   if (0 == world->population) {
     world->government = 0;
   } else {
-    dice_throw = sj_dice_throw_alloc(2, 6, random);
-    sj_dice_throw_add_modifier(dice_throw, -7);
-    sj_dice_throw_add_modifier(dice_throw, world->population);
-    world->government = sj_dice_throw_total(dice_throw);
-    sj_dice_throw_free(dice_throw);
+    world->government = sj_dice_throw(2, 6, (int[]) { -7, world->population }, 2, random);
     if (world->government < 0) world->government = 0;
   }
   
   if (0 == world->population) {
     world->law_level = 0;
   } else {
-    dice_throw = sj_dice_throw_alloc(2, 6, random);
-    sj_dice_throw_add_modifier(dice_throw, -7);
-    sj_dice_throw_add_modifier(dice_throw, world->government);
-    world->law_level = sj_dice_throw_total(dice_throw);
-    sj_dice_throw_free(dice_throw);
+    world->law_level = sj_dice_throw(2, 6, (int[]) { -7, world->government }, 2, random);
     if (world->law_level < 0) world->law_level = 0;
   }
   
   // TODO: adjust starport if 0 == population
   
   if (world->population) {
-    dice_throw = sj_dice_throw_alloc(1, 6, random);
+    struct sj_dice_throw *dice_throw = sj_dice_throw_alloc(1, 6, random);
     
     if ('A' == world->starport) {
       sj_dice_throw_add_modifier(dice_throw, +6);

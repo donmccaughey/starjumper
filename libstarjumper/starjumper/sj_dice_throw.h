@@ -15,6 +15,13 @@ struct sj_dice_throw
 };
 
 
+int
+sj_dice_throw(int count,
+              int sides,
+              int modifiers[],
+              int modifiers_count,
+              struct sj_random *random);
+
 void
 sj_dice_throw_add_modifier(struct sj_dice_throw *dice_throw, int modifier);
 
