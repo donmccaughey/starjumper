@@ -5,49 +5,49 @@
 
 
 static bool
-is_agricultural(sj_world_t world);
+is_agricultural(struct sj_world const *world);
 
 static bool
-is_asteroid_belt(sj_world_t world);
+is_asteroid_belt(struct sj_world const *world);
 
 static bool
-is_barren_world(sj_world_t world);
+is_barren_world(struct sj_world const *world);
 
 static bool
-is_desert_world(sj_world_t world);
+is_desert_world(struct sj_world const *world);
 
 static bool
-is_fluid_oceans(sj_world_t world);
+is_fluid_oceans(struct sj_world const *world);
 
 static bool
-is_high_population(sj_world_t world);
+is_high_population(struct sj_world const *world);
 
 static bool
-is_ice_capped(sj_world_t world);
+is_ice_capped(struct sj_world const *world);
 
 static bool
-is_industrial(sj_world_t world);
+is_industrial(struct sj_world const *world);
 
 static bool
-is_low_population(sj_world_t world);
+is_low_population(struct sj_world const *world);
 
 static bool
-is_non_agricultural(sj_world_t world);
+is_non_agricultural(struct sj_world const *world);
 
 static bool
-is_non_industrial(sj_world_t world);
+is_non_industrial(struct sj_world const *world);
 
 static bool
-is_poor(sj_world_t world);
+is_poor(struct sj_world const *world);
 
 static bool
-is_rich(sj_world_t world);
+is_rich(struct sj_world const *world);
 
 static bool
-is_vacuum_world(sj_world_t world);
+is_vacuum_world(struct sj_world const *world);
 
 static bool
-is_water_world(sj_world_t world);
+is_water_world(struct sj_world const *world);
 
 
 struct sj_trade_classification const sj_trade_classification_agricultural = {
@@ -178,67 +178,11 @@ static int all_trade_classifications_count = sizeof all_trade_classifications
 
 
 static bool
-is_agricultural(sj_world_t world)
+is_agricultural(struct sj_world const *world)
 {
-  if (world) {
-    if (sj_world_atmosphere(world) >= 4 && sj_world_atmosphere(world) <= 9) {
-      if (sj_world_hydrographics(world) >= 4 && sj_world_hydrographics(world) <= 8) {
-        if (sj_world_population(world) >= 5 && sj_world_population(world) <= 7) {
-          return true;
-        }
-      }
-    }
-  }
-  return false;
-}
-
-
-static bool
-is_asteroid_belt(sj_world_t world)
-{
-  if (world) {
-    if (sj_world_size(world) == 0) {
-      // from Book 7: Merchant Prince
-      if (sj_world_atmosphere(world) == 0) {
-        if (sj_world_hydrographics(world) == 0) {
-          return true;
-        }
-      }
-    }
-  }
-  return false;
-}
-
-
-static bool
-is_barren_world(sj_world_t world)
-{
-  if (world) {
-    // from Book 7: Merchant Prince
-    if (sj_world_population(world) == 0) {
-      if (sj_world_government(world) == 0) {
-        if (sj_world_law_level(world) == 0) {
-          return true;
-        }
-      }
-    }
-  }
-  return false;
-}
-
-
-static bool
-is_desert_world(sj_world_t world)
-{
-  if (world) {
-    // from Book 3: Worlds and Adventures (1981)
-    //     hydrographic 0
-    // from Supplement 10: The Solomani Rim
-    //     atmosphere 2 through 9 and hydrographic 0
-    // from Book 7: Merchant Prince
-    //     atmosphere 2+ and hydrographics 0
-    if (sj_world_atmosphere(world) >= 2) {
-      if (sj_world_hydrographics(world) == 0) {
+  if (world->atmosphere >= 4 && world->atmosphere <= 9) {
+    if (world->hydrographics >= 4 && world->hydrographics <= 8) {
+      if (world->population >= 5 && world->population <= 7) {
         return true;
       }
     }
@@ -248,12 +192,12 @@ is_desert_world(sj_world_t world)
 
 
 static bool
-is_fluid_oceans(sj_world_t world)
+is_asteroid_belt(struct sj_world const *world)
 {
-  if (world) {
+  if (world->size == 0) {
     // from Book 7: Merchant Prince
-    if (sj_world_atmosphere(world) >= 10) {
-      if (sj_world_hydrographics(world) >= 1) {
+    if (world->atmosphere == 0) {
+      if (world->hydrographics == 0) {
         return true;
       }
     }
@@ -263,24 +207,12 @@ is_fluid_oceans(sj_world_t world)
 
 
 static bool
-is_high_population(sj_world_t world)
+is_barren_world(struct sj_world const *world)
 {
-  if (world) {
-    // from Book 7: Merchant Prince
-    if (sj_world_population(world) >= 9) {
-      return true;
-    }
-  }
-  return false;
-}
-
-
-static bool
-is_ice_capped(sj_world_t world)
-{
-  if (world) {
-    if (sj_world_atmosphere(world) == 0 || sj_world_atmosphere(world) == 1) {
-      if (sj_world_hydrographics(world) >= 1) {
+  // from Book 7: Merchant Prince
+  if (world->population == 0) {
+    if (world->government == 0) {
+      if (world->law_level == 0) {
         return true;
       }
     }
@@ -290,14 +222,91 @@ is_ice_capped(sj_world_t world)
 
 
 static bool
-is_industrial(sj_world_t world)
+is_desert_world(struct sj_world const *world)
 {
-  if (world) {
-    if (   sj_world_atmosphere(world) == 0 || sj_world_atmosphere(world) == 1
-        || sj_world_atmosphere(world) == 2 || sj_world_atmosphere(world) == 4
-        || sj_world_atmosphere(world) == 7 || sj_world_atmosphere(world) == 9)
-    {
-      if (sj_world_population(world) >= 9) {
+  // from Book 3: Worlds and Adventures (1981)
+  //     hydrographic 0
+  // from Supplement 10: The Solomani Rim
+  //     atmosphere 2 through 9 and hydrographic 0
+  // from Book 7: Merchant Prince
+  //     atmosphere 2+ and hydrographics 0
+  if (world->atmosphere >= 2) {
+    if (world->hydrographics == 0) {
+      return true;
+    }
+  }
+  return false;
+}
+
+
+static bool
+is_fluid_oceans(struct sj_world const *world)
+{
+  // from Book 7: Merchant Prince
+  if (world->atmosphere >= 10) {
+    if (world->hydrographics >= 1) {
+      return true;
+    }
+  }
+  return false;
+}
+
+
+static bool
+is_high_population(struct sj_world const *world)
+{
+  // from Book 7: Merchant Prince
+  if (world->population >= 9) {
+    return true;
+  }
+  return false;
+}
+
+
+static bool
+is_ice_capped(struct sj_world const *world)
+{
+  if (world->atmosphere == 0 || world->atmosphere == 1) {
+    if (world->hydrographics >= 1) {
+      return true;
+    }
+  }
+  return false;
+}
+
+
+static bool
+is_industrial(struct sj_world const *world)
+{
+  if (   world->atmosphere == 0 || world->atmosphere == 1
+      || world->atmosphere == 2 || world->atmosphere == 4
+      || world->atmosphere == 7 || world->atmosphere == 9)
+  {
+    if (world->population >= 9) {
+      return true;
+    }
+  }
+  return false;
+}
+
+
+static bool
+is_low_population(struct sj_world const *world)
+{
+  // from Book 7: Merchant Prince
+  if (world->population <= 3) {
+    return true;
+  }
+  return false;
+}
+
+
+static bool
+is_non_agricultural(struct sj_world const *world)
+{
+  if (world->atmosphere <= 3) {
+    if (world->hydrographics <= 3) {
+      if (world->population >= 6) {
         return true;
       }
     }
@@ -307,11 +316,20 @@ is_industrial(sj_world_t world)
 
 
 static bool
-is_low_population(sj_world_t world)
+is_non_industrial(struct sj_world const *world)
 {
-  if (world) {
-    // from Book 7: Merchant Prince
-    if (sj_world_population(world) <= 3) {
+  if (world->population <= 6) {
+    return true;
+  }
+  return false;
+}
+
+
+static bool
+is_poor(struct sj_world const *world)
+{
+  if (world->atmosphere >= 2 && world->atmosphere <= 5) {
+    if (world->hydrographics <= 3) {
       return true;
     }
   }
@@ -320,39 +338,14 @@ is_low_population(sj_world_t world)
 
 
 static bool
-is_non_agricultural(sj_world_t world)
+is_rich(struct sj_world const *world)
 {
-  if (world) {
-    if (sj_world_atmosphere(world) <= 3) {
-      if (sj_world_hydrographics(world) <= 3) {
-        if (sj_world_population(world) >= 6) {
-          return true;
-        }
-      }
-    }
-  }
-  return false;
-}
-
-
-static bool
-is_non_industrial(sj_world_t world)
-{
-  if (world) {
-    if (sj_world_population(world) <= 6) {
-      return true;
-    }
-  }
-  return false;
-}
-
-
-static bool
-is_poor(sj_world_t world)
-{
-  if (world) {
-    if (sj_world_atmosphere(world) >= 2 && sj_world_atmosphere(world) <= 5) {
-      if (sj_world_hydrographics(world) <= 3) {
+  if (world->atmosphere == 6 || world->atmosphere == 8) {
+    if (world->population >= 6 && world->population <= 8) {
+      if (world->government >= 4 && world->government <= 9) {
+        // from Book 7: Merchant Prince
+        //     Aslan rich worlds ignore government type.
+        //     Vargr rich worlds may government type 4,5,6,8or 9 (not type 7).
         return true;
       }
     }
@@ -362,56 +355,33 @@ is_poor(sj_world_t world)
 
 
 static bool
-is_rich(sj_world_t world)
+is_vacuum_world(struct sj_world const *world)
 {
-  if (world) {
-    if (sj_world_atmosphere(world) == 6 || sj_world_atmosphere(world) == 8) {
-      if (sj_world_population(world) >= 6 && sj_world_population(world) <= 8) {
-        if (sj_world_government(world) >= 4 && sj_world_government(world) <= 9) {
-          // from Book 7: Merchant Prince
-          //     Aslan rich worlds ignore government type.
-          //     Vargr rich worlds may government type 4,5,6,8or 9 (not type 7).
-          return true;
-        }
-      }
-    }
+  // from Book 3: Worlds and Adventures (1981)
+  //     atmosphere of 0
+  // from Supplement 10: The Solomani Rim
+  //     size of at least 1 and an atmosphere of 0
+  // from Book 7: Merchant Prince
+  //     atmosphere of 0
+  if (world->atmosphere == 0) {
+    return true;
   }
   return false;
 }
 
 
 static bool
-is_vacuum_world(sj_world_t world)
+is_water_world(struct sj_world const *world)
 {
-  if (world) {
-    // from Book 3: Worlds and Adventures (1981)
-    //     atmosphere of 0
-    // from Supplement 10: The Solomani Rim
-    //     size of at least 1 and an atmosphere of 0
-    // from Book 7: Merchant Prince
-    //     atmosphere of 0
-    if (sj_world_atmosphere(world) == 0) {
-      return true;
-    }
-  }
-  return false;
-}
-
-
-static bool
-is_water_world(sj_world_t world)
-{
-  if (world) {
-    if (sj_world_hydrographics(world) == 10) {
-      return true;
-    }
+  if (world->hydrographics == 10) {
+    return true;
   }
   return false;
 }
 
 
 struct sj_trade_classification const **
-sj_world_alloc_trade_classifications(sj_world_t world, int *count)
+sj_world_alloc_trade_classifications(struct sj_world const *world, int *count)
 {
   size_t max_count = all_trade_classifications_count + 1;
   size_t item_size = sizeof all_trade_classifications[0];

@@ -4,32 +4,10 @@
 #include <string.h>
 
 #include "sj_dice_throw.h"
-#include "sj_hex_coordinate.h"
 #include "sj_memory.h"
 #include "sj_string_array.h"
 #include "sj_string.h"
 #include "sj_trade_classification.h"
-
-
-struct _sj_world
-{
-  SF_OBJECT_FIELDS;
-  sf_string_t name;
-  struct sj_hex_coordinate hex_coordinate;
-  char starport;
-  bool naval_base;
-  bool scout_base;
-  bool gas_giant;
-  int size;
-  int atmosphere;
-  int hydrographics;
-  int population;
-  int government;
-  int law_level;
-  int tech_level;
-  struct sj_trade_classification const **trade_classifications;
-  int trade_classifications_count;
-};
 
 
 static char *
@@ -42,13 +20,7 @@ static char *
 alloc_trade_classification_short_name(void const *item);
 
 static char
-base_code(sj_world_t world);
-
-static void
-dealloc(sf_any_t self);
-
-static sf_string_t 
-string_from(sf_any_t self);
+base_code(struct sj_world const *world);
 
 static char
 hex_digit(int value);
@@ -183,15 +155,6 @@ static int tech_level_size_table[] = {
 
 static char *starport_table = "??AAABBCCDEEX";
 
-sf_type_t sj_world_type;
-
-
-void
-_sj_world_init(void)
-{
-  sj_world_type = sf_type("sj_world_t", dealloc, string_from, NULL, NULL, NULL, NULL);
-}
-
 
 static char *
 alloc_trade_classification_abbreviation(void const *item)
@@ -218,7 +181,7 @@ alloc_trade_classification_short_name(void const *item)
 
 
 static char
-base_code(sj_world_t world)
+base_code(struct sj_world const *world)
 {
   if (world->naval_base) {
     return world->scout_base ? 'A' : 'N'; // base code 'A' from Supplement 10: The Solomani Rim
@@ -230,21 +193,9 @@ base_code(sj_world_t world)
 }
 
 
-static void
-dealloc(sf_any_t self)
+char *
+sj_string_from_world(struct sj_world const *world)
 {
-  sj_world_t world = self;
-  
-  sf_release(world->name);
-  sj_free(world->trade_classifications);
-}
-
-
-static sf_string_t 
-string_from(sf_any_t self)
-{
-  sj_world_t world = self;
-  
   char *hex_coordinate = sj_string_alloc_from_hex_coordinate(world->hex_coordinate);
   
   int const max_name_length = 18;
@@ -287,8 +238,9 @@ string_from(sf_any_t self)
     }
   }
   
-  sf_string_t string = sf_string_from_format("%*s %4s %c%c%c%c%c%c%c-%c %c %*s%c",
-      -max_name_length, sf_string_chars(world->name), hex_coordinate,
+  char *string;
+  sj_asprintf(&string, "%*s %4s %c%c%c%c%c%c%c-%c %c %*s%c",
+      -max_name_length, world->name, hex_coordinate,
       world->starport,
       hex_digit(world->size), hex_digit(world->atmosphere),
       hex_digit(world->hydrographics), hex_digit(world->population),
@@ -318,15 +270,14 @@ hex_digit(int value)
 }
 
 
-sj_world_t
-sj_world(sf_string_t name,
-         struct sj_hex_coordinate const hex_coordinate,
-         struct sj_random *random)
+struct sj_world *
+sj_world_alloc(char const *name,
+               struct sj_hex_coordinate const hex_coordinate,
+               struct sj_random *random)
 {
-  struct _sj_world *world = sf_object_calloc(sizeof(struct _sj_world), sj_world_type);
-  if ( ! world) return NULL;
+  struct sj_world *world = sj_malloc(sizeof(struct sj_world));
   
-  world->name = sf_retain(name);
+  world->name = sj_strdup(name);
   world->hex_coordinate = hex_coordinate;
   
   int starport_index = sj_dice_throw(2, 6, NULL, 0, random);
@@ -421,68 +372,14 @@ sj_world(sf_string_t name,
   
   world->trade_classifications = sj_world_alloc_trade_classifications(world, &world->trade_classifications_count);
   
-  return sf_move_to_temp_pool(world);
+  return world;
 }
 
 
-int
-sj_world_atmosphere(sj_world_t world)
+void
+sj_world_free(struct sj_world *world)
 {
-  return world ? world->atmosphere : 0;
-}
-
-
-int
-sj_world_government(sj_world_t world)
-{
-  return world ? world->government : 0;
-}
-
-
-struct sj_hex_coordinate
-sj_world_hex_coordinate(sj_world_t world)
-{
-  return world ? world->hex_coordinate : (struct sj_hex_coordinate) { .horizontal=0, .vertical=0, };
-}
-
-
-int
-sj_world_hydrographics(sj_world_t world)
-{
-  return world ? world->hydrographics : 0;
-}
-
-
-int
-sj_world_law_level(sj_world_t world)
-{
-  return world ? world->law_level : 0;
-}
-
-
-sf_string_t
-sj_world_name(sj_world_t world)
-{
-  return world ? world->name : NULL;
-}
-
-
-int
-sj_world_population(sj_world_t world)
-{
-  return world ? world->population : 0;
-}
-
-
-int
-sj_world_size(sj_world_t world)
-{
-  return world ? world->size : 0;
-}
-
-
-char
-sj_world_starport(sj_world_t world)
-{
-  return world ? world->starport : 'X';
+  sj_free(world->name);
+  sj_free(world->trade_classifications);
+  sj_free(world);
 }

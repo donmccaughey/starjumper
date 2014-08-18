@@ -2,7 +2,10 @@
 #define STARJUMPER_SJ_TRADE_CLASSIFICATION_H_INCLUDED
 
 
-#include <starjumper/sj_defs.h>
+#include <stdbool.h>
+
+
+struct sj_world;
 
 
 struct sj_trade_classification
@@ -10,7 +13,7 @@ struct sj_trade_classification
     char const *name;
     char const *short_name;
     char const *abbreviation;
-    bool (*applies_to)(sj_world_t);
+    bool (*applies_to)(struct sj_world const *world);
 };
 
 
@@ -32,7 +35,7 @@ extern struct sj_trade_classification const sj_trade_classification_water_world;
 
 
 struct sj_trade_classification const **
-sj_world_alloc_trade_classifications(sj_world_t world, int *count);
+sj_world_alloc_trade_classifications(struct sj_world const *world, int *count);
 
 
 #endif

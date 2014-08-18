@@ -41,10 +41,11 @@ main(int argc, char **argv)
   parse_options(argc, argv, &options);
   
   struct sj_random *random = sj_random_alloc_nrand48();
-  sj_world_t world = sj_world(options.name, options.hex_coordinate, random);
+  struct sj_world *world = sj_world_alloc(sf_string_chars(options.name), options.hex_coordinate, random);
   
-  sf_string_t description = sf_string_from(world);
-  fprintf(stdout, "%s\n", sf_string_chars(description));
+  char *description = sj_string_from_world(world);
+  fprintf(stdout, "%s\n", description);
+  sj_free(description);
   
   sj_random_free(random);
   sj_fin();
