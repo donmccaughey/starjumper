@@ -7,14 +7,14 @@
 
 
 static char *
-alloc_die_modifier_string(void const *item);
+alloc_modifier_string(void const *item);
 
 static char *
-alloc_die_roll_string(void const *item);
+alloc_roll_string(void const *item);
 
 
 static char *
-alloc_die_modifier_string(void const *item)
+alloc_modifier_string(void const *item)
 {
   int const *modifier = item;
   char *string;
@@ -24,11 +24,11 @@ alloc_die_modifier_string(void const *item)
 
 
 static char *
-alloc_die_roll_string(void const *item)
+alloc_roll_string(void const *item)
 {
-  int const *die_roll = item;
+  int const *roll = item;
   char *string;
-  sj_asprintf(&string, "%i", *die_roll);
+  sj_asprintf(&string, "%i", *roll);
   return string;
 }
 
@@ -55,9 +55,9 @@ sj_dice_throw_alloc(int count,
   dice_throw->count = count;
   dice_throw->sides = sides;
   
-  dice_throw->die_rolls = sj_malloc(count * sizeof(int));
+  dice_throw->rolls = sj_malloc(count * sizeof(int));
   for (int i = 0; i < count; ++i) {
-    dice_throw->die_rolls[i] = 1 + sj_random_next_value_in_range(random, sides);
+    dice_throw->rolls[i] = 1 + sj_random_next_value_in_range(random, sides);
   }
   
   dice_throw->modifiers = NULL;
@@ -70,7 +70,7 @@ sj_dice_throw_alloc(int count,
 void
 sj_dice_throw_free(struct sj_dice_throw *dice_throw)
 {
-  sj_free(dice_throw->die_rolls);
+  sj_free(dice_throw->rolls);
   sj_free(dice_throw->modifiers);
   sj_free(dice_throw);
 }
@@ -81,7 +81,7 @@ sj_dice_throw_total(struct sj_dice_throw *dice_throw)
 {
   int total = 0;
   for (int i = 0; i < dice_throw->count; ++i) {
-    total += dice_throw->die_rolls[i];
+    total += dice_throw->rolls[i];
   }
   
   for (int i = 0; i < dice_throw->modifiers_count; ++i) {
@@ -98,25 +98,28 @@ sj_string_alloc_from_dice_throw(struct sj_dice_throw const *dice_throw)
   char *dice;
   sj_asprintf(&dice, "%iD%i", dice_throw->count, dice_throw->sides);
   
-  struct sj_string_array *die_rolls_array = sj_string_array_alloc_collect_strings(
-      dice_throw->die_rolls,
+  struct sj_string_array *rolls_array = sj_string_array_alloc_collect_strings(
+      dice_throw->rolls,
       dice_throw->count,
-      sizeof dice_throw->die_rolls[0],
-      alloc_die_roll_string
+      sizeof dice_throw->rolls[0],
+      alloc_roll_string
   );
-  char *die_rolls = sj_string_alloc_join_string_array_with_separator(die_rolls_array, ", ");
-  sj_string_array_free(die_rolls_array);
+  char *rolls = sj_string_alloc_join_string_array_with_separator(rolls_array, ", ");
+  sj_string_array_free(rolls_array);
   
-  struct sj_string_array *die_modifiers_array = sj_string_array_alloc_collect_strings(
+  struct sj_string_array *modifiers_array = sj_string_array_alloc_collect_strings(
       dice_throw->modifiers,
       dice_throw->modifiers_count,
       sizeof dice_throw->modifiers[0],
-      alloc_die_modifier_string
+      alloc_modifier_string
   );
-  char *die_modifiers = sj_string_alloc_join_string_array_with_separator(die_modifiers_array, ", ");
-  sj_string_array_free(die_modifiers_array);
+  char *modifiers = sj_string_alloc_join_string_array_with_separator(modifiers_array, ", ");
+  sj_string_array_free(modifiers_array);
   
   char *string;
-  sj_asprintf(&string, "%s (%s) %s", dice, die_rolls, die_modifiers);
+  sj_asprintf(&string, "%s (%s) %s", dice, rolls, modifiers);
+  sj_free(modifiers);
+  sj_free(rolls);
+  sj_free(dice);
   return string;
 }

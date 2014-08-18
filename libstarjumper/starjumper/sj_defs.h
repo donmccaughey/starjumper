@@ -5,11 +5,9 @@
 #include <sf/sf.h>
 
 
-struct _sj_dice_throw;
 struct _sj_world;
 
 
-typedef struct _sj_dice_throw const *sj_dice_throw_t;
 typedef struct _sj_world const *sj_world_t;
 
 

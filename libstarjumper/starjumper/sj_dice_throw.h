@@ -1,8 +1,5 @@
-#ifndef STARJUMPER_SJ_DIE_ROLL_H_INCLUDED
-#define STARJUMPER_SJ_DIE_ROLL_H_INCLUDED
-
-
-#include <starjumper/sj_defs.h>
+#ifndef STARJUMPER_SJ_DICE_THROW_H_INCLUDED
+#define STARJUMPER_SJ_DICE_THROW_H_INCLUDED
 
 
 struct sj_random;
@@ -10,9 +7,9 @@ struct sj_random;
 
 struct sj_dice_throw
 {
-  int *die_rolls;
   int count;
   int sides;
+  int *rolls;
   int *modifiers;
   int modifiers_count;
 };
