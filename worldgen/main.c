@@ -1,3 +1,4 @@
+#include <earmark.h>
 #include <getopt.h>
 #include <libgen.h>
 #include <stdio.h>
@@ -16,12 +17,12 @@ main(int argc, char **argv)
 
   char *description = sj_string_from_world(world);
   fprintf(stdout, "%s\n", description);
-  sj_free(description);
+  em_free(description);
   
   sj_world_free(world);
   sj_random_free(random);
   options_free(options);
   
-  sj_memory_expect_alloc_count_zero();
+  em_expect_alloc_count_zero();
   return EXIT_SUCCESS;
 }

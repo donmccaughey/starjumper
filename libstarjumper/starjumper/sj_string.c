@@ -2,7 +2,7 @@
 
 #include <string.h>
 
-#include "sj_memory.h"
+#include "earmark.h"
 #include "sj_string_array.h"
 
 
@@ -41,7 +41,7 @@ sj_string_alloc_join_strings_with_separator(char const *const strings[],
     if (i) size += separator_size;
     size += strlen(strings[i]);
   }
-  char *joined = sj_malloc(size);
+  char *joined = em_malloc(size);
   char *end = joined;
   for (int i = 0; i < count; ++i) {
     if (i) end = stpcpy(end, separator);
@@ -62,7 +62,7 @@ sj_string_alloc_join_strings_with_suffix(char const *const strings[],
     size += strlen(strings[i]);
     size += suffix_size;
   }
-  char *joined = sj_malloc(size);
+  char *joined = em_malloc(size);
   char *end = joined;
   for (int i = 0; i < count; ++i) {
     end = stpcpy(end, strings[i]);

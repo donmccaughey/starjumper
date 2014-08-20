@@ -1,5 +1,6 @@
 #include "options.h"
 
+#include <earmark.h>
 #include <getopt.h>
 #include <libgen.h>
 #include <stdio.h>
@@ -41,9 +42,9 @@ print_usage_and_exit(int argc, char **argv);
 struct options *
 options_alloc(int argc, char *argv[])
 {
-  struct options *options = sj_malloc(sizeof(struct options));
+  struct options *options = em_malloc(sizeof(struct options));
   
-  options->name = sj_strdup("No Name");
+  options->name = em_strdup("No Name");
   options->hex_coordinate = (struct sj_hex_coordinate) { .horizontal=1, .vertical=1, };
   
   int long_options_index;
@@ -54,8 +55,8 @@ options_alloc(int argc, char *argv[])
         print_usage_and_exit(argc, argv);
         break;
       case 'n':
-        sj_free(options->name);
-        options->name = sj_strdup(optarg);
+        em_free(options->name);
+        options->name = em_strdup(optarg);
         break;
       case 'x':
       {
@@ -82,8 +83,8 @@ options_alloc(int argc, char *argv[])
 void
 options_free(struct options *options)
 {
-  sj_free(options->name);
-  sj_free(options);
+  em_free(options->name);
+  em_free(options);
 }
 
 

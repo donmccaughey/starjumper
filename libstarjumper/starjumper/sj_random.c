@@ -6,7 +6,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "sj_memory.h"
+#include "earmark.h"
 
 
 #define SJ_RANDOM_MAX (SJ_RANDOM_RANGE - 1)
@@ -45,7 +45,7 @@ fake_next_value_in_range(void *data, long range)
 static void
 free_data(void *data)
 {
-  sj_free(data);
+  em_free(data);
 }
 
 
@@ -95,9 +95,9 @@ seed_nrand48_state(unsigned short state[3])
 struct sj_random *
 sj_random_alloc_fake(enum sj_random_fake_type type)
 {
-  struct sj_random *random = sj_malloc(sizeof(struct sj_random));
+  struct sj_random *random = em_malloc(sizeof(struct sj_random));
   
-  random->data = sj_arraydup(&type, 1, sizeof type);
+  random->data = em_arraydup(&type, 1, sizeof type);
   random->next_value_in_range = fake_next_value_in_range;
   random->free_data = free_data;
   
@@ -108,12 +108,12 @@ sj_random_alloc_fake(enum sj_random_fake_type type)
 struct sj_random *
 sj_random_alloc_nrand48(void)
 {
-  struct sj_random *random = sj_malloc(sizeof(struct sj_random));
+  struct sj_random *random = em_malloc(sizeof(struct sj_random));
   
   unsigned short state[3];
   seed_nrand48_state(state);
   
-  random->data = sj_arraydup(state, 3, sizeof state[0]);
+  random->data = em_arraydup(state, 3, sizeof state[0]);
   random->next_value_in_range = nrand48_next_value_in_range;
   random->free_data = free_data;
   
@@ -125,7 +125,7 @@ void
 sj_random_free(struct sj_random *random)
 {
   random->free_data(random->data);
-  sj_free(random);
+  em_free(random);
 }
 
 

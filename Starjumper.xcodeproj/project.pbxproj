@@ -13,8 +13,6 @@
 		D4E2EC1019A014CD00483573 /* sj_dice_throw.h in Headers */ = {isa = PBXBuildFile; fileRef = D4E2EBFD19A014CD00483573 /* sj_dice_throw.h */; };
 		D4E2EC1319A014CD00483573 /* sj_hex_coordinate.c in Sources */ = {isa = PBXBuildFile; fileRef = D4E2EC0019A014CD00483573 /* sj_hex_coordinate.c */; };
 		D4E2EC1419A014CD00483573 /* sj_hex_coordinate.h in Headers */ = {isa = PBXBuildFile; fileRef = D4E2EC0119A014CD00483573 /* sj_hex_coordinate.h */; };
-		D4E2EC1519A014CD00483573 /* sj_memory.c in Sources */ = {isa = PBXBuildFile; fileRef = D4E2EC0219A014CD00483573 /* sj_memory.c */; };
-		D4E2EC1619A014CD00483573 /* sj_memory.h in Headers */ = {isa = PBXBuildFile; fileRef = D4E2EC0319A014CD00483573 /* sj_memory.h */; };
 		D4E2EC1719A014CD00483573 /* sj_string_array.c in Sources */ = {isa = PBXBuildFile; fileRef = D4E2EC0419A014CD00483573 /* sj_string_array.c */; };
 		D4E2EC1819A014CD00483573 /* sj_string_array.h in Headers */ = {isa = PBXBuildFile; fileRef = D4E2EC0519A014CD00483573 /* sj_string_array.h */; };
 		D4E2EC1919A014CD00483573 /* sj_string.c in Sources */ = {isa = PBXBuildFile; fileRef = D4E2EC0619A014CD00483573 /* sj_string.c */; };
@@ -26,6 +24,8 @@
 		D4E2EC2019A014CD00483573 /* starjumper.h in Headers */ = {isa = PBXBuildFile; fileRef = D4E2EC0D19A014CD00483573 /* starjumper.h */; };
 		D4E2EC2D19A05DB300483573 /* sj_random.c in Sources */ = {isa = PBXBuildFile; fileRef = D4E2EC2C19A05DB300483573 /* sj_random.c */; };
 		D4E2EC3019A18A7E00483573 /* options.c in Sources */ = {isa = PBXBuildFile; fileRef = D4E2EC2F19A18A7E00483573 /* options.c */; };
+		D4FF4C9919A46930007DEC78 /* earmark.c in Sources */ = {isa = PBXBuildFile; fileRef = D4FF4C9719A46930007DEC78 /* earmark.c */; };
+		D4FF4C9A19A46930007DEC78 /* earmark.h in Headers */ = {isa = PBXBuildFile; fileRef = D4FF4C9819A46930007DEC78 /* earmark.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,8 +60,6 @@
 		D4E2EBFD19A014CD00483573 /* sj_dice_throw.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sj_dice_throw.h; sourceTree = "<group>"; };
 		D4E2EC0019A014CD00483573 /* sj_hex_coordinate.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = sj_hex_coordinate.c; sourceTree = "<group>"; };
 		D4E2EC0119A014CD00483573 /* sj_hex_coordinate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sj_hex_coordinate.h; sourceTree = "<group>"; };
-		D4E2EC0219A014CD00483573 /* sj_memory.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = sj_memory.c; sourceTree = "<group>"; };
-		D4E2EC0319A014CD00483573 /* sj_memory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sj_memory.h; sourceTree = "<group>"; };
 		D4E2EC0419A014CD00483573 /* sj_string_array.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = sj_string_array.c; sourceTree = "<group>"; };
 		D4E2EC0519A014CD00483573 /* sj_string_array.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sj_string_array.h; sourceTree = "<group>"; };
 		D4E2EC0619A014CD00483573 /* sj_string.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = sj_string.c; sourceTree = "<group>"; };
@@ -75,6 +73,8 @@
 		D4E2EC2C19A05DB300483573 /* sj_random.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = sj_random.c; sourceTree = "<group>"; };
 		D4E2EC2E19A18A0700483573 /* options.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = options.h; sourceTree = "<group>"; };
 		D4E2EC2F19A18A7E00483573 /* options.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = options.c; sourceTree = "<group>"; };
+		D4FF4C9719A46930007DEC78 /* earmark.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = earmark.c; sourceTree = "<group>"; };
+		D4FF4C9819A46930007DEC78 /* earmark.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = earmark.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -138,6 +138,8 @@
 			isa = PBXGroup;
 			children = (
 				D4E2EBFA19A014CD00483573 /* starjumper */,
+				D4FF4C9819A46930007DEC78 /* earmark.h */,
+				D4FF4C9719A46930007DEC78 /* earmark.c */,
 			);
 			path = libstarjumper;
 			sourceTree = "<group>";
@@ -149,8 +151,6 @@
 				D4E2EBFC19A014CD00483573 /* sj_dice_throw.c */,
 				D4E2EC0119A014CD00483573 /* sj_hex_coordinate.h */,
 				D4E2EC0019A014CD00483573 /* sj_hex_coordinate.c */,
-				D4E2EC0319A014CD00483573 /* sj_memory.h */,
-				D4E2EC0219A014CD00483573 /* sj_memory.c */,
 				D4E2EC2B19A05DA800483573 /* sj_random.h */,
 				D4E2EC2C19A05DB300483573 /* sj_random.c */,
 				D4E2EC0719A014CD00483573 /* sj_string.h */,
@@ -175,9 +175,9 @@
 			files = (
 				D4E2EC1419A014CD00483573 /* sj_hex_coordinate.h in Headers */,
 				D4E2EC1C19A014CD00483573 /* sj_trade_classification.h in Headers */,
-				D4E2EC1619A014CD00483573 /* sj_memory.h in Headers */,
 				D4E2EC1A19A014CD00483573 /* sj_string.h in Headers */,
 				D4E2EC1E19A014CD00483573 /* sj_world.h in Headers */,
+				D4FF4C9A19A46930007DEC78 /* earmark.h in Headers */,
 				D4E2EC1019A014CD00483573 /* sj_dice_throw.h in Headers */,
 				D4E2EC2019A014CD00483573 /* starjumper.h in Headers */,
 				D4E2EC1819A014CD00483573 /* sj_string_array.h in Headers */,
@@ -254,11 +254,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D4E2EC1519A014CD00483573 /* sj_memory.c in Sources */,
 				D4E2EC1319A014CD00483573 /* sj_hex_coordinate.c in Sources */,
 				D4E2EC1D19A014CD00483573 /* sj_world.c in Sources */,
 				D4E2EC0F19A014CD00483573 /* sj_dice_throw.c in Sources */,
 				D4E2EC2D19A05DB300483573 /* sj_random.c in Sources */,
+				D4FF4C9919A46930007DEC78 /* earmark.c in Sources */,
 				D4E2EC1919A014CD00483573 /* sj_string.c in Sources */,
 				D4E2EC1B19A014CD00483573 /* sj_trade_classification.c in Sources */,
 				D4E2EC1719A014CD00483573 /* sj_string_array.c in Sources */,
@@ -351,10 +351,7 @@
 					"$(SRCROOT)/libstarjumper",
 					"$(SRCROOT)/submodules/libsf/src",
 				);
-				OTHER_CFLAGS = (
-					"-D",
-					VGR_COUNT_ALLOCS,
-				);
+				OTHER_CFLAGS = "-DEM_COUNT_ALLOCS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -380,6 +377,7 @@
 					"$(SRCROOT)/libstarjumper",
 					"$(SRCROOT)/submodules/libsf/src",
 				);
+				OTHER_CFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;

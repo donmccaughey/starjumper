@@ -1,6 +1,6 @@
 #include "sj_dice_throw.h"
 
-#include "sj_memory.h"
+#include "earmark.h"
 #include "sj_random.h"
 #include "sj_string.h"
 #include "sj_string_array.h"
@@ -18,7 +18,7 @@ alloc_modifier_string(void const *item)
 {
   int const *modifier = item;
   char *string;
-  sj_asprintf(&string, "%+i", *modifier);
+  em_asprintf(&string, "%+i", *modifier);
   return string;
 }
 
@@ -28,7 +28,7 @@ alloc_roll_string(void const *item)
 {
   int const *roll = item;
   char *string;
-  sj_asprintf(&string, "%i", *roll);
+  em_asprintf(&string, "%i", *roll);
   return string;
 }
 
@@ -55,7 +55,7 @@ sj_dice_throw_add_modifier(struct sj_dice_throw *dice_throw, int modifier)
 {
   int next_index = dice_throw->modifiers_count;
   ++dice_throw->modifiers_count;
-  dice_throw->modifiers = sj_reallocarray(dice_throw->modifiers,
+  dice_throw->modifiers = em_reallocarray(dice_throw->modifiers,
                                           dice_throw->modifiers_count,
                                           sizeof dice_throw->modifiers[0]);
   dice_throw->modifiers[next_index] = modifier;
@@ -67,12 +67,12 @@ sj_dice_throw_alloc(int count,
                     int sides,
                     struct sj_random *random)
 {
-  struct sj_dice_throw *dice_throw = sj_malloc(sizeof(struct sj_dice_throw));
+  struct sj_dice_throw *dice_throw = em_malloc(sizeof(struct sj_dice_throw));
   
   dice_throw->count = count;
   dice_throw->sides = sides;
   
-  dice_throw->rolls = sj_malloc(count * sizeof(int));
+  dice_throw->rolls = em_malloc(count * sizeof(int));
   for (int i = 0; i < count; ++i) {
     dice_throw->rolls[i] = 1 + sj_random_next_value_in_range(random, sides);
   }
@@ -87,9 +87,9 @@ sj_dice_throw_alloc(int count,
 void
 sj_dice_throw_free(struct sj_dice_throw *dice_throw)
 {
-  sj_free(dice_throw->rolls);
-  sj_free(dice_throw->modifiers);
-  sj_free(dice_throw);
+  em_free(dice_throw->rolls);
+  em_free(dice_throw->modifiers);
+  em_free(dice_throw);
 }
 
 
@@ -113,7 +113,7 @@ char *
 sj_string_alloc_from_dice_throw(struct sj_dice_throw const *dice_throw)
 {
   char *dice;
-  sj_asprintf(&dice, "%iD%i", dice_throw->count, dice_throw->sides);
+  em_asprintf(&dice, "%iD%i", dice_throw->count, dice_throw->sides);
   
   struct sj_string_array *rolls_array = sj_string_array_alloc_collect_strings(
       dice_throw->rolls,
@@ -134,9 +134,9 @@ sj_string_alloc_from_dice_throw(struct sj_dice_throw const *dice_throw)
   sj_string_array_free(modifiers_array);
   
   char *string;
-  sj_asprintf(&string, "%s (%s) %s", dice, rolls, modifiers);
-  sj_free(modifiers);
-  sj_free(rolls);
-  sj_free(dice);
+  em_asprintf(&string, "%s (%s) %s", dice, rolls, modifiers);
+  em_free(modifiers);
+  em_free(rolls);
+  em_free(dice);
   return string;
 }

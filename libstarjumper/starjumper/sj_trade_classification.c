@@ -1,6 +1,6 @@
 #include "sj_trade_classification.h"
 
-#include "sj_memory.h"
+#include "earmark.h"
 #include "sj_world.h"
 
 
@@ -385,7 +385,7 @@ sj_world_alloc_trade_classifications(struct sj_world const *world, int *count)
 {
   size_t max_count = all_trade_classifications_count + 1;
   size_t item_size = sizeof all_trade_classifications[0];
-  struct sj_trade_classification const **classifications_for_world = sj_calloc(max_count, item_size);
+  struct sj_trade_classification const **classifications_for_world = em_calloc(max_count, item_size);
   
   *count = 0;
   for (int i = 0; i < all_trade_classifications_count; ++i) {
@@ -397,5 +397,5 @@ sj_world_alloc_trade_classifications(struct sj_world const *world, int *count)
   }
   
   size_t final_size = (*count + 1) * item_size;
-  return sj_realloc(classifications_for_world, final_size);
+  return em_realloc(classifications_for_world, final_size);
 }
