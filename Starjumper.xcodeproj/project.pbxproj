@@ -51,6 +51,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		D41D32C91A43396600484607 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		D474B82B1789BB63007C9259 /* libstarjumper.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libstarjumper.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		D474B8901789C29E007C9259 /* worldgen */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = worldgen; sourceTree = BUILT_PRODUCTS_DIR; };
 		D474B8921789C29E007C9259 /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
@@ -99,6 +100,7 @@
 		D474B8221789BB63007C9259 = {
 			isa = PBXGroup;
 			children = (
+				D41D32C91A43396600484607 /* LICENSE */,
 				D4AA1DB219A0112700F9F30E /* README.md */,
 				D4AA1DB719A012C000F9F30E /* libstarjumper */,
 				D474B85D1789BD74007C9259 /* test */,
