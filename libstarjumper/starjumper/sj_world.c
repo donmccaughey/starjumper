@@ -1,9 +1,9 @@
 #include "sj_world.h"
 
+#include <alloc_or_die.h>
 #include <assert.h>
 #include <string.h>
 
-#include "alloc_or_die.h"
 #include "sj_dice_throw.h"
 #include "sj_string_array.h"
 #include "sj_string.h"
@@ -273,18 +273,18 @@ hex_digit(int value)
 struct sj_world *
 sj_world_alloc(char const *name,
                struct sj_hex_coordinate const hex_coordinate,
-               struct sj_random *random)
+               struct rnd *rnd)
 {
   struct sj_world *world = malloc_or_die(sizeof(struct sj_world));
   
   world->name = strdup_or_die(name);
   world->hex_coordinate = hex_coordinate;
   
-  int starport_index = sj_dice_throw(2, 6, NULL, 0, random);
+  int starport_index = sj_dice_throw(2, 6, NULL, 0, rnd);
   world->starport = starport_table[starport_index];
   
   if ('A' == world->starport || 'B' == world->starport) {
-    int naval_base_index = sj_dice_throw(2, 6, NULL, 0, random);
+    int naval_base_index = sj_dice_throw(2, 6, NULL, 0, rnd);
     world->naval_base = naval_base_table[naval_base_index];
   }
   
@@ -297,26 +297,26 @@ sj_world_alloc(char const *name,
     } else if ('A' == world->starport) {
       modifier = -3;
     }
-    int scout_base_index = sj_dice_throw(2, 6, (int[]) { modifier }, 1, random);
+    int scout_base_index = sj_dice_throw(2, 6, (int[]) { modifier }, 1, rnd);
     world->scout_base = scout_base_table[scout_base_index];
   }
   
-  int gas_giant_index = sj_dice_throw(2, 6, NULL, 0, random);
+  int gas_giant_index = sj_dice_throw(2, 6, NULL, 0, rnd);
   world->gas_giant = gas_giant_table[gas_giant_index];
   
-  world->size = sj_dice_throw(2, 6, (int[]) { -2 }, 1, random);
+  world->size = sj_dice_throw(2, 6, (int[]) { -2 }, 1, rnd);
   
   if (0 == world->size) {
     world->atmosphere = 0;
   } else {
-    world->atmosphere = sj_dice_throw(2, 6, (int[]) { -7, world->size }, 2, random);
+    world->atmosphere = sj_dice_throw(2, 6, (int[]) { -7, world->size }, 2, rnd);
     if (world->atmosphere < 0) world->atmosphere = 0;
   }
   
   if (0 == world->size) {
     world->hydrographics = 0;
   } else {
-    struct sj_dice_throw *dice_throw = sj_dice_throw_alloc(2, 6, random);
+    struct sj_dice_throw *dice_throw = sj_dice_throw_alloc(2, 6, rnd);
     sj_dice_throw_add_modifier(dice_throw, -7);
     sj_dice_throw_add_modifier(dice_throw, world->atmosphere);
     if (0 == world->atmosphere || 1 == world->atmosphere || world->atmosphere >= 10) {
@@ -328,26 +328,26 @@ sj_world_alloc(char const *name,
     if (world->hydrographics > 10) world->hydrographics = 10;
   }
   
-  world->population = sj_dice_throw(2, 6, (int[]) { -2 }, 1, random);
+  world->population = sj_dice_throw(2, 6, (int[]) { -2 }, 1, rnd);
   
   if (0 == world->population) {
     world->government = 0;
   } else {
-    world->government = sj_dice_throw(2, 6, (int[]) { -7, world->population }, 2, random);
+    world->government = sj_dice_throw(2, 6, (int[]) { -7, world->population }, 2, rnd);
     if (world->government < 0) world->government = 0;
   }
   
   if (0 == world->population) {
     world->law_level = 0;
   } else {
-    world->law_level = sj_dice_throw(2, 6, (int[]) { -7, world->government }, 2, random);
+    world->law_level = sj_dice_throw(2, 6, (int[]) { -7, world->government }, 2, rnd);
     if (world->law_level < 0) world->law_level = 0;
   }
   
   // TODO: adjust starport if 0 == population
   
   if (world->population) {
-    struct sj_dice_throw *dice_throw = sj_dice_throw_alloc(1, 6, random);
+    struct sj_dice_throw *dice_throw = sj_dice_throw_alloc(1, 6, rnd);
     
     if ('A' == world->starport) {
       sj_dice_throw_add_modifier(dice_throw, +6);

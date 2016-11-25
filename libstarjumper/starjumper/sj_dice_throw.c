@@ -1,7 +1,8 @@
 #include "sj_dice_throw.h"
 
-#include "alloc_or_die.h"
-#include "sj_random.h"
+#include <alloc_or_die.h>
+#include <rnd.h>
+
 #include "sj_string.h"
 #include "sj_string_array.h"
 
@@ -38,9 +39,9 @@ sj_dice_throw(int count,
               int sides,
               int modifiers[],
               int modifiers_count,
-              struct sj_random *random)
+              struct rnd *rnd)
 {
-  struct sj_dice_throw *dice_throw = sj_dice_throw_alloc(count, sides, random);
+  struct sj_dice_throw *dice_throw = sj_dice_throw_alloc(count, sides, rnd);
   for (int i = 0; i < modifiers_count; ++i) {
     sj_dice_throw_add_modifier(dice_throw, modifiers[i]);
   }
@@ -65,7 +66,7 @@ sj_dice_throw_add_modifier(struct sj_dice_throw *dice_throw, int modifier)
 struct sj_dice_throw *
 sj_dice_throw_alloc(int count,
                     int sides,
-                    struct sj_random *random)
+                    struct rnd *rnd)
 {
   struct sj_dice_throw *dice_throw = malloc_or_die(sizeof(struct sj_dice_throw));
   
@@ -74,7 +75,7 @@ sj_dice_throw_alloc(int count,
   
   dice_throw->rolls = malloc_or_die(count * sizeof(int));
   for (int i = 0; i < count; ++i) {
-    dice_throw->rolls[i] = 1 + sj_random_next_value_in_range(random, sides);
+    dice_throw->rolls[i] = 1 + rnd_next_uniform_value_in_range(rnd, 1, sides);
   }
   
   dice_throw->modifiers = NULL;

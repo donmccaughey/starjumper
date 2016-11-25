@@ -6,7 +6,7 @@
 #include <starjumper/sj_hex_coordinate.h>
 
 
-struct sj_random;
+struct rnd;
 struct sj_trade_classification;
 
 
@@ -36,7 +36,7 @@ sj_string_from_world(struct sj_world const *world);
 struct sj_world *
 sj_world_alloc(char const *name,
                struct sj_hex_coordinate const hex_coordinate,
-               struct sj_random *random);
+               struct rnd *rnd);
 
 void
 sj_world_free(struct sj_world *world);
