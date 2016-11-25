@@ -1,4 +1,4 @@
-#include <earmark.h>
+#include <alloc_or_die.h>
 #include <getopt.h>
 #include <libgen.h>
 #include <stdio.h>
@@ -17,12 +17,12 @@ main(int argc, char **argv)
 
   char *description = sj_string_from_world(world);
   fprintf(stdout, "%s\n", description);
-  em_free(description);
+  free_or_die(description);
   
   sj_world_free(world);
   sj_random_free(random);
   options_free(options);
   
-  em_expect_alloc_count_zero();
+  alloc_count_is_zero_or_die();
   return EXIT_SUCCESS;
 }

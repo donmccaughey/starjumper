@@ -2,7 +2,7 @@
 
 #include <stddef.h>
 
-#include "earmark.h"
+#include "alloc_or_die.h"
 
 
 struct sj_string_array *
@@ -11,8 +11,8 @@ sj_string_array_alloc_collect_strings(void const *array,
                                       size_t element_size,
                                       sj_string_array_alloc_string_for_element alloc_string_for_element)
 {
-  struct sj_string_array *string_array = em_malloc(sizeof(struct sj_string_array));
-  string_array->elements = em_calloc(count + 1, sizeof(char *));
+  struct sj_string_array *string_array = malloc_or_die(sizeof(struct sj_string_array));
+  string_array->elements = calloc_or_die(count + 1, sizeof(char *));
   string_array->count = (int) count;
   
   for (size_t i = 0; i < count; ++i) {
@@ -32,8 +32,8 @@ void
 sj_string_array_free(struct sj_string_array *string_array)
 {
   for (int i = 0; i < string_array->count; ++i) {
-    em_free(string_array->elements[i]);
+    free_or_die(string_array->elements[i]);
   }
-  em_free(string_array->elements);
-  em_free(string_array);
+  free_or_die(string_array->elements);
+  free_or_die(string_array);
 }

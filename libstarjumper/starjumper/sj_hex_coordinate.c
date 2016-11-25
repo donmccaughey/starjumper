@@ -5,7 +5,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "earmark.h"
+#include "alloc_or_die.h"
 
 
 bool
@@ -37,6 +37,6 @@ char *
 sj_string_alloc_from_hex_coordinate(struct sj_hex_coordinate hex_coordinate)
 {
   char *string;
-  em_asprintf(&string, "%02i%02i", hex_coordinate.horizontal, hex_coordinate.vertical);
+  asprintf_or_die(&string, "%02i%02i", hex_coordinate.horizontal, hex_coordinate.vertical);
   return string;
 }
