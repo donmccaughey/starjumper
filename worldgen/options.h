@@ -5,10 +5,14 @@
 #include <starjumper/starjumper.h>
 
 
+struct rnd;
+
+
 struct options
 {
   char *name;
   struct sj_hex_coordinate hex_coordinate;
+  struct rnd *rnd;
 };
 
 

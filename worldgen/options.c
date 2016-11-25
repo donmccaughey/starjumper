@@ -3,6 +3,7 @@
 #include <alloc_or_die.h>
 #include <getopt.h>
 #include <libgen.h>
+#include <rnd.h>
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -21,6 +22,12 @@ static struct option long_options[] = {
     .val = 'n',
   },
   {
+    .name = "rng",
+    .has_arg = required_argument,
+    .flag = NULL,
+    .val = 'r',
+  },
+  {
     .name = "hex",
     .has_arg = required_argument,
     .flag = NULL,
@@ -35,6 +42,9 @@ static struct option long_options[] = {
 };
 
 
+static bool
+rnd_from_type(char const *type, struct rnd **rnd);
+
 static void
 print_usage_and_exit(int argc, char **argv);
 
@@ -42,14 +52,13 @@ print_usage_and_exit(int argc, char **argv);
 struct options *
 options_alloc(int argc, char *argv[])
 {
-  struct options *options = malloc_or_die(sizeof(struct options));
+  struct options *options = calloc_or_die(1, sizeof(struct options));
   
-  options->name = strdup_or_die("No Name");
   options->hex_coordinate = (struct sj_hex_coordinate) { .horizontal=1, .vertical=1, };
   
   int long_options_index;
   int ch;
-  while (-1 != (ch = getopt_long(argc, argv, "hn:x:", long_options, &long_options_index))) {
+  while (-1 != (ch = getopt_long(argc, argv, "hn:r:x:", long_options, &long_options_index))) {
     switch (ch) {
       case 'h':
         print_usage_and_exit(argc, argv);
@@ -57,6 +66,15 @@ options_alloc(int argc, char *argv[])
       case 'n':
         free_or_die(options->name);
         options->name = strdup_or_die(optarg);
+        break;
+      case 'r':
+      {
+        bool valid = rnd_from_type(optarg, &options->rnd);
+        if ( ! valid) {
+          fprintf(stderr, "ERROR: \"%s\" is not a valid random number generator type\n", optarg);
+          print_usage_and_exit(argc, argv);
+        }
+      }
         break;
       case 'x':
       {
@@ -76,6 +94,14 @@ options_alloc(int argc, char *argv[])
     }
   }
   
+  if ( ! options->name) {
+    options->name = strdup_or_die("No Name");
+  }
+  
+  if ( ! options->rnd) {
+    options->rnd = global_rnd;
+  }
+  
   return options;
 }
 
@@ -84,7 +110,31 @@ void
 options_free(struct options *options)
 {
   free_or_die(options->name);
+  rnd_free(options->rnd);
   free_or_die(options);
+}
+
+
+static bool
+rnd_from_type(char const *type, struct rnd **rnd)
+{
+  if (0 == strcmp("arc4", type)) {
+    *rnd = global_rnd;
+    return true;
+  }
+  if (0 == strcmp("min", type)) {
+    *rnd = rnd_alloc_fake_min();
+    return true;
+  }
+  if (0 == strcmp("max", type)) {
+    *rnd = rnd_alloc_fake_max();
+    return true;
+  }
+  if (0 == strcmp("median", type)) {
+    *rnd = rnd_alloc_fake_median();
+    return true;
+  }
+  return false;
 }
 
 
@@ -95,6 +145,8 @@ print_usage_and_exit(int argc, char **argv)
           "usage: %s [OPTIONS]\n"
           "  -h, --help                       display this help message\n"
           "  -n, --name NAME                  set the world name\n"
+          "  -r, --rng TYPE                   set the random number generator type\n"
+          "                                     [arc4|min|max|median]\n"
           "  -x, --hex XXYY                   set the world hex coordinate\n"
           "                                   in the format \"0101\"\n"
           ,

@@ -13,7 +13,9 @@ int
 main(int argc, char **argv)
 {
   struct options *options = options_alloc(argc, argv);
-  struct sj_world *world = sj_world_alloc(options->name, options->hex_coordinate, global_rnd);
+  struct sj_world *world = sj_world_alloc(options->name,
+                                          options->hex_coordinate,
+                                          options->rnd);
 
   char *description = sj_string_from_world(world);
   fprintf(stdout, "%s\n", description);

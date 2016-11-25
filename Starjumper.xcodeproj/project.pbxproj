@@ -75,8 +75,8 @@
 		D4E2EC0A19A014CD00483573 /* sj_world.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = sj_world.c; sourceTree = "<group>"; };
 		D4E2EC0B19A014CD00483573 /* sj_world.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sj_world.h; sourceTree = "<group>"; };
 		D4E2EC0D19A014CD00483573 /* starjumper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = starjumper.h; sourceTree = "<group>"; };
-		D4E2EC2E19A18A0700483573 /* options.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = options.h; sourceTree = "<group>"; };
-		D4E2EC2F19A18A7E00483573 /* options.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = options.c; sourceTree = "<group>"; };
+		D4E2EC2E19A18A0700483573 /* options.h */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.c.h; path = options.h; sourceTree = "<group>"; tabWidth = 2; };
+		D4E2EC2F19A18A7E00483573 /* options.c */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 2; lastKnownFileType = sourcecode.c.c; path = options.c; sourceTree = "<group>"; tabWidth = 2; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
