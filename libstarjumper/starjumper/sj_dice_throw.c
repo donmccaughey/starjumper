@@ -75,7 +75,7 @@ sj_dice_throw_alloc(int count,
   
   dice_throw->rolls = malloc_or_die(count * sizeof(int));
   for (int i = 0; i < count; ++i) {
-    dice_throw->rolls[i] = 1 + rnd_next_uniform_value_in_range(rnd, 1, sides);
+    dice_throw->rolls[i] = rnd_next_uniform_value_in_range(rnd, 1, sides);
   }
   
   dice_throw->modifiers = NULL;
