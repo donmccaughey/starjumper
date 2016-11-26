@@ -40,3 +40,13 @@ sj_string_alloc_from_hex_coordinate(struct sj_hex_coordinate hex_coordinate)
   asprintf_or_die(&string, "%02i%02i", hex_coordinate.horizontal, hex_coordinate.vertical);
   return string;
 }
+
+
+struct sj_hex_coordinate
+sj_hex_coordinate_make(int horizontal, int vertical)
+{
+  return (struct sj_hex_coordinate){
+    .horizontal=horizontal,
+    .vertical=vertical
+  };
+}

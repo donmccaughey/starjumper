@@ -196,10 +196,16 @@ base_code(struct sj_world const *world)
 char *
 sj_string_from_world(struct sj_world const *world)
 {
-  char *hex_coordinate = sj_string_alloc_from_hex_coordinate(world->hex_coordinate);
+  
+  if ( ! world) {
+    return strdup_or_die("Name               Statistics       Remarks");
+  }
   
   int const max_name_length = 18;
   int const max_classifications_length = 42;
+  
+  char *hex_coordinate = sj_string_alloc_from_hex_coordinate(world->hex_coordinate);
+  
   char const separator[] = ". ";
   
   struct sj_string_array *classification_names = sj_string_array_alloc_collect_strings(

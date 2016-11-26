@@ -345,7 +345,7 @@ is_rich(struct sj_world const *world)
       if (world->government >= 4 && world->government <= 9) {
         // from Book 7: Merchant Prince
         //     Aslan rich worlds ignore government type.
-        //     Vargr rich worlds may government type 4,5,6,8or 9 (not type 7).
+        //     Vargr rich worlds may government type 4,5,6,8 or 9 (not type 7).
         return true;
       }
     }

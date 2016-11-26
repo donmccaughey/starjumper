@@ -10,6 +10,12 @@
 
 static struct option long_options[] = {
   {
+    .name = "subsector",
+    .has_arg = no_argument,
+    .flag = NULL,
+    .val = 'b',
+  },
+  {
     .name = "help",
     .has_arg = no_argument,
     .flag = NULL,
@@ -58,8 +64,11 @@ options_alloc(int argc, char *argv[])
   
   int long_options_index;
   int ch;
-  while (-1 != (ch = getopt_long(argc, argv, "hn:r:x:", long_options, &long_options_index))) {
+  while (-1 != (ch = getopt_long(argc, argv, "bhn:r:x:", long_options, &long_options_index))) {
     switch (ch) {
+      case 'b':
+        options->subsector = true;
+        break;
       case 'h':
         print_usage_and_exit(argc, argv);
         break;
@@ -144,11 +153,12 @@ print_usage_and_exit(int argc, char **argv)
   fprintf(stderr,
           "usage: %s [OPTIONS]\n"
           "  -h, --help                       display this help message\n"
+          "  -b, --subsector                  generate a subsector\n"
           "  -n, --name NAME                  set the world name\n"
           "  -r, --rng TYPE                   set the random number generator type\n"
           "                                     [arc4|min|max|median]\n"
           "  -x, --hex XXYY                   set the world hex coordinate\n"
-          "                                   in the format \"0101\"\n"
+          "                                     in the format \"0101\"\n"
           ,
           basename(argv[0])
           );
