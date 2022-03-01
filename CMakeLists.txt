@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.13...3.22)
 project(starjumper
         VERSION 0.0.1
         DESCRIPTION "Starjumper"
-        HOMEPAGE_URL https://github.com/donmccaughey/Starjumper
+        HOMEPAGE_URL https://github.com/donmccaughey/starjumper
         LANGUAGES C
         )
 
