@@ -25,9 +25,9 @@
 #include "alloc_or_die.h"
 
 #include <errno.h>
+#include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 
 
 long alloc_or_die_count = 0;
