@@ -3,7 +3,7 @@
 
 
 #include <stdbool.h>
-#include "starjumper/starjumper.h"
+#include <starjumper/starjumper.h>
 
 
 struct rnd;
