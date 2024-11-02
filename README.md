@@ -56,3 +56,10 @@ Examples:
         No Name            0807 A656978-B   High Population.                          G
         No Name            0810 C79A767-5   Water World.                              G
 
+
+## License
+
+_Starjumper_ is available under a BSD-style license.  See the [`LICENSE`][51]
+file for details.
+
+[51]: ./LICENSE
