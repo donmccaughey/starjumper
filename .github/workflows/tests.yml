@@ -1,0 +1,33 @@
+name: Tests
+on: [push, pull_request]
+jobs:
+  Coverage:
+    name: Coverage
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Packages
+        run: |
+          sudo apt-get update
+          sudo apt-get install libbsd-dev
+      - name: Configure
+        run: |
+          cmake -S . -B ${{github.workspace}}/tmp
+      - name: Build
+        run: |
+          cmake --build ${{github.workspace}}/tmp --target all
+          cd ${{github.workspace}}/tmp
+          ctest --output-on-failure
+  All-Tests-macOS:
+    name: All Tests (macOS)
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Configure
+        run: |
+          cmake -S . -B ${{github.workspace}}/tmp
+      - name: Build
+        run: |
+          cmake --build ${{github.workspace}}/tmp --target all
+          cd ${{github.workspace}}/tmp
+          ctest --output-on-failure
