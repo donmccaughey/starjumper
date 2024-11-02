@@ -44,5 +44,5 @@ endif()
 
 add_subdirectory(libs/alloc_or_die)
 add_subdirectory(libs/rnd)
-add_subdirectory(libstarjumper)
+add_subdirectory(src/starjumper)
 add_subdirectory(src/worldgen)
