@@ -4,7 +4,10 @@ project(starjumper
         DESCRIPTION "Starjumper"
         HOMEPAGE_URL https://github.com/donmccaughey/starjumper
         LANGUAGES C
-        )
+)
+
+set(CMAKE_C_STANDARD 99)
+enable_testing()
 
 # ----- compatibility checks -----
 
