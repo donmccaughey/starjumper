@@ -23,8 +23,8 @@ target_link_libraries(starjumper
         PUBLIC xmalloc
 )
 
-add_executable(starjumper_tests
-        starjumper_tests.c
+add_executable(hex_coordinate_tests
+        hex_coordinate_tests.c
 )
-target_link_libraries(starjumper_tests starjumper)
-add_test(starjumper_tests starjumper_tests)
+target_link_libraries(hex_coordinate_tests starjumper)
+add_test(hex_coordinate_tests hex_coordinate_tests)
