@@ -7,9 +7,12 @@ _Old school paper-and-pencil science fiction role playing rules in code._
 > 2. An archaic term for a jump-capable starship, esp. a small scout or yacht.
 
 [![GitHub Actions][11]][12]
+[![Code Coverage][13]][14]
 
 [11]: https://github.com/donmccaughey/starjumper/actions/workflows/tests.yml/badge.svg?branch=main
 [12]: https://github.com/donmccaughey/starjumper/actions/workflows/tests.yml
+[13]: https://codecov.io/gh/donmccaughey/starjumper/branch/main/graph/badge.svg
+[14]: https://codecov.io/gh/donmccaughey/starjumper
 
 
 ## Building From Source
