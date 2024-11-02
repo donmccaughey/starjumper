@@ -5,4 +5,3 @@ add_executable(worldgen
 target_link_libraries(worldgen
         starjumper
         )
-

@@ -18,4 +18,3 @@ endif()
 
 add_subdirectory(libstarjumper)
 add_subdirectory(worldgen)
-

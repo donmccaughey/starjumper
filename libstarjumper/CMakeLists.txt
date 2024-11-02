@@ -12,4 +12,3 @@ add_library(starjumper STATIC
 target_include_directories(starjumper
         PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/"
         )
-

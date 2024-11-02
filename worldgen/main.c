@@ -1,6 +1,4 @@
 #include <alloc_or_die.h>
-#include <getopt.h>
-#include <libgen.h>
 #include <rnd.h>
 #include <stdio.h>
 #include <stdlib.h>
