@@ -3,10 +3,10 @@ add_library(starjumper STATIC
         sj_dice_throw.c
         sj_hex_coordinate.h
         sj_hex_coordinate.c
-        sj_string.h
-        sj_string.c
         sj_string_array.h
         sj_string_array.c
+        sj_string_join.h
+        sj_string_join.c
         sj_subsector.h
         sj_subsector.c
         sj_trade_classification.h

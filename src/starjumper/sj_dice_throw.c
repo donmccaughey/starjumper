@@ -5,8 +5,8 @@
 #include <xmalloc.h>
 #include <xstdio.h>
 
-#include "sj_string.h"
 #include "sj_string_array.h"
+#include "sj_string_join.h"
 
 
 static char *

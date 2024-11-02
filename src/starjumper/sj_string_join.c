@@ -1,4 +1,4 @@
-#include "sj_string.h"
+#include "sj_string_join.h"
 
 #include <string.h>
 #include <xmalloc.h>

@@ -8,7 +8,7 @@
 
 #include "sj_dice_throw.h"
 #include "sj_string_array.h"
-#include "sj_string.h"
+#include "sj_string_join.h"
 #include "sj_trade_classification.h"
 
 
