@@ -1,9 +1,9 @@
-#ifndef STARJUMPER_SJ_WORLD_H_INCLUDED
-#define STARJUMPER_SJ_WORLD_H_INCLUDED
+#ifndef STARJUMPER_WORLD_H_INCLUDED
+#define STARJUMPER_WORLD_H_INCLUDED
 
 
 #include <stdbool.h>
-#include <starjumper/sj_hex_coordinate.h>
+#include <starjumper/hex_coordinate.h>
 
 
 struct rnd;

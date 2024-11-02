@@ -1,4 +1,4 @@
-#include "sj_world.h"
+#include "world.h"
 
 #include <assert.h>
 #include <string.h>
@@ -6,10 +6,10 @@
 #include <xstring.h>
 #include <xstdio.h>
 
-#include "sj_dice_throw.h"
-#include "sj_string_array.h"
-#include "sj_string_join.h"
-#include "sj_trade_classification.h"
+#include "dice_throw.h"
+#include "string_array.h"
+#include "string_join.h"
+#include "trade_classification.h"
 
 
 static char *

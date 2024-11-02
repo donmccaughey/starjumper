@@ -1,10 +1,10 @@
-#include "sj_subsector.h"
+#include "subsector.h"
 
 #include <xmalloc.h>
 #include <xstring.h>
 
-#include "sj_dice_throw.h"
-#include "sj_world.h"
+#include "dice_throw.h"
+#include "world.h"
 
 
 int const sj_subsector_height = 10;

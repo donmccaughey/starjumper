@@ -1,9 +1,9 @@
-#include "sj_string_join.h"
+#include "string_join.h"
 
 #include <string.h>
 #include <xmalloc.h>
 
-#include "sj_string_array.h"
+#include "string_array.h"
 
 
 char *

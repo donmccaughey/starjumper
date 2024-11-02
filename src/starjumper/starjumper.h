@@ -2,13 +2,13 @@
 #define STARJUMPER_STARJUMPER_H_INCLUDED
 
 
-#include <starjumper/sj_dice_throw.h>
-#include <starjumper/sj_hex_coordinate.h>
-#include <starjumper/sj_subsector.h>
-#include <starjumper/sj_string_array.h>
-#include <starjumper/sj_string_join.h>
-#include <starjumper/sj_trade_classification.h>
-#include <starjumper/sj_world.h>
+#include <starjumper/dice_throw.h>
+#include <starjumper/hex_coordinate.h>
+#include <starjumper/subsector.h>
+#include <starjumper/string_array.h>
+#include <starjumper/string_join.h>
+#include <starjumper/trade_classification.h>
+#include <starjumper/world.h>
 
 
 #endif

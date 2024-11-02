@@ -1,8 +1,8 @@
-#include "sj_trade_classification.h"
+#include "trade_classification.h"
 
 #include <xmalloc.h>
 
-#include "sj_world.h"
+#include "world.h"
 
 
 static bool

@@ -1,4 +1,4 @@
-#include "sj_hex_coordinate.h"
+#include "hex_coordinate.h"
 
 #include <errno.h>
 #include <stdlib.h>

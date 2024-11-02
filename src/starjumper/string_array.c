@@ -1,4 +1,4 @@
-#include "sj_string_array.h"
+#include "string_array.h"
 
 #include <stddef.h>
 #include <xmalloc.h>

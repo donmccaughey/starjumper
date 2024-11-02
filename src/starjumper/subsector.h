@@ -1,8 +1,8 @@
-#ifndef STARJUMPER_SJ_SUBSECTOR_H_INCLUDED
-#define STARJUMPER_SJ_SUBSECTOR_H_INCLUDED
+#ifndef STARJUMPER_SUBSECTOR_H_INCLUDED
+#define STARJUMPER_SUBSECTOR_H_INCLUDED
 
 
-#include <starjumper/sj_hex_coordinate.h>
+#include <starjumper/hex_coordinate.h>
 
 
 struct rnd;

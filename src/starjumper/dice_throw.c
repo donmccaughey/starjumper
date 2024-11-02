@@ -1,12 +1,12 @@
-#include "sj_dice_throw.h"
+#include "dice_throw.h"
 
 #include <rnd.h>
 #include <stdlib.h>
 #include <xmalloc.h>
 #include <xstdio.h>
 
-#include "sj_string_array.h"
-#include "sj_string_join.h"
+#include "string_array.h"
+#include "string_join.h"
 
 
 static char *

@@ -1,19 +1,19 @@
 add_library(starjumper STATIC
-        sj_dice_throw.h
-        sj_dice_throw.c
-        sj_hex_coordinate.h
-        sj_hex_coordinate.c
-        sj_string_array.h
-        sj_string_array.c
-        sj_string_join.h
-        sj_string_join.c
-        sj_subsector.h
-        sj_subsector.c
-        sj_trade_classification.h
-        sj_trade_classification.c
-        sj_world.h
-        sj_world.c
+        dice_throw.h
+        dice_throw.c
+        hex_coordinate.h
+        hex_coordinate.c
         starjumper.h
+        string_array.h
+        string_array.c
+        string_join.h
+        string_join.c
+        subsector.h
+        subsector.c
+        trade_classification.h
+        trade_classification.c
+        world.h
+        world.c
 )
 target_include_directories(starjumper
         PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/.."
