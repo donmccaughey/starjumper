@@ -47,12 +47,12 @@ lcov \
     --quiet
 
 genhtml \
-    --header-title 'fiends_and_fortune' \
+    --header-title 'starjumper' \
     --hierarchical \
     --quiet \
     --output-directory tmp/coverage-report \
     --parallel \
-    --title 'fiends_and_fortune' \
+    --title 'starjumper' \
     tmp/coverage.info
 
 printf 'Coverage report generated in tmp/coverage-report\n'
