@@ -1,6 +1,7 @@
 #include "sj_subsector.h"
 
-#include <alloc_or_die.h>
+#include <xmalloc.h>
+#include <xstring.h>
 
 #include "sj_dice_throw.h"
 #include "sj_world.h"
@@ -15,11 +16,11 @@ static int const occurrence_throw = 4;
 struct sj_subsector *
 sj_subsector_alloc(char const *name, struct rnd *rnd)
 {
-  struct sj_subsector *subsector = calloc_or_die(1, sizeof(struct sj_subsector));
+  struct sj_subsector *subsector = xcalloc(1, sizeof(struct sj_subsector));
   
-  subsector->name = strdup_or_die(name);
+  subsector->name = xstrdup(name);
   int max_world_count = sj_subsector_width * sj_subsector_height;
-  subsector->worlds = calloc_or_die(max_world_count, sizeof(struct sj_world *));
+  subsector->worlds = xcalloc(max_world_count, sizeof(struct sj_world *));
   
   for (int h = 1; h <= sj_subsector_width; ++h) {
     for (int v = 1; v <= sj_subsector_height; ++v) {
@@ -34,9 +35,9 @@ sj_subsector_alloc(char const *name, struct rnd *rnd)
     }
   }
   
-  subsector->worlds = reallocarray_or_die(subsector->worlds,
-                                          subsector->worlds_count,
-                                          sizeof(struct sj_world *));
+  subsector->worlds = xreallocarray(subsector->worlds,
+                                    subsector->worlds_count,
+                                    sizeof(struct sj_world *));
   
   return subsector;
 }
@@ -45,10 +46,10 @@ sj_subsector_alloc(char const *name, struct rnd *rnd)
 void
 sj_subsector_free(struct sj_subsector *subsector)
 {
-  free_or_die(subsector->name);
+  free(subsector->name);
   for (int i = 0; i < subsector->worlds_count; ++i) {
     sj_world_free(subsector->worlds[i]);
   }
-  free_or_die(subsector->worlds);
-  free_or_die(subsector);
+  free(subsector->worlds);
+  free(subsector);
 }

@@ -1,9 +1,9 @@
 #include "sj_hex_coordinate.h"
 
-#include <alloc_or_die.h>
 #include <errno.h>
 #include <stdlib.h>
 #include <string.h>
+#include <xstdio.h>
 
 
 bool
@@ -35,7 +35,7 @@ char *
 sj_string_alloc_from_hex_coordinate(struct sj_hex_coordinate hex_coordinate)
 {
   char *string;
-  asprintf_or_die(&string, "%02i%02i", hex_coordinate.horizontal, hex_coordinate.vertical);
+  xasprintf(&string, "%02i%02i", hex_coordinate.horizontal, hex_coordinate.vertical);
   return string;
 }
 

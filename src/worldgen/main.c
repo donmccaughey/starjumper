@@ -1,4 +1,3 @@
-#include <alloc_or_die.h>
 #include <rnd.h>
 #include <starjumper/starjumper.h>
 #include <stdio.h>
@@ -27,7 +26,6 @@ main(int argc, char **argv)
   }
   
   options_free(options);
-  alloc_count_is_zero_or_die();
   return EXIT_SUCCESS;
 }
 
@@ -39,12 +37,12 @@ generate_subsector(char const *name, struct rnd *rnd)
   
   char *header = sj_string_from_world(NULL);
   fprintf(stdout, "%s\n", header);
-  free_or_die(header);
+  free(header);
   
   for (int i = 0; i < subsector->worlds_count; ++i) {
     char *description = sj_string_from_world(subsector->worlds[i]);
     fprintf(stdout, "%s\n", description);
-    free_or_die(description);
+    free(description);
   }
   
   sj_subsector_free(subsector);
@@ -60,7 +58,7 @@ generate_world(char const *name,
   
   char *description = sj_string_from_world(world);
   fprintf(stdout, "%s\n", description);
-  free_or_die(description);
+  free(description);
   
   sj_world_free(world);
 }

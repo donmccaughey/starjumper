@@ -1,8 +1,10 @@
 #include "sj_world.h"
 
-#include <alloc_or_die.h>
 #include <assert.h>
 #include <string.h>
+#include <xmalloc.h>
+#include <xstring.h>
+#include <xstdio.h>
 
 #include "sj_dice_throw.h"
 #include "sj_string_array.h"
@@ -160,7 +162,7 @@ static char *
 alloc_trade_classification_abbreviation(void const *item)
 {
   struct sj_trade_classification const *const *trade_classification = item;
-  return strdup_or_die((*trade_classification)->abbreviation);
+  return xstrdup((*trade_classification)->abbreviation);
 }
 
 
@@ -168,7 +170,7 @@ static char *
 alloc_trade_classification_name(void const *item)
 {
   struct sj_trade_classification const *const *trade_classification = item;
-  return strdup_or_die((*trade_classification)->name);
+  return xstrdup((*trade_classification)->name);
 }
 
 
@@ -176,7 +178,7 @@ static char *
 alloc_trade_classification_short_name(void const *item)
 {
   struct sj_trade_classification const *const *trade_classification = item;
-  return strdup_or_die((*trade_classification)->short_name);
+  return xstrdup((*trade_classification)->short_name);
 }
 
 
@@ -198,7 +200,7 @@ sj_string_from_world(struct sj_world const *world)
 {
   
   if ( ! world) {
-    return strdup_or_die("Name               Statistics       Remarks");
+    return xstrdup("Name               Statistics       Remarks");
   }
   
   int const max_name_length = 18;
@@ -219,7 +221,7 @@ sj_string_from_world(struct sj_world const *world)
   sj_string_array_free(classification_names);
   
   if (strlen(classifications) > max_classifications_length) {
-    free_or_die(classifications);
+    free(classifications);
     struct sj_string_array *classification_short_names = sj_string_array_alloc_collect_strings(
         world->trade_classifications,
         world->trade_classifications_count,
@@ -231,7 +233,7 @@ sj_string_from_world(struct sj_world const *world)
     sj_string_array_free(classification_short_names);
     
     if (strlen(classifications) > max_classifications_length) {
-      free_or_die(classifications);
+      free(classifications);
       struct sj_string_array *classification_abbreviations = sj_string_array_alloc_collect_strings(
           world->trade_classifications,
           world->trade_classifications_count,
@@ -245,7 +247,7 @@ sj_string_from_world(struct sj_world const *world)
   }
   
   char *string;
-  asprintf_or_die(&string, "%*s %4s %c%c%c%c%c%c%c-%c %c %*s%c",
+  xasprintf(&string, "%*s %4s %c%c%c%c%c%c%c-%c %c %*s%c",
       -max_name_length, world->name, hex_coordinate,
       world->starport,
       hex_digit(world->size), hex_digit(world->atmosphere),
@@ -256,8 +258,8 @@ sj_string_from_world(struct sj_world const *world)
       (world->gas_giant ? 'G' : ' ')
   );
   
-  free_or_die(classifications);
-  free_or_die(hex_coordinate);
+  free(classifications);
+  free(hex_coordinate);
   return string;
 }
 
@@ -281,9 +283,9 @@ sj_world_alloc(char const *name,
                struct sj_hex_coordinate const hex_coordinate,
                struct rnd *rnd)
 {
-  struct sj_world *world = malloc_or_die(sizeof(struct sj_world));
+  struct sj_world *world = xmalloc(sizeof(struct sj_world));
   
-  world->name = strdup_or_die(name);
+  world->name = xstrdup(name);
   world->hex_coordinate = hex_coordinate;
   
   int starport_index = sj_dice_throw(2, 6, NULL, 0, rnd);
@@ -385,7 +387,7 @@ sj_world_alloc(char const *name,
 void
 sj_world_free(struct sj_world *world)
 {
-  free_or_die(world->name);
-  free_or_die(world->trade_classifications);
-  free_or_die(world);
+  free(world->name);
+  free(world->trade_classifications);
+  free(world);
 }

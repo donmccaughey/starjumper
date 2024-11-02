@@ -1,11 +1,13 @@
 #include "options.h"
 
-#include <alloc_or_die.h>
 #include <getopt.h>
 #include <libgen.h>
 #include <rnd.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+#include <xmalloc.h>
+#include <xstring.h>
 
 
 static struct option long_options[] = {
@@ -58,7 +60,7 @@ print_usage_and_exit(int argc, char **argv);
 struct options *
 options_alloc(int argc, char *argv[])
 {
-  struct options *options = calloc_or_die(1, sizeof(struct options));
+  struct options *options = xcalloc(1, sizeof(struct options));
   
   options->hex_coordinate = (struct sj_hex_coordinate) { .horizontal=1, .vertical=1, };
   
@@ -73,8 +75,8 @@ options_alloc(int argc, char *argv[])
         print_usage_and_exit(argc, argv);
         break;
       case 'n':
-        free_or_die(options->name);
-        options->name = strdup_or_die(optarg);
+        free(options->name);
+        options->name = xstrdup(optarg);
         break;
       case 'r':
       {
@@ -104,7 +106,7 @@ options_alloc(int argc, char *argv[])
   }
   
   if ( ! options->name) {
-    options->name = strdup_or_die("No Name");
+    options->name = xstrdup("No Name");
   }
   
   if ( ! options->rnd) {
@@ -118,9 +120,9 @@ options_alloc(int argc, char *argv[])
 void
 options_free(struct options *options)
 {
-  free_or_die(options->name);
+  free(options->name);
   rnd_free(options->rnd);
-  free_or_die(options);
+  free(options);
 }
 
 
