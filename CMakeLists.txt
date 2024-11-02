@@ -43,4 +43,4 @@ endif()
 # ----- add build files in subdirectories -----
 
 add_subdirectory(libstarjumper)
-add_subdirectory(worldgen)
+add_subdirectory(src/worldgen)
