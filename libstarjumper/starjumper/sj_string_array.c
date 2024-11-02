@@ -1,8 +1,7 @@
 #include "sj_string_array.h"
 
+#include <alloc_or_die.h>
 #include <stddef.h>
-
-#include "alloc_or_die.h"
 
 
 struct sj_string_array *

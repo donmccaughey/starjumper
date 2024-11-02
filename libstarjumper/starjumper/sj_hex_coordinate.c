@@ -1,11 +1,9 @@
 #include "sj_hex_coordinate.h"
 
+#include <alloc_or_die.h>
 #include <errno.h>
-#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
-#include "alloc_or_die.h"
 
 
 bool

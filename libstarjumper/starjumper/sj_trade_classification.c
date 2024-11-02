@@ -1,6 +1,7 @@
 #include "sj_trade_classification.h"
 
-#include "alloc_or_die.h"
+#include <alloc_or_die.h>
+
 #include "sj_world.h"
 
 

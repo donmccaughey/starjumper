@@ -1,8 +1,8 @@
 #include "sj_string.h"
 
+#include <alloc_or_die.h>
 #include <string.h>
 
-#include "alloc_or_die.h"
 #include "sj_string_array.h"
 
 

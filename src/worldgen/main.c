@@ -1,7 +1,8 @@
-#include "alloc_or_die.h"
-#include "rnd.h"
 #include <stdio.h>
 #include <stdlib.h>
+
+#include "alloc_or_die.h"
+#include "rnd.h"
 #include "starjumper/starjumper.h"
 
 #include "options.h"

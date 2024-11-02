@@ -1,6 +1,7 @@
 #ifndef STARJUMPER_SJ_SUBSECTOR_H_INCLUDED
 #define STARJUMPER_SJ_SUBSECTOR_H_INCLUDED
 
+
 #include <starjumper/sj_hex_coordinate.h>
 
 
