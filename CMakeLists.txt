@@ -6,8 +6,17 @@ project(starjumper
         LANGUAGES C
 )
 
+
+option(COVERAGE "Enable code coverage analysis")
+
+
 set(CMAKE_C_STANDARD 99)
 enable_testing()
+
+if(COVERAGE)
+    add_compile_options(--coverage -g -O0)
+    add_link_options(--coverage)
+endif()
 
 
 # ----- find external dependencies -----

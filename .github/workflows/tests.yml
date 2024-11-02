@@ -12,12 +12,15 @@ jobs:
           sudo apt-get install libbsd-dev
       - name: Configure
         run: |
-          cmake -S . -B ${{github.workspace}}/tmp
+          cmake -S . -B ${{github.workspace}}/tmp -DCOVERAGE=ON
       - name: Build
         run: |
           cmake --build ${{github.workspace}}/tmp --target all
           cd ${{github.workspace}}/tmp
           ctest --output-on-failure
+      - name: Coverage
+        run: |
+          bash <(curl -s https://codecov.io/bash)
   All-Tests-macOS:
     name: All Tests (macOS)
     runs-on: macos-latest
