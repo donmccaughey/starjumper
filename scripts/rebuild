@@ -8,5 +8,11 @@ then
     rm -rf tmp
 fi
 
-cmake -S . -B tmp
-cmake --build tmp --target all test
+cmake \
+    -S . \
+    -B tmp \
+    -DCOVERAGE=ON
+
+cmake \
+    --build tmp \
+    --target all test
