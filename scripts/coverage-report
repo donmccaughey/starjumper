@@ -49,9 +49,9 @@ lcov \
 genhtml \
     --header-title 'starjumper' \
     --hierarchical \
-    --quiet \
     --output-directory tmp/coverage-report \
     --parallel \
+    --quiet \
     --title 'starjumper' \
     tmp/coverage.info
 
