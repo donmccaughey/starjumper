@@ -1,0 +1,17 @@
+image: freebsd/latest
+packages:
+    - cmake
+sources:
+    - https://git.sr.ht/~donmcc/checks
+tasks:
+    - setup: |
+          cd checks
+          cmake -S . -B tmp -DWALL=ON
+    - build: |
+          cd checks
+          cmake --build tmp --target all test
+triggers:
+    - action: email
+      condition: failure
+      to: Don McCaughey <don@donm.cc>
+

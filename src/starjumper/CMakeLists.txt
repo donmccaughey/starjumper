@@ -26,5 +26,8 @@ target_link_libraries(starjumper
 add_executable(hex_coordinate_tests
         hex_coordinate_tests.c
 )
-target_link_libraries(hex_coordinate_tests starjumper)
+target_link_libraries(hex_coordinate_tests
+        checks
+        starjumper
+)
 add_test(hex_coordinate_tests hex_coordinate_tests)
