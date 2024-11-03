@@ -6,81 +6,81 @@
 #include <stdio.h>
 
 
-#define ASSERT_FALSE(expression) \
-    check_false( \
+#define check_false(expression) \
+    cks_verify_false( \
         __FILE__, __LINE__, __func__, \
         #expression, (expression), \
-        check_type_assert, stderr \
+        stderr, cks_on_fail_halt \
     )
 
 
-#define ASSERT_INT_EQ(int1, int2) \
-    check_int_eq( \
+#define check_int_eq(int1, int2) \
+    cks_verify_int_eq( \
         __FILE__, __LINE__, __func__, \
         #int1, (int1), #int2, (int2), \
-        check_type_assert, stderr \
+        stderr, cks_on_fail_halt \
     )
 
 
-#define ASSERT_TRUE(expression) \
-    check_true( \
+#define check_not_null(expression) \
+    cks_verify_not_null( \
         __FILE__, __LINE__, __func__, \
         #expression, (expression), \
-        check_type_assert, stderr \
+        stderr, cks_on_fail_halt \
     )
 
 
-#define ASSERT_NOT_NULL(expression) \
-    check_not_null( \
+#define check_null(expression) \
+    cks_verify_null( \
         __FILE__, __LINE__, __func__, \
         #expression, (expression), \
-        check_type_assert, stderr \
+        stderr, cks_on_fail_halt \
     )
 
 
-#define ASSERT_NULL(expression) \
-    check_null( \
-        __FILE__, __LINE__, __func__, \
-        #expression, (expression), \
-        check_type_assert, stderr \
-    )
-
-
-#define ASSERT_STR_CONTAINS(str, substring) \
-    check_str_contains( \
+#define check_str_contains(str, substring) \
+    cks_verify_str_contains( \
         __FILE__, __LINE__, __func__, \
         #str, (str), #substring, (substring), \
-        check_type_assert, stderr \
+        stderr, cks_on_fail_halt \
     )
 
 
-#define ASSERT_STR_EQ(str1, str2) \
-    check_str_eq( \
+#define check_str_eq(str1, str2) \
+    cks_verify_str_eq( \
         __FILE__, __LINE__, __func__, \
         #str1, (str1), #str2, (str2), \
-        check_type_assert, stderr \
+        stderr, cks_on_fail_halt \
     )
 
 
-enum check_type {
-    check_type_assert,
-    check_type_expect
+#define check_true(expression) \
+    cks_verify_true( \
+        __FILE__, __LINE__, __func__, \
+        #expression, (expression), \
+        stderr, cks_on_fail_halt \
+    )
+
+
+enum cks_on_fail {
+    cks_on_fail_continue,
+    cks_on_fail_halt,
 };
 
 
 void
-check_false(
+cks_verify_false(
     char const *file,
     int line,
     char const *function,
     char const *expression,
     bool value,
-    enum check_type type,
-    FILE *out
+    FILE *out,
+    enum cks_on_fail on_fail
 );
 
 void
-check_int_eq(
+cks_verify_int_eq(
     char const *file,
     int line,
     char const *function,
@@ -88,34 +88,34 @@ check_int_eq(
     int int1,
     char const *int2_expression,
     int int2,
-    enum check_type type,
-    FILE *out
+    FILE *out,
+    enum cks_on_fail on_fail
 );
 
 void
-check_not_null(
+cks_verify_not_null(
     char const *file,
     int line,
     char const *function,
     char const *expression,
     void const *value,
-    enum check_type type,
-    FILE *out
+    FILE *out,
+    enum cks_on_fail on_fail
 );
 
 void
-check_null(
+cks_verify_null(
     char const *file,
     int line,
     char const *function,
     char const *expression,
     void const *value,
-    enum check_type type,
-    FILE *out
+    FILE *out,
+    enum cks_on_fail on_fail
 );
 
 void
-check_str_contains(
+cks_verify_str_contains(
     char const *file,
     int line,
     char const *function,
@@ -123,12 +123,12 @@ check_str_contains(
     char const *str,
     char const *substr_expression,
     char const *substr,
-    enum check_type type,
-    FILE *out
+    FILE *out,
+    enum cks_on_fail on_fail
 );
 
 void
-check_str_eq(
+cks_verify_str_eq(
     char const *file,
     int line,
     char const *function,
@@ -136,42 +136,42 @@ check_str_eq(
     char const *str1,
     char const *str2_expression,
     char const *str2,
-    enum check_type type,
-    FILE *out
+    FILE *out,
+    enum cks_on_fail on_fail
 );
 
 void
-check_true(
+cks_verify_true(
     char const *file,
     int line,
     char const *function,
     char const *expression,
     bool value,
-    enum check_type type,
-    FILE *out
+    FILE *out,
+    enum cks_on_fail on_fail
 );
 
+bool
+cks_is_substr(char const *str, char const *substring);
+
+bool
+cks_is_str_eq(char const *str1, char const *str2);
+
 FILE *
-open_buffer(char buffer[], size_t buffer_size);
+cks_open_buffer(char buffer[], size_t buffer_size);
 
 void
-print_int_expression(
+cks_print_int_expression(
     FILE *out, char const *parameter, char const *expression, int value
 );
 
 void
-print_str_diff(FILE *out, char const *str1, char const *str2);
+cks_print_str_diff(FILE *out, char const *str1, char const *str2);
 
 void
-print_str_expression(
+cks_print_str_expression(
     FILE *out, char const *parameter, char const *expression, char const *value
 );
-
-bool
-str_contains(char const *str, char const *substring);
-
-bool
-str_eq(char const *s1, char const *s2);
 
 
 #endif

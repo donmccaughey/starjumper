@@ -5,299 +5,329 @@
 
 
 static void
-test_check_false_passes(void)
+test_verify_false_passes(void)
 {
     char buffer[200];
-    FILE *out = open_buffer(buffer, sizeof buffer);
+    FILE *out = cks_open_buffer(buffer, sizeof buffer);
 
     bool value = false;
-    check_false(
-        "file.c", 10, "test_file",
-        "value", value,
-        check_type_expect, out
+    cks_verify_false(
+            "file.c", 10, "test_file",
+            "value", value,
+            out, cks_on_fail_continue
     );
 
     fclose(out);
-    ASSERT_STR_EQ(buffer, "");
+    check_str_eq(buffer, "");
 }
 
 
 static void
-test_check_false_fails(void)
+test_verify_false_fails(void)
 {
     char buffer[200];
-    FILE *out = open_buffer(buffer, sizeof buffer);
+    FILE *out = cks_open_buffer(buffer, sizeof buffer);
 
     bool value = true;
-    check_false(
-        "file.c", 10, "test_file",
-        "value", value,
-        check_type_expect, out
+    cks_verify_false(
+            "file.c", 10, "test_file",
+            "value", value,
+            out, cks_on_fail_continue
     );
 
     fclose(out);
-    ASSERT_STR_CONTAINS(buffer, "file.c:10: in test_file():");
-    ASSERT_STR_CONTAINS(buffer, "`value` expected to be false");
+    check_str_contains(buffer, "file.c:10: in test_file():");
+    check_str_contains(buffer, "`value` expected to be false");
 }
 
 
 static void
-test_check_int_eq_passes(void)
+test_verify_int_eq_passes(void)
 {
     char buffer[200];
-    FILE *out = open_buffer(buffer, sizeof buffer);
+    FILE *out = cks_open_buffer(buffer, sizeof buffer);
 
     int i = 42;
-    check_int_eq(
-        "file.c", 10, "test_file",
-        "i", i, "42", 42,
-        check_type_expect, out
+    cks_verify_int_eq(
+            "file.c", 10, "test_file",
+            "i", i, "42", 42,
+            out, cks_on_fail_continue
     );
 
     fclose(out);
-    ASSERT_STR_EQ(buffer, "");
+    check_str_eq(buffer, "");
 }
 
 
 static void
-test_check_int_eq_fails(void)
+test_verify_int_eq_fails(void)
 {
     char buffer[200];
-    FILE *out = open_buffer(buffer, sizeof buffer);
+    FILE *out = cks_open_buffer(buffer, sizeof buffer);
 
     int i = 17;
-    check_int_eq(
-        "file.c", 10, "test_file",
-        "i", i, "42", 42,
-        check_type_expect, out
+    cks_verify_int_eq(
+            "file.c", 10, "test_file",
+            "i", i, "42", 42,
+            out, cks_on_fail_continue
     );
 
     fclose(out);
-    ASSERT_STR_CONTAINS(buffer, "file.c:10: in test_file():");
-    ASSERT_STR_CONTAINS(buffer, "`i` expected to equal `42`");
-    ASSERT_STR_CONTAINS(buffer, "int1 (i): 17");
-    ASSERT_STR_CONTAINS(buffer, "int2: 42");
+    check_str_contains(buffer, "file.c:10: in test_file():");
+    check_str_contains(buffer, "`i` expected to equal `42`");
+    check_str_contains(buffer, "int1 (i): 17");
+    check_str_contains(buffer, "int2: 42");
 }
 
 
 static void
-test_check_not_null_passes(void)
+test_verify_not_null_passes(void)
 {
     char buffer[200];
-    FILE *out = open_buffer(buffer, sizeof buffer);
+    FILE *out = cks_open_buffer(buffer, sizeof buffer);
 
     int i = 42;
     int *ptr = &i;
-    check_not_null(
-        "file.c", 10, "test_file",
-        "ptr", ptr,
-        check_type_expect, out
+    cks_verify_not_null(
+            "file.c", 10, "test_file",
+            "ptr", ptr,
+            out, cks_on_fail_continue
     );
 
     fclose(out);
-    ASSERT_STR_EQ(buffer, "");
+    check_str_eq(buffer, "");
 }
 
 
 static void
-test_check_not_null_fails(void)
+test_verify_not_null_fails(void)
 {
     char buffer[200];
-    FILE *out = open_buffer(buffer, sizeof buffer);
+    FILE *out = cks_open_buffer(buffer, sizeof buffer);
 
     int *ptr = NULL;
-    check_not_null(
-        "file.c", 10, "test_file",
-        "ptr", ptr,
-        check_type_expect, out
+    cks_verify_not_null(
+            "file.c", 10, "test_file",
+            "ptr", ptr,
+            out, cks_on_fail_continue
     );
 
     fclose(out);
-    ASSERT_STR_CONTAINS(buffer, "file.c:10: in test_file():");
-    ASSERT_STR_CONTAINS(buffer, "`ptr` expected to be non-NULL");
+    check_str_contains(buffer, "file.c:10: in test_file():");
+    check_str_contains(buffer, "`ptr` expected to be non-NULL");
 }
 
 
 static void
-test_check_null_passes(void)
+test_verify_null_passes(void)
 {
     char buffer[200];
-    FILE *out = open_buffer(buffer, sizeof buffer);
+    FILE *out = cks_open_buffer(buffer, sizeof buffer);
 
     int *ptr = NULL;
-    check_null(
-        "file.c", 10, "test_file",
-        "ptr", ptr,
-        check_type_expect, out
+    cks_verify_null(
+            "file.c", 10, "test_file",
+            "ptr", ptr,
+            out, cks_on_fail_continue
     );
 
     fclose(out);
-    ASSERT_STR_EQ(buffer, "");
+    check_str_eq(buffer, "");
 }
 
 
 static void
-test_check_null_fails(void)
+test_verify_null_fails(void)
 {
     char buffer[200];
-    FILE *out = open_buffer(buffer, sizeof buffer);
+    FILE *out = cks_open_buffer(buffer, sizeof buffer);
 
     int i = 42;
     int *ptr = &i;
-    check_null(
-        "file.c", 10, "test_file",
-        "ptr", ptr,
-        check_type_expect, out
+    cks_verify_null(
+            "file.c", 10, "test_file",
+            "ptr", ptr,
+            out, cks_on_fail_continue
     );
 
     fclose(out);
-    ASSERT_STR_CONTAINS(buffer, "file.c:10: in test_file():");
-    ASSERT_STR_CONTAINS(buffer, "`ptr` expected to be NULL");
+    check_str_contains(buffer, "file.c:10: in test_file():");
+    check_str_contains(buffer, "`ptr` expected to be NULL");
 }
 
 
 static void
-test_check_str_contains_passes(void)
+test_verify_str_contains_passes(void)
 {
     char buffer[200];
-    FILE *out = open_buffer(buffer, sizeof buffer);
+    FILE *out = cks_open_buffer(buffer, sizeof buffer);
 
     char const *str = "foobar";
     char const *substring = "foo";
-    check_str_contains(
-        "file.c", 10, "test_file",
-        "str", str, "substring", substring,
-        check_type_expect, out
+    cks_verify_str_contains(
+            "file.c", 10, "test_file",
+            "str", str, "substring", substring,
+            out, cks_on_fail_continue
     );
 
     fclose(out);
-    ASSERT_STR_EQ("", buffer);
+    check_str_eq("", buffer);
 }
 
 
 static void
-test_check_str_contains_fails(void)
+test_verify_str_contains_fails(void)
 {
     char buffer[200];
-    FILE *out = open_buffer(buffer, sizeof buffer);
+    FILE *out = cks_open_buffer(buffer, sizeof buffer);
 
     char const *line = "foo";
     char const *fragment = "bar";
-    check_str_contains(
-        "file.c", 10, "test_file",
-        "line", line, "fragment", fragment,
-        check_type_expect, out
+    cks_verify_str_contains(
+            "file.c", 10, "test_file",
+            "line", line, "fragment", fragment,
+            out, cks_on_fail_continue
     );
 
     fclose(out);
-    ASSERT_STR_CONTAINS(buffer, "file.c:10: in test_file():");
-    ASSERT_STR_CONTAINS(buffer, "`line` expected to contain `fragment`");
-    ASSERT_STR_CONTAINS(buffer, "str (line): \"foo\"");
-    ASSERT_STR_CONTAINS(buffer, "substr (fragment): \"bar\"");
+    check_str_contains(buffer, "file.c:10: in test_file():");
+    check_str_contains(buffer, "`line` expected to contain `fragment`");
+    check_str_contains(buffer, "str (line): \"foo\"");
+    check_str_contains(buffer, "substr (fragment): \"bar\"");
 }
 
 
 static void
-test_check_str_eq_passes(void)
+test_verify_str_eq_passes(void)
 {
     char buffer[200];
-    FILE *out = open_buffer(buffer, sizeof buffer);
+    FILE *out = cks_open_buffer(buffer, sizeof buffer);
 
     char const *name1 = "foo";
     char const *name2 = "foo";
-    check_str_eq(
-        "file.c", 10, "test_file",
-        "name1", name1, "name2", name2,
-        check_type_expect, out
+    cks_verify_str_eq(
+            "file.c", 10, "test_file",
+            "name1", name1, "name2", name2,
+            out, cks_on_fail_continue
     );
 
     fclose(out);
-    ASSERT_STR_EQ("", buffer);
+    check_str_eq("", buffer);
 }
 
 
 static void
-test_check_str_eq_fails(void)
+test_verify_str_eq_fails(void)
 {
     char buffer[200];
-    FILE *out = open_buffer(buffer, sizeof buffer);
+    FILE *out = cks_open_buffer(buffer, sizeof buffer);
 
     char const *name1 = "foo";
     char const *name2 = "bar";
-    check_str_eq(
-        "file.c", 10, "test_file",
-        "name1", name1, "name2", name2,
-        check_type_expect, out
+    cks_verify_str_eq(
+            "file.c", 10, "test_file",
+            "name1", name1, "name2", name2,
+            out, cks_on_fail_continue
     );
 
     fclose(out);
-    ASSERT_STR_CONTAINS(buffer, "file.c:10: in test_file():");
-    ASSERT_STR_CONTAINS(buffer, "`name1` expected to equal `name2`");
-    ASSERT_STR_CONTAINS(buffer, "str1 (name1): \"foo\"");
-    ASSERT_STR_CONTAINS(buffer, "str2 (name2): \"bar\"");
+    check_str_contains(buffer, "file.c:10: in test_file():");
+    check_str_contains(buffer, "`name1` expected to equal `name2`");
+    check_str_contains(buffer, "str1 (name1): \"foo\"");
+    check_str_contains(buffer, "str2 (name2): \"bar\"");
 }
 
 
 static void
-test_check_str_eq_fails_when_multiline(void)
+test_verify_str_eq_fails_when_multiline(void)
 {
     char buffer[200];
-    FILE *out = open_buffer(buffer, sizeof buffer);
+    FILE *out = cks_open_buffer(buffer, sizeof buffer);
 
     char const *name1 = "foo\n  bar\n  baz\n";
     char const *name2 = "foo\n  xam\n  baz\n";
-    check_str_eq(
-        "file.c", 10, "test_file",
-        "name1", name1, "name2", name2,
-        check_type_expect, out
+    cks_verify_str_eq(
+            "file.c", 10, "test_file",
+            "name1", name1, "name2", name2,
+            out, cks_on_fail_continue
     );
 
     fclose(out);
-    ASSERT_STR_CONTAINS(buffer, "file.c:10: in test_file():");
-    ASSERT_STR_CONTAINS(buffer, "`name1` expected to equal `name2`");
-    ASSERT_STR_CONTAINS(buffer, "str1 (name1): 3 lines");
-    ASSERT_STR_CONTAINS(buffer, "str2 (name2): 3 lines");
-    ASSERT_STR_CONTAINS(buffer, "====== \"foo\"");
-    ASSERT_STR_CONTAINS(buffer, "str1 < \"  bar\"");
-    ASSERT_STR_CONTAINS(buffer, "str2 > \"  xam\"");
-    ASSERT_STR_CONTAINS(buffer, "====== \"  baz\"");
+    check_str_contains(buffer, "file.c:10: in test_file():");
+    check_str_contains(buffer, "`name1` expected to equal `name2`");
+    check_str_contains(buffer, "str1 (name1): 3 lines");
+    check_str_contains(buffer, "str2 (name2): 3 lines");
+    check_str_contains(buffer, "====== \"foo\"");
+    check_str_contains(buffer, "str1 < \"  bar\"");
+    check_str_contains(buffer, "str2 > \"  xam\"");
+    check_str_contains(buffer, "====== \"  baz\"");
 }
 
 
 static void
-test_check_true_passes(void)
+test_verify_true_passes(void)
 {
     char buffer[200];
-    FILE *out = open_buffer(buffer, sizeof buffer);
+    FILE *out = cks_open_buffer(buffer, sizeof buffer);
 
     bool value = true;
-    check_true(
-        "file.c", 10, "test_file",
-        "value", value,
-        check_type_expect, out
+    cks_verify_true(
+            "file.c", 10, "test_file",
+            "value", value,
+            out, cks_on_fail_continue
     );
 
     fclose(out);
-    ASSERT_STR_EQ(buffer, "");
+    check_str_eq(buffer, "");
 }
 
 
 static void
-test_check_true_fails(void)
+test_verify_true_fails(void)
 {
     char buffer[200];
-    FILE *out = open_buffer(buffer, sizeof buffer);
+    FILE *out = cks_open_buffer(buffer, sizeof buffer);
 
     bool value = false;
-    check_true(
-        "file.c", 10, "test_file",
-        "value", value,
-        check_type_expect, out
+    cks_verify_true(
+            "file.c", 10, "test_file",
+            "value", value,
+            out, cks_on_fail_continue
     );
 
     fclose(out);
-    ASSERT_STR_CONTAINS(buffer, "file.c:10: in test_file():");
-    ASSERT_STR_CONTAINS(buffer, "`value` expected to be true");
+    check_str_contains(buffer, "file.c:10: in test_file():");
+    check_str_contains(buffer, "`value` expected to be true");
+}
+
+
+static void
+test_is_substr(void)
+{
+    check_true(cks_is_substr("foobar", "foo"));
+    check_true(cks_is_substr("foo", "foo"));
+    check_true(cks_is_substr("foo", ""));
+    check_true(cks_is_substr("", ""));
+
+    check_false(cks_is_substr("foo", NULL));
+    check_false(cks_is_substr(NULL, "bar"));
+    check_false(cks_is_substr(NULL, NULL));
+    check_false(cks_is_substr("foo", "bar"));
+}
+
+
+static void
+test_is_str_eq(void)
+{
+    char foo1[] = "foo";
+    char foo2[] = "foo";
+    check_true(cks_is_str_eq(NULL, NULL));
+    check_true(cks_is_str_eq(foo1, foo1));
+    check_true(cks_is_str_eq(foo1, foo2));
+
+    check_false(cks_is_str_eq("foo", NULL));
+    check_false(cks_is_str_eq(NULL, "foo"));
+    check_false(cks_is_str_eq("foo", "bar"));
 }
 
 
@@ -305,15 +335,15 @@ static void
 test_open_buffer()
 {
     char buffer[200];
-    FILE *out = open_buffer(buffer, sizeof buffer);
+    FILE *out = cks_open_buffer(buffer, sizeof buffer);
 
-    ASSERT_TRUE(buffer[0] == 0);
-    ASSERT_TRUE(buffer[199] == 0);
+    check_true(buffer[0] == 0);
+    check_true(buffer[199] == 0);
 
     fprintf(out, "Hello, world!");
     fclose(out);
 
-    ASSERT_STR_EQ(buffer, "Hello, world!");
+    check_str_eq(buffer, "Hello, world!");
 }
 
 
@@ -321,12 +351,12 @@ static void
 test_print_int_expression(void)
 {
     char buffer[200];
-    FILE *out = open_buffer(buffer, sizeof buffer);
+    FILE *out = cks_open_buffer(buffer, sizeof buffer);
 
-    print_int_expression(out, "int1", "i", 42);
+    cks_print_int_expression(out, "int1", "i", 42);
 
     fclose(out);
-    ASSERT_STR_CONTAINS(buffer, "int1 (i): 42\n");
+    check_str_contains(buffer, "int1 (i): 42\n");
 }
 
 
@@ -334,12 +364,12 @@ static void
 test_print_int_expression_for_int_literal(void)
 {
     char buffer[200];
-    FILE *out = open_buffer(buffer, sizeof buffer);
+    FILE *out = cks_open_buffer(buffer, sizeof buffer);
 
-    print_int_expression(out, "int1", "42", 42);
+    cks_print_int_expression(out, "int1", "42", 42);
 
     fclose(out);
-    ASSERT_STR_CONTAINS(buffer, "int1: 42\n");
+    check_str_contains(buffer, "int1: 42\n");
 }
 
 
@@ -347,17 +377,17 @@ static void
 test_print_str_diff_for_equal_line_count(void)
 {
     char buffer[200];
-    FILE *out = open_buffer(buffer, sizeof buffer);
+    FILE *out = cks_open_buffer(buffer, sizeof buffer);
 
     char const *str1 = "foo\n  bar\n  baz\n";
     char const *str2 = "foo\n  xam\n  baz\n";
-    print_str_diff(out, str1, str2);
+    cks_print_str_diff(out, str1, str2);
 
     fclose(out);
-    ASSERT_STR_CONTAINS(buffer, "====== \"foo\"");
-    ASSERT_STR_CONTAINS(buffer, "str1 < \"  bar\"");
-    ASSERT_STR_CONTAINS(buffer, "str2 > \"  xam\"");
-    ASSERT_STR_CONTAINS(buffer, "====== \"  baz\"");
+    check_str_contains(buffer, "====== \"foo\"");
+    check_str_contains(buffer, "str1 < \"  bar\"");
+    check_str_contains(buffer, "str2 > \"  xam\"");
+    check_str_contains(buffer, "====== \"  baz\"");
 }
 
 
@@ -365,18 +395,18 @@ static void
 test_print_str_diff_for_different_line_count(void)
 {
     char buffer[200];
-    FILE *out = open_buffer(buffer, sizeof buffer);
+    FILE *out = cks_open_buffer(buffer, sizeof buffer);
 
     char const *str1 = "foo\n  bar\n  baz\n";
     char const *str2 = "foo\n  xam";
-    print_str_diff(out, str1, str2);
+    cks_print_str_diff(out, str1, str2);
 
     fclose(out);
-    ASSERT_STR_CONTAINS(buffer, "====== \"foo\"");
-    ASSERT_STR_CONTAINS(buffer, "str1 < \"  bar\"");
-    ASSERT_STR_CONTAINS(buffer, "str2 > \"  xam\"");
-    ASSERT_STR_CONTAINS(buffer, "str1 < \"  baz\"");
-    ASSERT_STR_CONTAINS(buffer, "str2 > \"\"");
+    check_str_contains(buffer, "====== \"foo\"");
+    check_str_contains(buffer, "str1 < \"  bar\"");
+    check_str_contains(buffer, "str2 > \"  xam\"");
+    check_str_contains(buffer, "str1 < \"  baz\"");
+    check_str_contains(buffer, "str2 > \"\"");
 }
 
 
@@ -384,12 +414,12 @@ static void
 test_print_str_expression(void)
 {
     char buffer[200];
-    FILE *out = open_buffer(buffer, sizeof buffer);
+    FILE *out = cks_open_buffer(buffer, sizeof buffer);
 
-    print_str_expression(out, "str", "buffer", "Hello!");
+    cks_print_str_expression(out, "str", "buffer", "Hello!");
 
     fclose(out);
-    ASSERT_STR_CONTAINS(buffer, "str (buffer): \"Hello!\"\n");
+    check_str_contains(buffer, "str (buffer): \"Hello!\"\n");
 }
 
 
@@ -397,12 +427,12 @@ static void
 test_print_str_expression_for_string_literal(void)
 {
     char buffer[200];
-    FILE *out = open_buffer(buffer, sizeof buffer);
+    FILE *out = cks_open_buffer(buffer, sizeof buffer);
 
-    print_str_expression(out, "str", "\"Hello!\"", "Hello!");
+    cks_print_str_expression(out, "str", "\"Hello!\"", "Hello!");
 
     fclose(out);
-    ASSERT_STR_CONTAINS(buffer, "str: \"Hello!\"\n");
+    check_str_contains(buffer, "str: \"Hello!\"\n");
 }
 
 
@@ -410,60 +440,36 @@ static void
 test_print_str_expression_for_null_value(void)
 {
     char buffer[200];
-    FILE *out = open_buffer(buffer, sizeof buffer);
+    FILE *out = cks_open_buffer(buffer, sizeof buffer);
 
-    print_str_expression(out, "str", "title", NULL);
+    cks_print_str_expression(out, "str", "title", NULL);
 
     fclose(out);
-    ASSERT_STR_CONTAINS(buffer, "str (title): NULL\n");
-}
-
-
-static void
-test_str_contains(void)
-{
-    ASSERT_TRUE(str_contains("foobar", "foo"));
-    ASSERT_TRUE(str_contains("foo", "foo"));
-    ASSERT_TRUE(str_contains("foo", ""));
-    ASSERT_TRUE(str_contains("", ""));
-
-    ASSERT_FALSE(str_contains("foo", NULL));
-    ASSERT_FALSE(str_contains(NULL, "bar"));
-    ASSERT_FALSE(str_contains(NULL, NULL));
-    ASSERT_FALSE(str_contains("foo", "bar"));
-}
-
-
-static void
-test_str_eq(void)
-{
-    char foo1[] = "foo";
-    char foo2[] = "foo";
-    ASSERT_TRUE(str_eq(NULL, NULL));
-    ASSERT_TRUE(str_eq(foo1, foo1));
-    ASSERT_TRUE(str_eq(foo1, foo2));
-
-    ASSERT_FALSE(str_eq("foo", NULL));
-    ASSERT_FALSE(str_eq(NULL, "foo"));
-    ASSERT_FALSE(str_eq("foo", "bar"));
+    check_str_contains(buffer, "str (title): NULL\n");
 }
 
 
 int
 main(int argc, char *argv[])
 {
-    test_check_false_passes();
-    test_check_false_fails();
+    test_verify_false_passes();
+    test_verify_false_fails();
 
-    test_check_int_eq_passes();
-    test_check_int_eq_fails();
-    test_check_str_eq_fails_when_multiline();
+    test_verify_int_eq_passes();
+    test_verify_int_eq_fails();
+    test_verify_str_eq_fails_when_multiline();
 
-    test_check_not_null_passes();
-    test_check_not_null_fails();
+    test_verify_not_null_passes();
+    test_verify_not_null_fails();
 
-    test_check_null_passes();
-    test_check_null_fails();
+    test_verify_null_passes();
+    test_verify_null_fails();
+
+    test_verify_true_passes();
+    test_verify_true_fails();
+
+    test_is_substr();
+    test_is_str_eq();
 
     test_open_buffer();
 
@@ -477,17 +483,11 @@ main(int argc, char *argv[])
     test_print_str_expression_for_string_literal();
     test_print_str_expression_for_null_value();
 
-    test_check_str_contains_passes();
-    test_check_str_contains_fails();
+    test_verify_str_contains_passes();
+    test_verify_str_contains_fails();
 
-    test_check_str_eq_passes();
-    test_check_str_eq_fails();
-
-    test_check_true_passes();
-    test_check_true_fails();
-
-    test_str_contains();
-    test_str_eq();
+    test_verify_str_eq_passes();
+    test_verify_str_eq_fails();
 
     return EXIT_SUCCESS;
 }

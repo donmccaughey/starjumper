@@ -60,6 +60,17 @@ next_line(char const *str, size_t len)
 
 
 static void
+print_location(
+    FILE *out,
+    char const *file,
+    int line,
+    char const *function
+) {
+    fprintf(out, "%s:%d: in %s():\n", file, line, function);
+}
+
+
+static void
 print_multi_line_string_diff(
     char const *str1_expression,
     char const *str1,
@@ -77,7 +88,7 @@ print_multi_line_string_diff(
     fprintf(out, "    str1 (%s): %d lines\n", str1_expression, str1_lines);
     fprintf(out, "    str2 (%s): %d lines\n", str2_expression, str2_lines);
     fprintf(out, "\n");
-    print_str_diff(out, str1, str2);
+    cks_print_str_diff(out, str1, str2);
     fprintf(out, "\n");
 }
 
@@ -95,30 +106,31 @@ print_single_line_string_diff(
         str1_expression, str2_expression
     );
     fprintf(out, "\n");
-    print_str_expression(out, "str1", str1_expression, str1);
-    print_str_expression(out, "str2", str2_expression, str2);
+    cks_print_str_expression(out, "str1", str1_expression, str1);
+    cks_print_str_expression(out, "str2", str2_expression, str2);
 }
 
 
 void
-check_false(
+cks_verify_false(
     char const *file,
     int line,
     char const *function,
     char const *expression,
     bool value,
-    enum check_type type,
-    FILE *out
+    FILE *out,
+    enum cks_on_fail on_fail
 ) {
     if (false == value) return;
     fprintf(out, "%s:%d: in %s():\n", file, line, function);
+    print_location(out, file, line, function);
     fprintf(out, "    `%s` expected to be false\n", expression);
-    if (check_type_assert == type) exit(EXIT_FAILURE);
+    if (cks_on_fail_halt == on_fail) exit(EXIT_FAILURE);
 }
 
 
 void
-check_int_eq(
+cks_verify_int_eq(
     char const *file,
     int line,
     char const *function,
@@ -126,59 +138,59 @@ check_int_eq(
     int int1,
     char const *int2_expression,
     int int2,
-    enum check_type type,
-    FILE *out
+    FILE *out,
+    enum cks_on_fail on_fail
 ) {
     if (int1 == int2) return;
-    fprintf(out, "%s:%d: in %s():\n", file, line, function);
+    print_location(out, file, line, function);
     fprintf(
         out, "    `%s` expected to equal `%s`\n",
         int1_expression, int2_expression
     );
     fprintf(out, "\n");
-    print_int_expression(out, "int1", int1_expression, int1);
-    print_int_expression(out, "int2", int2_expression, int2);
-    if (check_type_assert == type) exit(EXIT_FAILURE);
+    cks_print_int_expression(out, "int1", int1_expression, int1);
+    cks_print_int_expression(out, "int2", int2_expression, int2);
+    if (cks_on_fail_halt == on_fail) exit(EXIT_FAILURE);
 
 }
 
 
 void
-check_not_null(
+cks_verify_not_null(
     char const *file,
     int line,
     char const *function,
     char const *expression,
     void const *value,
-    enum check_type type,
-    FILE *out
+    FILE *out,
+    enum cks_on_fail on_fail
 ) {
     if (NULL != value) return;
-    fprintf(out, "%s:%d: in %s():\n", file, line, function);
+    print_location(out, file, line, function);
     fprintf(out, "    `%s` expected to be non-NULL\n", expression);
-    if (check_type_assert == type) exit(EXIT_FAILURE);
+    if (cks_on_fail_halt == on_fail) exit(EXIT_FAILURE);
 }
 
 
 void
-check_null(
+cks_verify_null(
     char const *file,
     int line,
     char const *function,
     char const *expression,
     void const *value,
-    enum check_type type,
-    FILE *out
+    FILE *out,
+    enum cks_on_fail on_fail
 ) {
     if (NULL == value) return;
-    fprintf(out, "%s:%d: in %s():\n", file, line, function);
+    print_location(out, file, line, function);
     fprintf(out, "    `%s` expected to be NULL\n", expression);
-    if (check_type_assert == type) exit(EXIT_FAILURE);
+    if (cks_on_fail_halt == on_fail) exit(EXIT_FAILURE);
 }
 
 
 void
-check_str_contains(
+cks_verify_str_contains(
     char const *file,
     int line,
     char const *function,
@@ -186,24 +198,24 @@ check_str_contains(
     char const *str,
     char const *substr_expression,
     char const *substr,
-    enum check_type type,
-    FILE *out
+    FILE *out,
+    enum cks_on_fail on_fail
 ) {
-    if (str_contains(str, substr)) return;
-    fprintf(out, "%s:%d: in %s():\n", file, line, function);
+    if (cks_is_substr(str, substr)) return;
+    print_location(out, file, line, function);
     fprintf(
         out, "    `%s` expected to contain `%s`\n",
         str_expression, substr_expression
     );
     fprintf(out, "\n");
-    print_str_expression(out, "str", str_expression, str);
-    print_str_expression(out, "substr", substr_expression, substr);
-    if (check_type_assert == type) exit(EXIT_FAILURE);
+    cks_print_str_expression(out, "str", str_expression, str);
+    cks_print_str_expression(out, "substr", substr_expression, substr);
+    if (cks_on_fail_halt == on_fail) exit(EXIT_FAILURE);
 }
 
 
 void
-check_str_eq(
+cks_verify_str_eq(
     char const *file,
     int line,
     char const *function,
@@ -211,11 +223,11 @@ check_str_eq(
     char const *str1,
     char const *str2_expression,
     char const *str2,
-    enum check_type type,
-    FILE *out
+    FILE *out,
+    enum cks_on_fail on_fail
 ) {
-    if (str_eq(str1, str2)) return;
-    fprintf(out, "%s:%d: in %s():\n", file, line, function);
+    if (cks_is_str_eq(str1, str2)) return;
+    print_location(out, file, line, function);
     if (is_str_multi_line(str1) || is_str_multi_line(str2)) {
         print_multi_line_string_diff(
                 str1_expression, str1, str2_expression, str2, out);
@@ -223,29 +235,46 @@ check_str_eq(
         print_single_line_string_diff(
                 str1_expression, str1, str2_expression, str2, out);
     }
-    if (check_type_assert == type) exit(EXIT_FAILURE);
+    if (cks_on_fail_halt == on_fail) exit(EXIT_FAILURE);
 }
 
 
 void
-check_true(
+cks_verify_true(
     char const *file,
     int line,
     char const *function,
     char const *expression,
     bool value,
-    enum check_type type,
-    FILE *out
+    FILE *out,
+    enum cks_on_fail on_fail
 ) {
     if (true == value) return;
-    fprintf(out, "%s:%d: in %s():\n", file, line, function);
+    print_location(out, file, line, function);
     fprintf(out, "    `%s` expected to be true\n", expression);
-    if (check_type_assert == type) exit(EXIT_FAILURE);
+    if (cks_on_fail_halt == on_fail) exit(EXIT_FAILURE);
+}
+
+
+bool
+cks_is_substr(char const *str, char const *substring)
+{
+    if (NULL == str || NULL == substring) return false;
+    return NULL != strstr(str, substring);
+}
+
+
+bool
+cks_is_str_eq(char const *str1, char const *str2)
+{
+    if (str1 == str2) return true;
+    if (NULL == str1 || NULL == str2) return false;
+    return 0 == strcmp(str1, str2);
 }
 
 
 FILE *
-open_buffer(char buffer[], size_t buffer_size)
+cks_open_buffer(char buffer[], size_t buffer_size)
 {
     memset(buffer, 0, buffer_size);
     return fmemopen(buffer, buffer_size, "w+");
@@ -253,12 +282,12 @@ open_buffer(char buffer[], size_t buffer_size)
 
 
 void
-print_int_expression(
+cks_print_int_expression(
     FILE *out, char const *parameter, char const *expression, int value
 ) {
     char buffer[21]; // holds INT64_MIN and INT64_MAX as decimal strings
     snprintf(buffer, sizeof buffer, "%d", value);
-    if (str_eq(expression, buffer)) {
+    if (cks_is_str_eq(expression, buffer)) {
         fprintf(out, "    %s: %s\n", parameter, expression);
     } else {
         fprintf(out, "    %s (%s): %d\n", parameter, expression, value);
@@ -267,7 +296,7 @@ print_int_expression(
 
 
 void
-print_str_diff(FILE *out, char const *str1, char const *str2)
+cks_print_str_diff(FILE *out, char const *str1, char const *str2)
 {
     size_t len1;
     size_t len2;
@@ -287,7 +316,7 @@ print_str_diff(FILE *out, char const *str1, char const *str2)
 
 
 void
-print_str_expression(
+cks_print_str_expression(
     FILE *out, char const *parameter, char const *expression, char const *value
 ) {
     if (!value) {
@@ -297,21 +326,4 @@ print_str_expression(
     } else {
         fprintf(out, "    %s (%s): \"%s\"\n", parameter, expression, value);
     }
-}
-
-
-bool
-str_contains(char const *str, char const *substring)
-{
-    if (NULL == str || NULL == substring) return false;
-    return NULL != strstr(str, substring);
-}
-
-
-bool
-str_eq(char const *s1, char const *s2)
-{
-    if (s1 == s2) return true;
-    if (NULL == s1 || NULL == s2) return false;
-    return 0 == strcmp(s1, s2);
 }

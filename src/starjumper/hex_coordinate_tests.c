@@ -12,23 +12,23 @@ test_from_string(void)
         .vertical = 0
     };
     bool success = sj_hex_coordinate_from_string("0105", &hex_coordinate);
-    ASSERT_TRUE(success);
-    ASSERT_INT_EQ(hex_coordinate.horizontal, 1);
-    ASSERT_INT_EQ(hex_coordinate.vertical, 5);
+    check_true(success);
+    check_int_eq(hex_coordinate.horizontal, 1);
+    check_int_eq(hex_coordinate.vertical, 5);
 
     success = sj_hex_coordinate_from_string("1242", &hex_coordinate);
-    ASSERT_TRUE(success);
-    ASSERT_INT_EQ(hex_coordinate.horizontal, 12);
-    ASSERT_INT_EQ(hex_coordinate.vertical, 42);
+    check_true(success);
+    check_int_eq(hex_coordinate.horizontal, 12);
+    check_int_eq(hex_coordinate.vertical, 42);
 
     success = sj_hex_coordinate_from_string("", &hex_coordinate);
-    ASSERT_FALSE(success);
+    check_false(success);
 
     success = sj_hex_coordinate_from_string("01", &hex_coordinate);
-    ASSERT_FALSE(success);
+    check_false(success);
 
     success = sj_hex_coordinate_from_string("011", &hex_coordinate);
-    ASSERT_FALSE(success);
+    check_false(success);
 }
 
 
@@ -40,22 +40,22 @@ test_string_alloc(void)
         .vertical = 0
     };
     char *string = sj_string_alloc_from_hex_coordinate(hex_coordinate);
-    ASSERT_NOT_NULL(string);
-    ASSERT_STR_EQ(string, "0000");
+    check_not_null(string);
+    check_str_eq(string, "0000");
     free(string);
 
     hex_coordinate.horizontal = 1;
     hex_coordinate.vertical = 5;
     string = sj_string_alloc_from_hex_coordinate(hex_coordinate);
-    ASSERT_NOT_NULL(string);
-    ASSERT_STR_EQ(string, "0105");
+    check_not_null(string);
+    check_str_eq(string, "0105");
     free(string);
 
     hex_coordinate.horizontal = 12;
     hex_coordinate.vertical = 42;
     string = sj_string_alloc_from_hex_coordinate(hex_coordinate);
-    ASSERT_NOT_NULL(string);
-    ASSERT_STR_EQ(string, "1242");
+    check_not_null(string);
+    check_str_eq(string, "1242");
     free(string);
 }
 
@@ -64,12 +64,12 @@ static void
 test_make(void)
 {
     struct sj_hex_coordinate hex_coordinate = sj_hex_coordinate_make(1, 5);
-    ASSERT_INT_EQ(hex_coordinate.horizontal, 1);
-    ASSERT_INT_EQ(hex_coordinate.vertical, 5);
+    check_int_eq(hex_coordinate.horizontal, 1);
+    check_int_eq(hex_coordinate.vertical, 5);
 
     hex_coordinate = sj_hex_coordinate_make(12, 42);
-    ASSERT_INT_EQ(hex_coordinate.horizontal, 12);
-    ASSERT_INT_EQ(hex_coordinate.vertical, 42);
+    check_int_eq(hex_coordinate.horizontal, 12);
+    check_int_eq(hex_coordinate.vertical, 42);
 }
 
 
