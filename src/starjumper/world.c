@@ -306,6 +306,7 @@ sj_world_alloc(char const *name,
       modifier = -3;
     }
     int scout_base_index = sj_dice_throw(2, 6, (int[]) { modifier }, 1, rnd);
+    if (scout_base_index < 0) scout_base_index = 0;
     world->scout_base = scout_base_table[scout_base_index];
   }
   

@@ -122,7 +122,6 @@ cks_verify_false(
     enum cks_on_fail on_fail
 ) {
     if (false == value) return;
-    fprintf(out, "%s:%d: in %s():\n", file, line, function);
     print_location(out, file, line, function);
     fprintf(out, "    `%s` expected to be false\n", expression);
     if (cks_on_fail_halt == on_fail) exit(EXIT_FAILURE);
