@@ -77,10 +77,62 @@ test_world_alloc_for_maximum_rolls(void)
 }
 
 
+static void
+test_world_alloc_for_average_rolls(void)
+{
+    struct rnd *rnd = rnd_alloc_fake_fixed(2);
+    struct sj_world *world = sj_world_alloc("Test", sj_hex_coordinate_make(2, 3), rnd);
+
+    check_not_null(world);
+    check_str_eq(world->name, "Test");
+    check_int_eq(world->hex_coordinate.horizontal, 2);
+    check_int_eq(world->hex_coordinate.vertical, 3);
+
+    check_int_eq(world->starport, 'B');
+    check_false(world->naval_base);
+    check_false(world->scout_base);
+    check_true(world->gas_giant);
+
+    check_int_eq(world->size, 4);
+    check_int_eq(world->atmosphere, 3);
+    check_int_eq(world->hydrographics, 2);
+    check_int_eq(world->population, 4);
+    check_int_eq(world->government, 3);
+    check_int_eq(world->law_level, 2);
+
+    check_int_eq(world->tech_level, 10);
+
+    check_int_eq(world->trade_classifications_count, 2);
+    check_str_eq(world->trade_classifications[0]->name, "Non-industrial");
+    check_str_eq(world->trade_classifications[1]->name, "Poor");
+
+    sj_world_free(world);
+    rnd_free(rnd);
+}
+
+
+static void
+test_string_from_world(void)
+{
+    struct rnd *rnd = rnd_alloc_fake_fixed(2);
+    struct sj_world *world = sj_world_alloc("Test", sj_hex_coordinate_make(3, 7), rnd);
+    char *string = sj_string_from_world(world);
+
+    check_str_eq(string, "Test               0307 B432432-A   Non-industrial. Poor.                     G");
+
+    free(string);
+    sj_world_free(world);
+    rnd_free(rnd);
+}
+
+
 int
 main(int argc, char *argv[])
 {
     test_world_alloc_for_minimum_rolls();
     test_world_alloc_for_maximum_rolls();
+    test_world_alloc_for_average_rolls();
+
+    test_string_from_world();
     return EXIT_SUCCESS;
 }
