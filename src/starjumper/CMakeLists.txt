@@ -24,6 +24,16 @@ target_link_libraries(starjumper
 )
 
 
+add_executable(dice_throw_tests
+        dice_throw_tests.c
+)
+target_link_libraries(dice_throw_tests
+        checks
+        starjumper
+)
+add_test(dice_throw_tests dice_throw_tests)
+
+
 add_executable(hex_coordinate_tests
         hex_coordinate_tests.c
 )
