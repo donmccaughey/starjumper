@@ -47,6 +47,7 @@ sj_string_alloc_join_strings_with_separator(char const *const strings[],
     if (i) end = stpcpy(end, separator);
     end = stpcpy(end, strings[i]);
   }
+  *end = '\0';
   return joined;
 }
 
