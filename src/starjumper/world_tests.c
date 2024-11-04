@@ -42,9 +42,45 @@ test_world_alloc_for_minimum_rolls(void)
 }
 
 
+static void
+test_world_alloc_for_maximum_rolls(void)
+{
+    struct rnd *rnd = rnd_alloc_fake_fixed(5);
+    struct sj_world *world = sj_world_alloc("Test", sj_hex_coordinate_make(8, 10), rnd);
+
+    check_not_null(world);
+    check_str_eq(world->name, "Test");
+    check_int_eq(world->hex_coordinate.horizontal, 8);
+    check_int_eq(world->hex_coordinate.vertical, 10);
+
+    check_int_eq(world->starport, 'X');
+    check_false(world->naval_base);
+    check_false(world->scout_base);
+    check_false(world->gas_giant);
+
+    check_int_eq(world->size, 10);
+    check_int_eq(world->atmosphere, 15);
+    check_int_eq(world->hydrographics, 10);
+    check_int_eq(world->population, 10);
+    check_int_eq(world->government, 15);
+    check_int_eq(world->law_level, 20);
+
+    check_int_eq(world->tech_level, 8);
+
+    check_int_eq(world->trade_classifications_count, 3);
+    check_str_eq(world->trade_classifications[0]->name, "Fluid Oceans");
+    check_str_eq(world->trade_classifications[1]->name, "High Population");
+    check_str_eq(world->trade_classifications[2]->name, "Water World");
+
+    sj_world_free(world);
+    rnd_free(rnd);
+}
+
+
 int
 main(int argc, char *argv[])
 {
     test_world_alloc_for_minimum_rolls();
+    test_world_alloc_for_maximum_rolls();
     return EXIT_SUCCESS;
 }
