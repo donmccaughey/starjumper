@@ -1,15 +1,15 @@
 #include <starjumper/starjumper.h>
 
 #include <checks.h>
-#include <rnd.h>
+#include <lrnd.h>
 #include <stdlib.h>
 
 
 static void
 test_world_alloc_for_minimum_rolls(void)
 {
-    struct rnd *rnd = rnd_alloc_fake_fixed(0);
-    struct sj_world *world = sj_world_alloc("Test", sj_hex_coordinate_make(1, 2), rnd);
+    struct lrnd *lrnd = lrnd_alloc_fake_fixed(0);
+    struct sj_world *world = sj_world_alloc("Test", sj_hex_coordinate_make(1, 2), lrnd);
 
     check_not_null(world);
     check_str_eq(world->name, "Test");
@@ -38,15 +38,15 @@ test_world_alloc_for_minimum_rolls(void)
     check_str_eq(world->trade_classifications[4]->name, "Vacuum World");
 
     sj_world_free(world);
-    rnd_free(rnd);
+    lrnd_free(lrnd);
 }
 
 
 static void
 test_world_alloc_for_maximum_rolls(void)
 {
-    struct rnd *rnd = rnd_alloc_fake_fixed(5);
-    struct sj_world *world = sj_world_alloc("Test", sj_hex_coordinate_make(8, 10), rnd);
+    struct lrnd *lrnd = lrnd_alloc_fake_fixed(5);
+    struct sj_world *world = sj_world_alloc("Test", sj_hex_coordinate_make(8, 10), lrnd);
 
     check_not_null(world);
     check_str_eq(world->name, "Test");
@@ -73,15 +73,15 @@ test_world_alloc_for_maximum_rolls(void)
     check_str_eq(world->trade_classifications[2]->name, "Water World");
 
     sj_world_free(world);
-    rnd_free(rnd);
+    lrnd_free(lrnd);
 }
 
 
 static void
 test_world_alloc_for_average_rolls(void)
 {
-    struct rnd *rnd = rnd_alloc_fake_fixed(2);
-    struct sj_world *world = sj_world_alloc("Test", sj_hex_coordinate_make(2, 3), rnd);
+    struct lrnd *lrnd = lrnd_alloc_fake_fixed(2);
+    struct sj_world *world = sj_world_alloc("Test", sj_hex_coordinate_make(2, 3), lrnd);
 
     check_not_null(world);
     check_str_eq(world->name, "Test");
@@ -107,22 +107,22 @@ test_world_alloc_for_average_rolls(void)
     check_str_eq(world->trade_classifications[1]->name, "Poor");
 
     sj_world_free(world);
-    rnd_free(rnd);
+    lrnd_free(lrnd);
 }
 
 
 static void
 test_string_from_world(void)
 {
-    struct rnd *rnd = rnd_alloc_fake_fixed(2);
-    struct sj_world *world = sj_world_alloc("Test", sj_hex_coordinate_make(3, 7), rnd);
+    struct lrnd *lrnd = lrnd_alloc_fake_fixed(2);
+    struct sj_world *world = sj_world_alloc("Test", sj_hex_coordinate_make(3, 7), lrnd);
     char *string = sj_string_from_world(world);
 
     check_str_eq(string, "Test               0307 B432432-A   Non-industrial. Poor.                     G");
 
     free(string);
     sj_world_free(world);
-    rnd_free(rnd);
+    lrnd_free(lrnd);
 }
 
 

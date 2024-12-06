@@ -52,7 +52,7 @@ endif()
 # ----- add build files in subdirectories -----
 
 add_subdirectory(libs/checks)
-add_subdirectory(libs/rnd)
+add_subdirectory(libs/lrnd)
 add_subdirectory(libs/xmalloc)
 add_subdirectory(src/starjumper)
 add_subdirectory(src/worldgen)

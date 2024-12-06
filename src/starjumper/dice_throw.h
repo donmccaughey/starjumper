@@ -2,7 +2,7 @@
 #define STARJUMPER_DICE_THROW_H_INCLUDED
 
 
-struct rnd;
+struct lrnd;
 
 
 struct sj_dice_throw
@@ -20,7 +20,7 @@ sj_dice_throw(int count,
               int sides,
               int modifiers[],
               int modifiers_count,
-              struct rnd *rnd);
+              struct lrnd *lrnd);
 
 void
 sj_dice_throw_add_modifier(struct sj_dice_throw *dice_throw, int modifier);
@@ -28,7 +28,7 @@ sj_dice_throw_add_modifier(struct sj_dice_throw *dice_throw, int modifier);
 struct sj_dice_throw *
 sj_dice_throw_alloc(int count,
                     int sides,
-                    struct rnd *rnd);
+                    struct lrnd *lrnd);
 
 void
 sj_dice_throw_free(struct sj_dice_throw *dice_throw);

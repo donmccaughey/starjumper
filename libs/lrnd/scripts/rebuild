@@ -1,0 +1,24 @@
+#!/bin/bash
+
+set -euo pipefail
+IFS=$'\n\t'
+
+if [ -d tmp ]
+then
+    rm -rf tmp
+fi
+
+cmake \
+    -S . \
+    -B tmp \
+    -DADDRESS_SANITIZER=ON \
+    -DCOVERAGE=ON \
+    -DWALL=ON
+
+cmake \
+    --build tmp \
+    --target all
+
+ctest \
+    --output-on-failure \
+    --test-dir tmp

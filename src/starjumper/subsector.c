@@ -14,7 +14,7 @@ static int const occurrence_throw = 4;
 
 
 struct sj_subsector *
-sj_subsector_alloc(char const *name, struct rnd *rnd)
+sj_subsector_alloc(char const *name, struct lrnd *lrnd)
 {
   struct sj_subsector *subsector = xcalloc(1, sizeof(struct sj_subsector));
   
@@ -24,12 +24,12 @@ sj_subsector_alloc(char const *name, struct rnd *rnd)
   
   for (int h = 1; h <= sj_subsector_width; ++h) {
     for (int v = 1; v <= sj_subsector_height; ++v) {
-      int throw = sj_dice_throw(1, 6, NULL, 0, rnd);
+      int throw = sj_dice_throw(1, 6, NULL, 0, lrnd);
       if (throw >= occurrence_throw) {
         int i = subsector->worlds_count;
         subsector->worlds[i] = sj_world_alloc("No Name",
                                               sj_hex_coordinate_make(h, v),
-                                              rnd);
+                                              lrnd);
         ++subsector->worlds_count;
       }
     }

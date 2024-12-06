@@ -6,14 +6,15 @@
 #include <starjumper/starjumper.h>
 
 
+struct lrnd;
 struct rnd;
 
 
 struct options
 {
   struct sj_hex_coordinate hex_coordinate;
+  struct lrnd *lrnd;
   char *name;
-  struct rnd *rnd;
   bool subsector;
 };
 

@@ -1,0 +1,19 @@
+image: freebsd/latest
+packages:
+    - cmake
+sources:
+    - https://git.sr.ht/~donmcc/lrnd
+tasks:
+    - generate: |
+        cd lrnd
+        cmake -S . -B tmp -DWALL=ON
+    - build: |
+        cd lrnd
+        cmake --build tmp --target all
+    - test: |
+        cd lrnd
+        ctest --output-on-failure --test-dir tmp
+triggers:
+    - action: email
+      condition: failure
+      to: Don McCaughey <don@donm.cc>

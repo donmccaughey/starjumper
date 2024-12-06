@@ -2,7 +2,7 @@
 
 #include <getopt.h>
 #include <libgen.h>
-#include <rnd.h>
+#include <lrnd.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -51,7 +51,7 @@ static struct option long_options[] = {
 
 
 static bool
-rnd_from_type(char const *type, struct rnd **rnd);
+lrnd_from_type(char const *type, struct lrnd **lrnd_out);
 
 static void
 print_usage_and_exit(int argc, char **argv);
@@ -80,7 +80,7 @@ options_alloc(int argc, char *argv[])
         break;
       case 'r':
       {
-        bool valid = rnd_from_type(optarg, &options->rnd);
+        bool valid = lrnd_from_type(optarg, &options->lrnd);
         if ( ! valid) {
           fprintf(stderr, "ERROR: \"%s\" is not a valid random number generator type\n", optarg);
           print_usage_and_exit(argc, argv);
@@ -104,15 +104,15 @@ options_alloc(int argc, char *argv[])
         break;
     }
   }
-  
+
+  if ( ! options->lrnd) {
+    options->lrnd = lrnd_best;
+  }
+
   if ( ! options->name) {
     options->name = xstrdup("No Name");
   }
-  
-  if ( ! options->rnd) {
-    options->rnd = global_rnd;
-  }
-  
+
   return options;
 }
 
@@ -120,29 +120,29 @@ options_alloc(int argc, char *argv[])
 void
 options_free(struct options *options)
 {
+  lrnd_free(options->lrnd);
   free(options->name);
-  rnd_free(options->rnd);
   free(options);
 }
 
 
 static bool
-rnd_from_type(char const *type, struct rnd **rnd)
+lrnd_from_type(char const *type, struct lrnd **lrnd_out)
 {
   if (0 == strcmp("arc4", type)) {
-    *rnd = global_rnd;
+    *lrnd_out = lrnd_best;
     return true;
   }
-  if (0 == strcmp("min", type)) {
-    *rnd = rnd_alloc_fake_min();
+  if (0 == strcmp("asc", type)) {
+    *lrnd_out = lrnd_alloc_fake_start_step(0, 1);
     return true;
   }
-  if (0 == strcmp("max", type)) {
-    *rnd = rnd_alloc_fake_max();
+  if (0 == strcmp("desc", type)) {
+    *lrnd_out = lrnd_alloc_fake_start_step(UINT32_MAX, -1);
     return true;
   }
-  if (0 == strcmp("median", type)) {
-    *rnd = rnd_alloc_fake_median();
+  if (0 == strcmp("fixed", type)) {
+    *lrnd_out = lrnd_alloc_fake_fixed(0);
     return true;
   }
   return false;
@@ -158,7 +158,7 @@ print_usage_and_exit(int argc, char **argv)
           "  -b, --subsector                  generate a subsector\n"
           "  -n, --name NAME                  set the world name\n"
           "  -r, --rng TYPE                   set the random number generator type\n"
-          "                                     [arc4|min|max|median]\n"
+          "                                     [arc4|asc|desc]\n"
           "  -x, --hex XXYY                   set the world hex coordinate\n"
           "                                     in the format \"0101\"\n"
           ,
