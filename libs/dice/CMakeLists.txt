@@ -46,6 +46,7 @@ endif()
 
 
 add_library(dice STATIC dice.h dice.c)
+target_include_directories(dice PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}")
 if(bsd_FOUND)
     target_link_libraries(dice PUBLIC PkgConfig::bsd)
 endif()
