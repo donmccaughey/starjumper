@@ -1,0 +1,19 @@
+image: openbsd/latest
+packages:
+    - cmake
+sources:
+    - https://git.sr.ht/~donmcc/dice
+tasks:
+    - generate: |
+        cd dice
+        cmake -S . -B tmp -DWALL=ON
+    - build: |
+        cd dice
+        cmake --build tmp --target all
+    - test: |
+        cd dice
+        ctest --output-on-failure --test-dir tmp
+triggers:
+    - action: email
+      condition: failure
+      to: Don McCaughey <don@donm.cc>

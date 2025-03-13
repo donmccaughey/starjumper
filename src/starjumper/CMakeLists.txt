@@ -19,6 +19,7 @@ target_include_directories(starjumper
         PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/.."
 )
 target_link_libraries(starjumper
+        PUBLIC dice
         PUBLIC lrnd
         PUBLIC xmalloc
 )

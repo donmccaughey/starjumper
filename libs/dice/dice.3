@@ -1,0 +1,286 @@
+.Dd February 7, 2025
+.Dt DICE 3
+.Os
+.Sh NAME
+.Nm dice_alloc ,
+.Nm dice_alloc_parse ,
+.Nm dice_alloc_with_mods ,
+.Nm dice_alloc_with_mods_capacity ,
+.Nm dice_description_alloc
+.Nm dice_realloc_add_mod
+.Nm dice_realloc_set_mods_capacity ,
+.Nm die_make_ascending ,
+.Nm die_make_fixed ,
+.Nm high_die ,
+.Nm low_die ,
+.Nm mod_make ,
+.Nm median_die ,
+.Nm random_die ,
+.Nm roll ,
+.Nm roll_alloc ,
+.Nm roll_alloc_with_die_rolls ,
+.Nm roll_dice ,
+.Nm roll_die ,
+.Nm roll_total
+.Sh LIBRARY
+.Lb libdice
+.Sh SYNOPSIS
+.In dice.h
+.Vt extern struct die
+.Va high_die;
+.Vt extern struct die
+.Va low_die;
+.Vt extern struct die
+.Va median_die;
+.Vt extern struct die
+.Va random_die;
+.Pp
+.Ft struct die
+.Fn die_make_ascending "int *initial_value"
+.Ft struct die
+.Fn die_make_fixed "int *fixed_value"
+.Ft struct mod
+.Fn mod_make "char op, int value"
+.Ft struct dice *
+.Fn dice_alloc "int count" "int sides"
+.Ft struct dice *
+.Fn dice_alloc_with_mods "int count" "int sides" "struct mod mods[]" "int mods_count"
+.Ft struct dice *
+.Fn dice_alloc_with_mods_capacity "int count" "int sides" "int mods_capacity"
+.Ft struct dice *
+.Fn dice_alloc_parse "char const *dice_expression"
+.Ft char *
+.Fn dice_description_alloc "struct dice const *dice"
+.Ft struct dice *
+.Fn dice_realloc_add_mod "struct dice *dice" "struct mod mod"
+.Ft struct dice *
+.Fn dice_realloc_set_mods_capacity "struct dice *dice" "int mods_capacity"
+.Ft struct roll *
+.Fn roll_alloc "struct dice const *dice" "struct die die"
+.Ft struct roll *
+.Fn roll_alloc_with_die_rolls "struct dice const *dice" "int die_rolls[]" "int die_rolls_count"
+.Ft int
+.Fn roll_total "struct roll const *roll"
+.Ft int
+.Fn roll "char const *dice_expression" "struct die die"
+.Ft int
+.Fn roll_die "int sides" "struct die die"
+.Ft int
+.Fn roll_dice "struct dice const *dice" "struct die die"
+.Sh DESCRIPTION
+.Ss Conventions
+Functions that allocate memory will call
+.Xr abort 3
+if memory allocation fails thus checking for
+.Dv NULL
+is not necessary.
+Most functions use
+.Xr assert 3
+to validate parameters and invariants but do no validation when
+.Dv NDEBUG
+is defined; however the
+.Fn dice_alloc_parse
+function will return
+.Dv NULL
+if given an invalid dice expression so that it can be used to validate user input.
+.Ss The die Struct
+A
+.Vt die
+struct is a number generator that produces the roll of a single die.
+The number produced by a
+.Vt die
+is in the range [1, sides] where
+.Va sides
+is determined by a
+.Vt dice
+struct.
+A
+.Vt die
+struct can generate random or deterministic rolls.
+.Pp
+The global variables
+.Va high_die ,
+.Va low_die
+and
+.Va median_die
+are deterministic
+.Vt die
+structs that are useful for testing.
+The
+.Va high_die
+and
+.Va low_die
+structs generate max and min rolls respectively.
+The
+.Va median_die
+struct generates the middle roll for an odd number of sides,
+or the higher of the two middle rolls for an even number of sides.
+.Pp
+The global variable
+.Va random_die
+generates a random roll using
+.Xr arc4random_uniform 3 ,
+a high quality random number generator.
+.Pp
+The
+.Fn die_make_ascending
+function initializes a
+.Vt die
+struct that emits a monotonically increasing sequence of rolls starting at the
+given initial value.
+The
+.Fn die_make_fixed
+function initializes a
+.Vt die
+struct that emits a fixed value.
+.Ss The mod Struct
+A
+.Vt mod
+struct is a modifier applied to a dice roll.
+The
+.Va op
+field is the operator ('+', '-' or 'x') and
+.Va value
+is the integer value of the modifier.
+The
+.Fn mod_make
+function initializes a
+.Vt mod
+struct; it will normalize negative numbers, for example
+.Ic mod_make('-', -3)
+is equivalent to
+.Ic mod_make('+', 3) .
+.Ss The dice Struct
+A
+.Vt dice
+struct represents a set of dice to be rolled and modifiers applied to the roll.
+The set of dice is determined by fields
+.Va count
+and
+.Va sides .
+The modifiers are stored in unsized array
+.Va mods ,
+with
+.Va mods_count
+and
+.Va mods_capacity
+tracking the size of
+.Va mods .
+.Pp
+The
+.Fn dice_alloc
+and
+.Fn dice_alloc_with_mods
+functions allocate a
+.Vt dice
+struct without or with modifiers.
+The
+.Fn dice_alloc_with_mods_capacity
+functions allocate a
+.Vt dice
+struct with a specified capacity for modifiers.
+.Pp
+The
+.Fn dice_alloc_parse
+function allocates a
+.Vt dice
+struct by parsing a dice expression like
+.Ql 3d6+2
+or
+.Ql 2d8-1x10 ;
+it returns
+.Dv NULL
+if the dice expression is invalid.
+.Pp
+The
+.Fn dice_description_alloc
+function allocates a string containing the dice expression for a
+.Vt dice
+struct.
+.Pp
+Use
+.Fn free
+to deallocate
+.Vt dice
+structs and dice descriptions.
+.Pp
+The
+.Fn dice_realloc_add_mod
+and
+.Fn dice_realloc_set_mods_capacity
+functions modify the
+.Va mods
+array field of a
+.Vt dice
+struct, possibly reallocating the
+.Vt dice
+struct in the process.
+Both return a pointer to the modified
+.Vt dice
+struct; the
+.Vt dice
+struct parameter may be invalid on return.
+.Ss The roll Struct
+A
+.Vt roll
+struct represents the result of rolling dice.
+It contains a const pointer to the
+.Vt dice
+struct that was rolled and the unsized
+.Va die_rolls
+array containing the values rolled.
+The creator of a
+.Vt roll
+struct is responsible for ensuring that the referenced
+.Vt dice
+struct lives at least as long as the
+.Vt roll .
+.Pp
+The
+.Fn roll_alloc
+function allocates a
+.Vt roll
+struct given a
+.Vt dice
+and a
+.Vt die
+struct respectively.
+The
+.Fn roll_alloc_with_die_rolls
+function allocates a
+.Vt roll
+struct when the die roll values are known.
+.Pp
+Use
+.Fn free
+to deallocate
+.Vt roll
+structs.
+.Pp
+The
+.Fn roll_total
+function calculates the die roll total by summing the die roll values and
+applying the modifiers.
+.Ss The roll Functions
+The
+.Fn roll
+function rolls a set of dice given a dice expression and a
+.Vt die
+struct; it should not be used with untrusted input.
+.Pp
+The
+.Fn roll_die
+function rolls a die given the number of sides and a
+.Vt die
+struct.
+.Pp
+The
+.Fn roll_dice
+function rolls a set of dice given a
+.Vt dice
+struct and a
+.Vt die
+struct.
+.Sh SEE ALSO
+.Xr abort 3 ,
+.Xr assert 3
