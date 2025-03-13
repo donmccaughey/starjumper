@@ -1,6 +1,7 @@
 #include <starjumper/starjumper.h>
 
 #include <checks.h>
+#include <dice.h>
 #include <lrnd.h>
 #include <stdlib.h>
 
@@ -8,8 +9,10 @@
 static void
 test_world_alloc_for_minimum_rolls(void)
 {
+    int die_value = 0;
+    struct die die = die_make_fixed(&die_value);
     struct lrnd *lrnd = lrnd_alloc_fake_fixed(0);
-    struct sj_world *world = sj_world_alloc("Test", sj_hex_coordinate_make(1, 2), lrnd);
+    struct sj_world *world = sj_world_alloc("Test", sj_hex_coordinate_make(1, 2), lrnd, die);
 
     check_not_null(world);
     check_str_eq(world->name, "Test");
@@ -45,8 +48,10 @@ test_world_alloc_for_minimum_rolls(void)
 static void
 test_world_alloc_for_maximum_rolls(void)
 {
+    int die_value = 5;
+    struct die die = die_make_fixed(&die_value);
     struct lrnd *lrnd = lrnd_alloc_fake_fixed(5);
-    struct sj_world *world = sj_world_alloc("Test", sj_hex_coordinate_make(8, 10), lrnd);
+    struct sj_world *world = sj_world_alloc("Test", sj_hex_coordinate_make(8, 10), lrnd, die);
 
     check_not_null(world);
     check_str_eq(world->name, "Test");
@@ -80,8 +85,10 @@ test_world_alloc_for_maximum_rolls(void)
 static void
 test_world_alloc_for_average_rolls(void)
 {
+    int die_value = 2;
+    struct die die = die_make_fixed(&die_value);
     struct lrnd *lrnd = lrnd_alloc_fake_fixed(2);
-    struct sj_world *world = sj_world_alloc("Test", sj_hex_coordinate_make(2, 3), lrnd);
+    struct sj_world *world = sj_world_alloc("Test", sj_hex_coordinate_make(2, 3), lrnd, die);
 
     check_not_null(world);
     check_str_eq(world->name, "Test");
@@ -114,8 +121,10 @@ test_world_alloc_for_average_rolls(void)
 static void
 test_string_from_world(void)
 {
+    int die_value = 2;
+    struct die die = die_make_fixed(&die_value);
     struct lrnd *lrnd = lrnd_alloc_fake_fixed(2);
-    struct sj_world *world = sj_world_alloc("Test", sj_hex_coordinate_make(3, 7), lrnd);
+    struct sj_world *world = sj_world_alloc("Test", sj_hex_coordinate_make(3, 7), lrnd, die);
     char *string = sj_string_from_world(world);
 
     check_str_eq(string, "Test               0307 B432432-A   Non-industrial. Poor.                     G");
