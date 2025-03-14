@@ -8,7 +8,6 @@
 #include <xstring.h>
 #include <xstdio.h>
 
-#include "dice_throw.h"
 #include "string_array.h"
 #include "string_join.h"
 #include "trade_classification.h"

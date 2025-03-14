@@ -4,7 +4,6 @@
 #include <xmalloc.h>
 #include <xstring.h>
 
-#include "dice_throw.h"
 #include "world.h"
 
 

@@ -1,6 +1,4 @@
 add_library(starjumper STATIC
-        dice_throw.h
-        dice_throw.c
         hex_coordinate.h
         hex_coordinate.c
         starjumper.h
@@ -23,16 +21,6 @@ target_link_libraries(starjumper
         PUBLIC lrnd
         PUBLIC xmalloc
 )
-
-
-add_executable(dice_throw_tests
-        dice_throw_tests.c
-)
-target_link_libraries(dice_throw_tests
-        checks
-        starjumper
-)
-add_test(dice_throw_tests dice_throw_tests)
 
 
 add_executable(hex_coordinate_tests
