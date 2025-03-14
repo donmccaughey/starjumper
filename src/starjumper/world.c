@@ -282,7 +282,6 @@ hex_digit(int value)
 struct sj_world *
 sj_world_alloc(char const *name,
                struct sj_hex_coordinate const hex_coordinate,
-               struct lrnd *lrnd,
                struct die die)
 {
     struct sj_world *world = xmalloc(sizeof(struct sj_world));

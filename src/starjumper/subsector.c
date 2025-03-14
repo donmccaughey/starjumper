@@ -29,7 +29,6 @@ sj_subsector_alloc(char const *name, struct lrnd *lrnd, struct die die)
                 int i = subsector->worlds_count;
                 subsector->worlds[i] = sj_world_alloc("No Name",
                                                       sj_hex_coordinate_make(h, v),
-                                                      lrnd,
                                                       die);
                 ++subsector->worlds_count;
             }

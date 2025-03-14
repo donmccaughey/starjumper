@@ -56,7 +56,7 @@ generate_world(char const *name,
                struct lrnd *lrnd,
                struct die die)
 {
-    struct sj_world *world = sj_world_alloc(name, hex_coordinate, lrnd, die);
+    struct sj_world *world = sj_world_alloc(name, hex_coordinate, die);
 
     char *description = sj_string_from_world(world);
     fprintf(stdout, "%s\n", description);
