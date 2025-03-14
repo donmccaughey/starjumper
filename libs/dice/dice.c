@@ -448,22 +448,6 @@ roll_total(struct roll const *roll)
 
 
 int
-roll(char const *dice_expression, struct die die)
-{
-    assert(dice_expression);
-    assert(*dice_expression);
-    assert(die.roll);
-
-    struct dice *dice = dice_alloc_parse(dice_expression);
-    assert(dice);
-
-    int total = roll_dice(dice, die);
-    free(dice);
-    return total;
-}
-
-
-int
 roll_die(int sides, struct die die)
 {
     assert(sides > 1);
@@ -482,6 +466,58 @@ roll_dice(struct dice const *dice, struct die die)
     struct roll *roll = roll_alloc(dice, die);
     int total = roll_total(roll);
     free(roll);
+
+    return total;
+}
+
+
+int
+roll(int count, int sides, struct die die)
+{
+    assert(count >= 0);
+    assert(sides > 1);
+
+    return roll_with_mods(count, sides, NULL, 0, die);
+}
+
+
+int
+roll_with_mod(int count, int sides, struct mod mod, struct die die)
+{
+    assert(count >= 0);
+    assert(sides > 1);
+
+    return roll_with_mods(count, sides, &mod, 1, die);
+}
+
+
+int
+roll_with_mods(int count, int sides, struct mod mods[], int mods_count, struct die die)
+{
+    assert(count >= 0);
+    assert(sides > 1);
+
+    struct dice *dice = dice_alloc_with_mods(count, sides, mods, mods_count);
+
+    int total = roll_dice(dice, die);
+    free(dice);
+
+    return total;
+}
+
+
+int
+roll_parse(char const *dice_expression, struct die die)
+{
+    assert(dice_expression);
+    assert(*dice_expression);
+    assert(die.roll);
+
+    struct dice *dice = dice_alloc_parse(dice_expression);
+    assert(dice);
+
+    int total = roll_dice(dice, die);
+    free(dice);
 
     return total;
 }

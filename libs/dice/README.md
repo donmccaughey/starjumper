@@ -99,11 +99,17 @@ roll values and applying the modifiers.
 
 ## The roll functions
 
-The `roll()` function rolls a set of dice given a dice expression and a `die`
-struct; it should not be used with untrusted input.
-
 The `roll_die()` function rolls a die given the number of sides and a `die`
 struct.
 
 The `roll_dice()` function rolls a set of dice given a `dice` struct and a `die`
 struct.
+
+The `roll()` function rolls a set of dice given the count of dice, number of
+sides and a `die` struct.
+
+The `roll_with_mod()` and `roll_with_mods()` functions roll a set of dice given
+the count of dice, number of sides, modifier(s) and a `die` struct.
+
+The `roll_parse()` function rolls a set of dice given a dice expression and a
+`die` struct; it should not be used with untrusted input.

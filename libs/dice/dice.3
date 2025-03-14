@@ -21,7 +21,10 @@
 .Nm roll_alloc_with_die_rolls ,
 .Nm roll_dice ,
 .Nm roll_die ,
-.Nm roll_total
+.Nm roll_parse ,
+.Nm roll_total ,
+.Nm roll_with_mod ,
+.Nm roll_with_mods 
 .Sh LIBRARY
 .Lb libdice
 .Sh SYNOPSIS
@@ -62,11 +65,17 @@
 .Ft int
 .Fn roll_total "struct roll const *roll"
 .Ft int
-.Fn roll "char const *dice_expression" "struct die die"
-.Ft int
 .Fn roll_die "int sides" "struct die die"
 .Ft int
 .Fn roll_dice "struct dice const *dice" "struct die die"
+.Ft int
+.Fn roll "int count" "int sides" "struct die die"
+.Ft int
+.Fn roll_with_mod "int count" "int sides" "struct mod mod" "struct die die"
+.Ft int
+.Fn roll_with_mods "int count" "int sides" "struct mod mods[]" "int mod mods_count" "struct die die"
+.Ft int
+.Fn roll_parse "char const *dice_expression" "struct die die"
 .Sh DESCRIPTION
 .Ss Conventions
 Functions that allocate memory will call
@@ -263,12 +272,6 @@ function calculates the die roll total by summing the die roll values and
 applying the modifiers.
 .Ss The roll Functions
 The
-.Fn roll
-function rolls a set of dice given a dice expression and a
-.Vt die
-struct; it should not be used with untrusted input.
-.Pp
-The
 .Fn roll_die
 function rolls a die given the number of sides and a
 .Vt die
@@ -281,6 +284,27 @@ function rolls a set of dice given a
 struct and a
 .Vt die
 struct.
+.Pp
+The
+.Fn roll
+function rolls a set of dice given the count of dice, number of sides and a
+.Vt die
+struct.
+.Pp
+The
+.Fn roll_with_mod
+and
+.Fn roll_with_mods
+functions roll a set of dice given the count of dice, number of sides,
+modifier(s) and a
+.Vt die
+struct.
+.Pp
+The
+.Fn roll_parse
+function rolls a set of dice given a dice expression and a
+.Vt die
+struct; it should not be used with untrusted input.
 .Sh SEE ALSO
 .Xr abort 3 ,
 .Xr assert 3

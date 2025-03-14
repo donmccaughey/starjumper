@@ -603,32 +603,6 @@ test_roll_total(void)
 
 
 static void
-test_roll(void)
-{
-    struct {
-        char const *dice_expression;
-        int min_total;
-        int max_total;
-    } tests[] = {
-            { "2d8", 2, 16 },
-            { "2d8+2", 4, 18 },
-            { "2d8-2", 0, 14 },
-            { "2d8x2", 4, 32 },
-            { "2d8+2-1x10", 30, 170 },
-    };
-    int tests_count = sizeof tests / sizeof tests[0];
-
-    for (int i = 0; i < tests_count; ++i) {
-        for (int j = 0; j < 10; ++j) {
-            int total = roll(tests[i].dice_expression, random_die);
-            assert(tests[i].min_total <= total);
-            assert(tests[i].max_total >= total);
-        }
-    }
-}
-
-
-static void
 test_roll_dice(void)
 {
     struct dice *dice = dice_alloc(2, 8);
@@ -654,6 +628,71 @@ test_roll_dice_with_zero_count(void)
     }
 
     free(dice);
+}
+
+
+static void
+test_roll(void)
+{
+    for (int i = 0; i < 10; ++i) {
+        int total = roll(2, 10, random_die);
+        assert(2 <= total);
+        assert(20 >= total);
+    }
+}
+
+
+static void
+test_roll_with_mod(void)
+{
+    for (int i = 0; i < 10; ++i) {
+        int total = roll_with_mod(2, 8, mod_make('+', 2), random_die);
+        assert(4 <= total);
+        assert(18 >= total);
+    }
+}
+
+
+static void
+test_roll_with_mods(void)
+{
+    struct mod mods[] = {
+            mod_make('+', 3),
+            mod_make('x', 10),
+    };
+    int mods_count = sizeof(mods) / sizeof(mods[0]);
+
+    for (int i = 0; i < 10; ++i) {
+        int total = roll_with_mods(2, 6, mods, mods_count, random_die);
+        assert(50 <= total);
+        assert(150 >= total);
+    }
+}
+
+
+static void
+test_roll_parse(void)
+{
+    struct {
+        char const *dice_expression;
+        int min_total;
+        int max_total;
+    } tests[] = {
+            { "2d8", 2, 16 },
+            { "2d8+2", 4, 18 },
+            { "2d8-2", 0, 14 },
+            { "2d8x2", 4, 32 },
+            { "2d8+2-1x10", 30, 170 },
+    };
+    int tests_count = sizeof tests / sizeof tests[0];
+
+    for (int i = 0; i < tests_count; ++i) {
+        for (int j = 0; j < 10; ++j) {
+            int total = roll_parse(tests[i].dice_expression, random_die);
+            assert(tests[i].min_total <= total);
+            assert(tests[i].max_total >= total);
+        }
+    }
 }
 
 
@@ -696,9 +735,14 @@ main(int argc, char *argv[])
 
     test_roll_total();
 
-    test_roll();
     test_roll_dice();
     test_roll_dice_with_zero_count();
+
+    test_roll();
+    test_roll_with_mod();
+    test_roll_with_mods();
+
+    test_roll_parse();
 
     return EXIT_SUCCESS;
 }

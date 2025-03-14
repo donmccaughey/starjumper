@@ -80,13 +80,22 @@ roll_total(struct roll const *roll);
 
 
 int
-roll(char const *dice_expression, struct die die);
-
-int
 roll_die(int sides, struct die die);
 
 int
 roll_dice(struct dice const *dice, struct die die);
+
+int
+roll(int count, int sides, struct die die);
+
+int
+roll_with_mod(int count, int sides, struct mod mod, struct die die);
+
+int
+roll_with_mods(int count, int sides, struct mod mods[], int mods_count, struct die die);
+
+int
+roll_parse(char const *dice_expression, struct die die);
 
 
 #endif
