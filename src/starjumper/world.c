@@ -333,14 +333,14 @@ sj_world_alloc(char const *name,
     if (0 == world->size) {
         world->hydrographics = 0;
     } else {
-        struct sj_dice_throw *dice_throw = sj_dice_throw_alloc(2, 6, lrnd);
-        sj_dice_throw_add_modifier(dice_throw, -7);
-        sj_dice_throw_add_modifier(dice_throw, world->atmosphere);
+        struct dice *dice = dice_alloc_with_mods_capacity(2, 6, 3);
+        dice = dice_realloc_add_mod(dice, mod_make('-', 7));
+        dice = dice_realloc_add_mod(dice, mod_make('+', world->atmosphere));
         if (0 == world->atmosphere || 1 == world->atmosphere || world->atmosphere >= 10) {
-            sj_dice_throw_add_modifier(dice_throw, -4);
+            dice = dice_realloc_add_mod(dice, mod_make('-', 4));
         }
-        world->hydrographics = sj_dice_throw_total(dice_throw);
-        sj_dice_throw_free(dice_throw);
+        world->hydrographics = roll_dice(dice, die);
+        free(dice);
         if (world->hydrographics < 0) world->hydrographics = 0;
         if (world->hydrographics > 10) world->hydrographics = 10;
     }
@@ -374,26 +374,26 @@ sj_world_alloc(char const *name,
     // TODO: adjust starport if 0 == population
 
     if (world->population) {
-        struct sj_dice_throw *dice_throw = sj_dice_throw_alloc(1, 6, lrnd);
+        struct dice *dice = dice_alloc_with_mods_capacity(1, 6, 6);
 
         if ('A' == world->starport) {
-            sj_dice_throw_add_modifier(dice_throw, +6);
+            dice = dice_realloc_add_mod(dice, mod_make('+', 6));
         } else if ('B' == world->starport) {
-            sj_dice_throw_add_modifier(dice_throw, +4);
+            dice = dice_realloc_add_mod(dice, mod_make('+', 4));
         } else if ('C' == world->starport) {
-            sj_dice_throw_add_modifier(dice_throw, +2);
+            dice = dice_realloc_add_mod(dice, mod_make('+', 2));
         } else if ('X' == world->starport) {
-            sj_dice_throw_add_modifier(dice_throw, -4);
+            dice = dice_realloc_add_mod(dice, mod_make('-', 4));
         }
 
-        sj_dice_throw_add_modifier(dice_throw, tech_level_size_table[world->size]);
-        sj_dice_throw_add_modifier(dice_throw, tech_level_atmosphere_table[world->atmosphere]);
-        sj_dice_throw_add_modifier(dice_throw, tech_level_hydrographics_table[world->hydrographics]);
-        sj_dice_throw_add_modifier(dice_throw, tech_level_population_table[world->population]);
-        sj_dice_throw_add_modifier(dice_throw, tech_level_government_table[world->government]);
+        dice = dice_realloc_add_mod(dice, mod_make('+', tech_level_size_table[world->size]));
+        dice = dice_realloc_add_mod(dice, mod_make('+', tech_level_atmosphere_table[world->atmosphere]));
+        dice = dice_realloc_add_mod(dice, mod_make('+', tech_level_hydrographics_table[world->hydrographics]));
+        dice = dice_realloc_add_mod(dice, mod_make('+', tech_level_population_table[world->population]));
+        dice = dice_realloc_add_mod(dice, mod_make('+', tech_level_government_table[world->government]));
 
-        world->tech_level = sj_dice_throw_total(dice_throw);
-        sj_dice_throw_free(dice_throw);
+        world->tech_level = roll_dice(dice, die);
+        free(dice);
         if (world->tech_level < 0) world->tech_level = 0;
     }
 
