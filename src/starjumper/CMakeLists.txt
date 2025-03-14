@@ -18,7 +18,6 @@ target_include_directories(starjumper
 )
 target_link_libraries(starjumper
         PUBLIC dice
-        PUBLIC lrnd
         PUBLIC xmalloc
 )
 

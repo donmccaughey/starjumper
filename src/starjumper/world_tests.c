@@ -2,7 +2,6 @@
 
 #include <checks.h>
 #include <dice.h>
-#include <lrnd.h>
 #include <stdlib.h>
 
 
@@ -11,7 +10,6 @@ test_world_alloc_for_minimum_rolls(void)
 {
     int die_value = 0;
     struct die die = die_make_fixed(&die_value);
-    struct lrnd *lrnd = lrnd_alloc_fake_fixed(0);
     struct sj_world *world = sj_world_alloc("Test", sj_hex_coordinate_make(1, 2), die);
 
     check_not_null(world);
@@ -41,7 +39,6 @@ test_world_alloc_for_minimum_rolls(void)
     check_str_eq(world->trade_classifications[4]->name, "Vacuum World");
 
     sj_world_free(world);
-    lrnd_free(lrnd);
 }
 
 
@@ -50,7 +47,6 @@ test_world_alloc_for_maximum_rolls(void)
 {
     int die_value = 6;
     struct die die = die_make_fixed(&die_value);
-    struct lrnd *lrnd = lrnd_alloc_fake_fixed(5);
     struct sj_world *world = sj_world_alloc("Test", sj_hex_coordinate_make(8, 10), die);
 
     check_not_null(world);
@@ -78,7 +74,6 @@ test_world_alloc_for_maximum_rolls(void)
     check_str_eq(world->trade_classifications[2]->name, "Water World");
 
     sj_world_free(world);
-    lrnd_free(lrnd);
 }
 
 
@@ -87,7 +82,6 @@ test_world_alloc_for_average_rolls(void)
 {
     int die_value = 3;
     struct die die = die_make_fixed(&die_value);
-    struct lrnd *lrnd = lrnd_alloc_fake_fixed(2);
     struct sj_world *world = sj_world_alloc("Test", sj_hex_coordinate_make(2, 3), die);
 
     check_not_null(world);
@@ -114,7 +108,6 @@ test_world_alloc_for_average_rolls(void)
     check_str_eq(world->trade_classifications[1]->name, "Poor");
 
     sj_world_free(world);
-    lrnd_free(lrnd);
 }
 
 
@@ -123,7 +116,6 @@ test_string_from_world(void)
 {
     int die_value = 3;
     struct die die = die_make_fixed(&die_value);
-    struct lrnd *lrnd = lrnd_alloc_fake_fixed(2);
     struct sj_world *world = sj_world_alloc("Test", sj_hex_coordinate_make(3, 7), die);
     char *string = sj_string_from_world(world);
 
@@ -131,7 +123,6 @@ test_string_from_world(void)
 
     free(string);
     sj_world_free(world);
-    lrnd_free(lrnd);
 }
 
 

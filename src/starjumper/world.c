@@ -2,7 +2,6 @@
 
 #include <assert.h>
 #include <dice.h>
-#include <lrnd.h>
 #include <string.h>
 #include <xmalloc.h>
 #include <xstring.h>

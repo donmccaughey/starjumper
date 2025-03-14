@@ -53,7 +53,6 @@ endif()
 
 add_subdirectory(libs/checks)
 add_subdirectory(libs/dice)
-add_subdirectory(libs/lrnd)
 add_subdirectory(libs/xmalloc)
 
 add_subdirectory(src/starjumper)

@@ -3,7 +3,6 @@ add_executable(worldgen
         options.c
 )
 target_link_libraries(worldgen
-        lrnd
         starjumper
         xmalloc
 )
