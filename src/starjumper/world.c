@@ -370,7 +370,9 @@ sj_world_alloc(char const *name,
 
     // TODO: adjust starport if 0 == population
 
-    if (world->population) {
+    if (0 == world->population) {
+        world->tech_level = 0;
+    } else {
         struct dice *dice = dice_alloc_with_mods_capacity(1, 6, 6);
 
         if ('A' == world->starport) {
