@@ -5,13 +5,13 @@
 #include <stddef.h>
 
 
-typedef char *(*sj_string_array_alloc_string_for_element)(void const *element);
+typedef char *
+(*sj_string_array_alloc_string_for_element)(void const *element);
 
 
-struct sj_string_array
-{
-  char **elements;
-  int count;
+struct sj_string_array {
+    char **elements;
+    int count;
 };
 
 

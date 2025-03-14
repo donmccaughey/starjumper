@@ -5,15 +5,15 @@
 #include <stdbool.h>
 
 
-struct sj_hex_coordinate
-{
-  int horizontal;
-  int vertical;
+struct sj_hex_coordinate {
+    int horizontal;
+    int vertical;
 };
 
 
 bool
-sj_hex_coordinate_from_string(char const *string, struct sj_hex_coordinate *hex_coordinate);
+sj_hex_coordinate_from_string(char const *string,
+                              struct sj_hex_coordinate *hex_coordinate);
 
 char *
 sj_string_alloc_from_hex_coordinate(struct sj_hex_coordinate hex_coordinate);
