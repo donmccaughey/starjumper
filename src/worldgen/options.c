@@ -65,6 +65,8 @@ options_alloc(int argc, char *argv[])
 {
     struct options *options = xcalloc(1, sizeof(struct options));
 
+    options->die = random_die;
+
     options->hex_coordinate = (struct sj_hex_coordinate) {
         .horizontal=1,
         .vertical=1,
