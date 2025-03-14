@@ -7,12 +7,8 @@
 #include <starjumper/starjumper.h>
 
 
-struct lrnd;
-
-
 struct options {
     struct sj_hex_coordinate hex_coordinate;
-    struct lrnd *lrnd;
     struct die die;
     int die_value;
     char *name;

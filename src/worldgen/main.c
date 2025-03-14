@@ -7,12 +7,11 @@
 
 
 static void
-generate_subsector(char const *name, struct lrnd *lrnd, struct die die);
+generate_subsector(char const *name, struct die die);
 
 static void
 generate_world(char const *name,
                struct sj_hex_coordinate hex_coordinate,
-               struct lrnd *lrnd,
                struct die die);
 
 
@@ -21,9 +20,9 @@ main(int argc, char **argv)
 {
     struct options *options = options_alloc(argc, argv);
     if (options->subsector) {
-        generate_subsector(options->name, options->lrnd, options->die);
+        generate_subsector(options->name, options->die);
     } else {
-        generate_world(options->name, options->hex_coordinate, options->lrnd, options->die);
+        generate_world(options->name, options->hex_coordinate, options->die);
     }
 
     options_free(options);
@@ -32,7 +31,7 @@ main(int argc, char **argv)
 
 
 static void
-generate_subsector(char const *name, struct lrnd *lrnd, struct die die)
+generate_subsector(char const *name, struct die die)
 {
     struct sj_subsector *subsector = sj_subsector_alloc(name, die);
 
@@ -53,7 +52,6 @@ generate_subsector(char const *name, struct lrnd *lrnd, struct die die)
 static void
 generate_world(char const *name,
                struct sj_hex_coordinate hex_coordinate,
-               struct lrnd *lrnd,
                struct die die)
 {
     struct sj_world *world = sj_world_alloc(name, hex_coordinate, die);

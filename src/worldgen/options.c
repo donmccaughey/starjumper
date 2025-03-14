@@ -2,7 +2,6 @@
 
 #include <getopt.h>
 #include <libgen.h>
-#include <lrnd.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -53,9 +52,6 @@ static struct option long_options[] = {
 static bool
 die_from_type(char const *type, struct die *die_out, int *die_value_out);
 
-static bool
-lrnd_from_type(char const *type, struct lrnd **lrnd_out);
-
 static void
 print_usage_and_exit(int argc, char **argv);
 
@@ -92,11 +88,6 @@ options_alloc(int argc, char *argv[])
                     fprintf(stderr, "ERROR: \"%s\" is not a valid random number generator type\n", optarg);
                     print_usage_and_exit(argc, argv);
                 }
-                valid = lrnd_from_type(optarg, &options->lrnd);
-                if ( ! valid) {
-                    fprintf(stderr, "ERROR: \"%s\" is not a valid random number generator type\n", optarg);
-                    print_usage_and_exit(argc, argv);
-                }
             }
                 break;
             case 'x': {
@@ -116,10 +107,6 @@ options_alloc(int argc, char *argv[])
         }
     }
 
-    if (!options->lrnd) {
-        options->lrnd = lrnd_best;
-    }
-
     if (!options->name) {
         options->name = xstrdup("No Name");
     }
@@ -131,7 +118,6 @@ options_alloc(int argc, char *argv[])
 void
 options_free(struct options *options)
 {
-    lrnd_free(options->lrnd);
     free(options->name);
     free(options);
 }
@@ -153,25 +139,6 @@ die_from_type(char const *type, struct die *die_out, int *die_value_out)
     if (0 == strcmp("fixed", type)) {
         *die_value_out = 0;
         *die_out = die_make_fixed(die_value_out);
-        return true;
-    }
-    return false;
-}
-
-
-static bool
-lrnd_from_type(char const *type, struct lrnd **lrnd_out)
-{
-    if (0 == strcmp("arc4", type)) {
-        *lrnd_out = lrnd_best;
-        return true;
-    }
-    if (0 == strcmp("ascending", type)) {
-        *lrnd_out = lrnd_alloc_fake_start_step(0, 1);
-        return true;
-    }
-    if (0 == strcmp("fixed", type)) {
-        *lrnd_out = lrnd_alloc_fake_fixed(0);
         return true;
     }
     return false;
