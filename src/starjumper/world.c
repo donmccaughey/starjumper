@@ -1,6 +1,7 @@
 #include "world.h"
 
 #include <assert.h>
+#include <dice.h>
 #include <lrnd.h>
 #include <string.h>
 #include <xmalloc.h>
@@ -290,11 +291,11 @@ sj_world_alloc(char const *name,
     world->name = xstrdup(name);
     world->hex_coordinate = hex_coordinate;
 
-    int starport_index = sj_dice_throw(2, 6, NULL, 0, lrnd);
+    int starport_index = roll(2, 6, die);
     world->starport = starport_table[starport_index];
 
     if ('A' == world->starport || 'B' == world->starport) {
-        int naval_base_index = sj_dice_throw(2, 6, NULL, 0, lrnd);
+        int naval_base_index = roll(2, 6, die);
         world->naval_base = naval_base_table[naval_base_index];
     }
 
@@ -307,20 +308,25 @@ sj_world_alloc(char const *name,
         } else if ('A' == world->starport) {
             modifier = -3;
         }
-        int scout_base_index = sj_dice_throw(2, 6, (int[]) {modifier}, 1, lrnd);
+        int scout_base_index = roll_with_mod(2, 6, mod_make('+', modifier), die);
         if (scout_base_index < 0) scout_base_index = 0;
         world->scout_base = scout_base_table[scout_base_index];
     }
 
-    int gas_giant_index = sj_dice_throw(2, 6, NULL, 0, lrnd);
+    int gas_giant_index = roll(2, 6, die);
     world->gas_giant = gas_giant_table[gas_giant_index];
 
-    world->size = sj_dice_throw(2, 6, (int[]) {-2}, 1, lrnd);
+    world->size = roll_with_mod(2, 6, mod_make('-', 2), die);
 
     if (0 == world->size) {
         world->atmosphere = 0;
     } else {
-        world->atmosphere = sj_dice_throw(2, 6, (int[]) {-7, world->size}, 2, lrnd);
+        struct mod mods[] = {
+                mod_make('-', 7),
+                mod_make('+', world->size),
+        };
+        int mods_count = sizeof(mods) / sizeof(mods[0]);
+        world->atmosphere = roll_with_mods(2, 6, mods, mods_count, die);
         if (world->atmosphere < 0) world->atmosphere = 0;
     }
 
@@ -339,19 +345,29 @@ sj_world_alloc(char const *name,
         if (world->hydrographics > 10) world->hydrographics = 10;
     }
 
-    world->population = sj_dice_throw(2, 6, (int[]) {-2}, 1, lrnd);
+    world->population = roll_with_mod(2, 6, mod_make('-', 2), die);
 
     if (0 == world->population) {
         world->government = 0;
     } else {
-        world->government = sj_dice_throw(2, 6, (int[]) {-7, world->population}, 2, lrnd);
+        struct mod mods[] = {
+                mod_make('-', 7),
+                mod_make('+', world->population),
+        };
+        int mods_count = sizeof(mods) / sizeof(mods[0]);
+        world->government = roll_with_mods(2, 6, mods, mods_count, die);
         if (world->government < 0) world->government = 0;
     }
 
     if (0 == world->population) {
         world->law_level = 0;
     } else {
-        world->law_level = sj_dice_throw(2, 6, (int[]) {-7, world->government}, 2, lrnd);
+        struct mod mods[] = {
+                mod_make('-', 7),
+                mod_make('+', world->government),
+        };
+        int mods_count = sizeof(mods) / sizeof(mods[0]);
+        world->law_level = roll_with_mods(2, 6, mods, mods_count, die);
         if (world->law_level < 0) world->law_level = 0;
     }
 

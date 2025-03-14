@@ -6,24 +6,6 @@
 
 
 static void
-test_dice_throw(void)
-{
-    struct lrnd *lrnd = lrnd_alloc_fake_fixed(3);
-
-    int total = sj_dice_throw(2, 6, NULL, 0, lrnd);
-    check_int_eq(total, 8);
-
-    total = sj_dice_throw(2, 6, (int[]) { 2 }, 1, lrnd);
-    check_int_eq(total, 10);
-
-    total = sj_dice_throw(2, 6, (int[]) { 2, 3 }, 2, lrnd);
-    check_int_eq(total, 13);
-
-    lrnd_free(lrnd);
-}
-
-
-static void
 test_alloc(void)
 {
     struct lrnd *lrnd = lrnd_alloc_fake_fixed(3);
@@ -83,7 +65,6 @@ test_string_alloc(void)
 int
 main(int argc, char *argv[])
 {
-    test_dice_throw();
     test_alloc();
     test_add_modifiers();
     test_string_alloc();

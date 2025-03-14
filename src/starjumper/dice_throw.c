@@ -36,23 +36,6 @@ alloc_roll_string(void const *item)
 }
 
 
-int
-sj_dice_throw(int count,
-              int sides,
-              int modifiers[],
-              int modifiers_count,
-              struct lrnd *lrnd)
-{
-  struct sj_dice_throw *dice_throw = sj_dice_throw_alloc(count, sides, lrnd);
-  for (int i = 0; i < modifiers_count; ++i) {
-    sj_dice_throw_add_modifier(dice_throw, modifiers[i]);
-  }
-  int total = sj_dice_throw_total(dice_throw);
-  sj_dice_throw_free(dice_throw);
-  return total;
-}
-
-
 void
 sj_dice_throw_add_modifier(struct sj_dice_throw *dice_throw, int modifier)
 {

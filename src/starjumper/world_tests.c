@@ -48,7 +48,7 @@ test_world_alloc_for_minimum_rolls(void)
 static void
 test_world_alloc_for_maximum_rolls(void)
 {
-    int die_value = 5;
+    int die_value = 6;
     struct die die = die_make_fixed(&die_value);
     struct lrnd *lrnd = lrnd_alloc_fake_fixed(5);
     struct sj_world *world = sj_world_alloc("Test", sj_hex_coordinate_make(8, 10), lrnd, die);
@@ -85,7 +85,7 @@ test_world_alloc_for_maximum_rolls(void)
 static void
 test_world_alloc_for_average_rolls(void)
 {
-    int die_value = 2;
+    int die_value = 3;
     struct die die = die_make_fixed(&die_value);
     struct lrnd *lrnd = lrnd_alloc_fake_fixed(2);
     struct sj_world *world = sj_world_alloc("Test", sj_hex_coordinate_make(2, 3), lrnd, die);
@@ -121,7 +121,7 @@ test_world_alloc_for_average_rolls(void)
 static void
 test_string_from_world(void)
 {
-    int die_value = 2;
+    int die_value = 3;
     struct die die = die_make_fixed(&die_value);
     struct lrnd *lrnd = lrnd_alloc_fake_fixed(2);
     struct sj_world *world = sj_world_alloc("Test", sj_hex_coordinate_make(3, 7), lrnd, die);

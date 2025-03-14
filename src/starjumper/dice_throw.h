@@ -14,14 +14,6 @@ struct sj_dice_throw
   int modifiers_count;
 };
 
-
-int
-sj_dice_throw(int count,
-              int sides,
-              int modifiers[],
-              int modifiers_count,
-              struct lrnd *lrnd);
-
 void
 sj_dice_throw_add_modifier(struct sj_dice_throw *dice_throw, int modifier);
 

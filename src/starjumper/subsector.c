@@ -1,5 +1,6 @@
 #include "subsector.h"
 
+#include <dice.h>
 #include <xmalloc.h>
 #include <xstring.h>
 
@@ -24,7 +25,7 @@ sj_subsector_alloc(char const *name, struct lrnd *lrnd, struct die die)
 
     for (int h = 1; h <= sj_subsector_width; ++h) {
         for (int v = 1; v <= sj_subsector_height; ++v) {
-            int throw = sj_dice_throw(1, 6, NULL, 0, lrnd);
+            int throw = roll(1, 6, die);
             if (throw >= occurrence_throw) {
                 int i = subsector->worlds_count;
                 subsector->worlds[i] = sj_world_alloc("No Name",
