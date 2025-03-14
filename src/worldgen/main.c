@@ -34,7 +34,7 @@ main(int argc, char **argv)
 static void
 generate_subsector(char const *name, struct lrnd *lrnd, struct die die)
 {
-    struct sj_subsector *subsector = sj_subsector_alloc(name, lrnd, die);
+    struct sj_subsector *subsector = sj_subsector_alloc(name, die);
 
     char *header = sj_string_from_world(NULL);
     fprintf(stdout, "%s\n", header);

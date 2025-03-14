@@ -6,7 +6,6 @@
 #include <starjumper/hex_coordinate.h>
 
 
-struct lrnd;
 struct sj_world;
 
 
@@ -22,7 +21,7 @@ struct sj_subsector {
 
 
 struct sj_subsector *
-sj_subsector_alloc(char const *name, struct lrnd *lrnd, struct die die);
+sj_subsector_alloc(char const *name, struct die die);
 
 void
 sj_subsector_free(struct sj_subsector *subsector);

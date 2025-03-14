@@ -7,7 +7,6 @@
 #include <starjumper/hex_coordinate.h>
 
 
-struct lrnd;
 struct sj_trade_classification;
 
 

@@ -14,7 +14,7 @@ static int const occurrence_throw = 4;
 
 
 struct sj_subsector *
-sj_subsector_alloc(char const *name, struct lrnd *lrnd, struct die die)
+sj_subsector_alloc(char const *name, struct die die)
 {
     struct sj_subsector *subsector = xcalloc(1, sizeof(struct sj_subsector));
 
