@@ -37,9 +37,9 @@ Command line options:
           -b, --subsector                  generate a subsector
           -n, --name NAME                  set the world name
           -r, --rng TYPE                   set the random number generator type
-                                             [arc4|min|max|median]
+                                             [arc4|ascending|fixed]
           -x, --hex XXYY                   set the world hex coordinate
-                                             in the format "0101"
+                                     in the format "0101"
 
 Examples:
 
