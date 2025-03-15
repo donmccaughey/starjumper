@@ -332,6 +332,50 @@ generate_gas_giant(struct die die)
 }
 
 
+static int
+generate_size(struct die die)
+{
+    return roll_with_mod(2, 6, mod_make('-', 2), die);
+}
+
+
+static int
+generate_atmosphere(int size, struct die die)
+{
+    if (0 == size) return 0;
+
+    struct mod mods[] = {
+            mod_make('-', 7),
+            mod_make('+', size),
+    };
+    int mods_count = sizeof(mods) / sizeof(mods[0]);
+
+    int atmosphere = roll_with_mods(2, 6, mods, mods_count, die);
+    return atmosphere < 0 ? 0 : atmosphere;
+}
+
+
+static int
+generate_hydrographics(int size, int atmosphere, struct die die)
+{
+    if (0 == size) return 0;
+
+    struct dice *dice = dice_alloc_with_mods_capacity(2, 6, 3);
+    dice = dice_realloc_add_mod(dice, mod_make('-', 7));
+    dice = dice_realloc_add_mod(dice, mod_make('+', atmosphere));
+    if (0 == atmosphere || 1 == atmosphere || atmosphere >= 10) {
+        dice = dice_realloc_add_mod(dice, mod_make('-', 4));
+    }
+
+    int hydrographics = roll_dice(dice, die);
+    free(dice);
+
+    if (hydrographics < 0) hydrographics = 0;
+    if (hydrographics > 10) hydrographics = 10;
+    return hydrographics;
+}
+
+
 struct sj_world *
 sj_world_alloc(char const *name,
                struct sj_hex_coordinate const hex_coordinate,
@@ -347,34 +391,9 @@ sj_world_alloc(char const *name,
     world->scout_base = generate_scout_base(world->starport, die);
     world->gas_giant = generate_gas_giant(die);
 
-    world->size = roll_with_mod(2, 6, mod_make('-', 2), die);
-
-    if (0 == world->size) {
-        world->atmosphere = 0;
-    } else {
-        struct mod mods[] = {
-                mod_make('-', 7),
-                mod_make('+', world->size),
-        };
-        int mods_count = sizeof(mods) / sizeof(mods[0]);
-        world->atmosphere = roll_with_mods(2, 6, mods, mods_count, die);
-        if (world->atmosphere < 0) world->atmosphere = 0;
-    }
-
-    if (0 == world->size) {
-        world->hydrographics = 0;
-    } else {
-        struct dice *dice = dice_alloc_with_mods_capacity(2, 6, 3);
-        dice = dice_realloc_add_mod(dice, mod_make('-', 7));
-        dice = dice_realloc_add_mod(dice, mod_make('+', world->atmosphere));
-        if (0 == world->atmosphere || 1 == world->atmosphere || world->atmosphere >= 10) {
-            dice = dice_realloc_add_mod(dice, mod_make('-', 4));
-        }
-        world->hydrographics = roll_dice(dice, die);
-        free(dice);
-        if (world->hydrographics < 0) world->hydrographics = 0;
-        if (world->hydrographics > 10) world->hydrographics = 10;
-    }
+    world->size = generate_size(die);
+    world->atmosphere = generate_atmosphere(world->size, die);
+    world->hydrographics = generate_hydrographics(world->size, world->atmosphere, die);
 
     world->population = roll_with_mod(2, 6, mod_make('-', 2), die);
 
