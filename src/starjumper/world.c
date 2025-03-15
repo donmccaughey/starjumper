@@ -28,54 +28,6 @@ static char
 hex_digit(int value);
 
 
-static bool gas_giant_table[] = {
-        false,
-        false,
-        true,  // 2
-        true,  // 3
-        true,  // 4
-        true,  // 5
-        true,  // 6
-        true,  // 7
-        true,  // 8
-        true,  // 9
-        false, // 10
-        false, // 11
-        false, // 12
-};
-
-static bool naval_base_table[] = {
-        false,
-        false,
-        false, // 2
-        false, // 3
-        false, // 4
-        false, // 5
-        false, // 6
-        false, // 7
-        true,  // 8
-        true,  // 9
-        true,  // 10
-        true,  // 11
-        true,  // 12
-};
-
-static bool scout_base_table[] = {
-        false,
-        false,
-        false, // 2
-        false, // 3
-        false, // 4
-        false, // 5
-        false, // 6
-        true,  // 7
-        true,  // 8
-        true,  // 9
-        true,  // 10
-        true,  // 11
-        true,  // 12
-};
-
 static int tech_level_atmosphere_table[] = {
         +1, // 0
         +1, // 1
@@ -154,8 +106,6 @@ static int tech_level_size_table[] = {
         0, // 9
         0, // 10
 };
-
-static char *starport_table = "??AAABBCCDEEX";
 
 
 static char *
@@ -278,6 +228,110 @@ hex_digit(int value)
 }
 
 
+static char
+generate_starport(struct die die)
+{
+    static char *starport_table = "??AAABBCCDEEX";
+    int i = roll(2, 6, die);
+    return starport_table[i];
+}
+
+
+static bool
+generate_naval_base(char starport, struct die die)
+{
+    static bool naval_base_table[] = {
+            false,
+            false,
+            false, // 2
+            false, // 3
+            false, // 4
+            false, // 5
+            false, // 6
+            false, // 7
+            true,  // 8
+            true,  // 9
+            true,  // 10
+            true,  // 11
+            true,  // 12
+    };
+
+    if ('A' == starport || 'B' == starport) {
+        int i = roll(2, 6, die);
+        return naval_base_table[i];
+    } else {
+        return false;
+    }
+}
+
+
+static bool
+generate_scout_base(char starport, struct die die)
+{
+    static bool scout_base_table[] = {
+            false,
+            false,
+            false, // 2
+            false, // 3
+            false, // 4
+            false, // 5
+            false, // 6
+            true,  // 7
+            true,  // 8
+            true,  // 9
+            true,  // 10
+            true,  // 11
+            true,  // 12
+    };
+
+    int modifier = 0;
+    switch (starport) {
+        case 'A':
+            modifier = -3; break;
+        case 'B':
+            modifier = -2; break;
+        case 'C':
+            modifier = -1; break;
+        case 'D':
+            modifier = 0; break;
+        case 'E':
+            return false;
+        case 'X':
+            return false;
+        default:
+            abort();
+    }
+
+    int i = roll_with_mod(2, 6, mod_make('+', modifier), die);
+    if (i < 2) i = 2;
+    return scout_base_table[i];
+}
+
+
+static bool
+generate_gas_giant(struct die die)
+{
+    static bool gas_giant_table[] = {
+            false,
+            false,
+            true,  // 2
+            true,  // 3
+            true,  // 4
+            true,  // 5
+            true,  // 6
+            true,  // 7
+            true,  // 8
+            true,  // 9
+            false, // 10
+            false, // 11
+            false, // 12
+    };
+
+    int i = roll(2, 6, die);
+    return gas_giant_table[i];
+}
+
+
 struct sj_world *
 sj_world_alloc(char const *name,
                struct sj_hex_coordinate const hex_coordinate,
@@ -288,30 +342,10 @@ sj_world_alloc(char const *name,
     world->name = xstrdup(name);
     world->hex_coordinate = hex_coordinate;
 
-    int starport_index = roll(2, 6, die);
-    world->starport = starport_table[starport_index];
-
-    if ('A' == world->starport || 'B' == world->starport) {
-        int naval_base_index = roll(2, 6, die);
-        world->naval_base = naval_base_table[naval_base_index];
-    }
-
-    if ('E' != world->starport && 'X' != world->starport) {
-        int modifier = 0;
-        if ('C' == world->starport) {
-            modifier = -1;
-        } else if ('B' == world->starport) {
-            modifier = -2;
-        } else if ('A' == world->starport) {
-            modifier = -3;
-        }
-        int scout_base_index = roll_with_mod(2, 6, mod_make('+', modifier), die);
-        if (scout_base_index < 0) scout_base_index = 0;
-        world->scout_base = scout_base_table[scout_base_index];
-    }
-
-    int gas_giant_index = roll(2, 6, die);
-    world->gas_giant = gas_giant_table[gas_giant_index];
+    world->starport = generate_starport(die);
+    world->naval_base = generate_naval_base(world->starport, die);
+    world->scout_base = generate_scout_base(world->starport, die);
+    world->gas_giant = generate_gas_giant(die);
 
     world->size = roll_with_mod(2, 6, mod_make('-', 2), die);
 
