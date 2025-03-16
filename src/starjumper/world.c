@@ -28,86 +28,6 @@ static char
 hex_digit(int value);
 
 
-static int tech_level_atmosphere_table[] = {
-        +1, // 0
-        +1, // 1
-        +1, // 2
-        +1, // 3
-        0, // 4
-        0, // 5
-        0, // 6
-        0, // 7
-        0, // 8
-        0, // 9
-        +1, // 10
-        +1, // 11
-        +1, // 12
-        +1, // 13
-        +1, // 14
-};
-
-static int tech_level_government_table[] = {
-        +1, // 0
-        0, // 1
-        0, // 2
-        0, // 3
-        0, // 4
-        +1, // 5
-        0, // 6
-        0, // 7
-        0, // 8
-        0, // 9
-        0, // 10
-        0, // 11
-        0, // 12
-        -2, // 13
-        0, // 14
-        0, // 15
-};
-
-static int tech_level_hydrographics_table[] = {
-        0, // 0
-        0, // 1
-        0, // 2
-        0, // 3
-        0, // 4
-        0, // 5
-        0, // 6
-        0, // 7
-        0, // 8
-        +1, // 9
-        +2, // 10
-};
-
-static int tech_level_population_table[] = {
-        0, // 0
-        +1, // 1
-        +1, // 2
-        +1, // 3
-        +1, // 4
-        +1, // 5
-        0, // 6
-        0, // 7
-        0, // 8
-        +2, // 9
-        +4, // 10
-};
-
-static int tech_level_size_table[] = {
-        +2, // 0
-        +2, // 1
-        +1, // 2
-        +1, // 3
-        +1, // 4
-        0, // 5
-        0, // 6
-        0, // 7
-        0, // 8
-        0, // 9
-        0, // 10
-};
-
-
 static char *
 alloc_trade_classification_abbreviation(void const *item)
 {
@@ -376,6 +296,165 @@ generate_hydrographics(int size, int atmosphere, struct die die)
 }
 
 
+static int
+generate_population(struct die die)
+{
+    return roll_with_mod(2, 6, mod_make('-', 2), die);
+}
+
+
+static int
+generate_government(int population, struct die die)
+{
+    if (0 == population) return 0;
+
+    struct mod mods[] = {
+            mod_make('-', 7),
+            mod_make('+', population),
+    };
+    int mods_count = sizeof(mods) / sizeof(mods[0]);
+
+    int government = roll_with_mods(2, 6, mods, mods_count, die);
+    return government < 0 ? 0 : government;
+}
+
+
+static int
+generate_law_level(int population, int government, struct die die)
+{
+    if (0 == population) return 0;
+
+    struct mod mods[] = {
+            mod_make('-', 7),
+            mod_make('+', government),
+    };
+    int mods_count = sizeof(mods) / sizeof(mods[0]);
+
+    int law_level = roll_with_mods(2, 6, mods, mods_count, die);
+    if (law_level < 0) law_level = 0;
+    return law_level;
+}
+
+
+static int
+generate_tech_level(struct sj_world const *world, struct die die)
+{
+    if (0 == world->population) return 0;
+
+    struct dice *dice = dice_alloc_with_mods_capacity(1, 6, 6);
+
+    if ('A' == world->starport) {
+        dice = dice_realloc_add_mod(dice, mod_make('+', 6));
+    } else if ('B' == world->starport) {
+        dice = dice_realloc_add_mod(dice, mod_make('+', 4));
+    } else if ('C' == world->starport) {
+        dice = dice_realloc_add_mod(dice, mod_make('+', 2));
+    } else if ('X' == world->starport) {
+        dice = dice_realloc_add_mod(dice, mod_make('-', 4));
+    }
+
+    static int size_mods[] = {
+            +2, // 0
+            +2, // 1
+            +1, // 2
+            +1, // 3
+            +1, // 4
+            0, // 5
+            0, // 6
+            0, // 7
+            0, // 8
+            0, // 9
+            0, // 10
+    };
+    assert(world->size >= 0);
+    assert(world->size <= 10);
+    dice = dice_realloc_add_mod(dice, mod_make('+', size_mods[world->size]));
+
+    static int atmosphere_mods[] = {
+            +1, // 0
+            +1, // 1
+            +1, // 2
+            +1, // 3
+            0, // 4
+            0, // 5
+            0, // 6
+            0, // 7
+            0, // 8
+            0, // 9
+            +1, // 10
+            +1, // 11
+            +1, // 12
+            +1, // 13
+            +1, // 14
+            0, // 15
+    };
+    assert(world->atmosphere >= 0);
+    assert(world->atmosphere <= 15);
+    dice = dice_realloc_add_mod(dice, mod_make('+', atmosphere_mods[world->atmosphere]));
+
+    static int hydrographics_mods[] = {
+            0, // 0
+            0, // 1
+            0, // 2
+            0, // 3
+            0, // 4
+            0, // 5
+            0, // 6
+            0, // 7
+            0, // 8
+            +1, // 9
+            +2, // 10
+    };
+    assert(world->hydrographics >= 0);
+    assert(world->hydrographics <= 10);
+    dice = dice_realloc_add_mod(dice, mod_make('+', hydrographics_mods[world->hydrographics]));
+
+    static int population_mods[] = {
+        0, // 0
+        +1, // 1
+        +1, // 2
+        +1, // 3
+        +1, // 4
+        +1, // 5
+        0, // 6
+        0, // 7
+        0, // 8
+        +2, // 9
+        +4, // 10
+    };
+    assert(world->population >= 0);
+    assert(world->population <= 10);
+    dice = dice_realloc_add_mod(dice, mod_make('+', population_mods[world->population]));
+
+    static int government_mods[] = {
+            +1, // 0
+            0, // 1
+            0, // 2
+            0, // 3
+            0, // 4
+            +1, // 5
+            0, // 6
+            0, // 7
+            0, // 8
+            0, // 9
+            0, // 10
+            0, // 11
+            0, // 12
+            -2, // 13
+            0, // 14
+            0, // 15
+    };
+    assert(world->government >= 0);
+    assert(world->government <= 15);
+    dice = dice_realloc_add_mod(dice, mod_make('+', government_mods[world->government]));
+
+    int tech_level = roll_dice(dice, die);
+    free(dice);
+    if (tech_level < 0) tech_level = 0;
+    return tech_level;
+}
+
+
 struct sj_world *
 sj_world_alloc(char const *name,
                struct sj_hex_coordinate const hex_coordinate,
@@ -386,6 +465,7 @@ sj_world_alloc(char const *name,
     world->name = xstrdup(name);
     world->hex_coordinate = hex_coordinate;
 
+    // TODO: adjust starport and bases if 0 == population
     world->starport = generate_starport(die);
     world->naval_base = generate_naval_base(world->starport, die);
     world->scout_base = generate_scout_base(world->starport, die);
@@ -394,61 +474,11 @@ sj_world_alloc(char const *name,
     world->size = generate_size(die);
     world->atmosphere = generate_atmosphere(world->size, die);
     world->hydrographics = generate_hydrographics(world->size, world->atmosphere, die);
+    world->population = generate_population(die);
+    world->government = generate_government(world->population, die);
+    world->law_level = generate_law_level(world->population, world->government, die);
 
-    world->population = roll_with_mod(2, 6, mod_make('-', 2), die);
-
-    if (0 == world->population) {
-        world->government = 0;
-    } else {
-        struct mod mods[] = {
-                mod_make('-', 7),
-                mod_make('+', world->population),
-        };
-        int mods_count = sizeof(mods) / sizeof(mods[0]);
-        world->government = roll_with_mods(2, 6, mods, mods_count, die);
-        if (world->government < 0) world->government = 0;
-    }
-
-    if (0 == world->population) {
-        world->law_level = 0;
-    } else {
-        struct mod mods[] = {
-                mod_make('-', 7),
-                mod_make('+', world->government),
-        };
-        int mods_count = sizeof(mods) / sizeof(mods[0]);
-        world->law_level = roll_with_mods(2, 6, mods, mods_count, die);
-        if (world->law_level < 0) world->law_level = 0;
-    }
-
-    // TODO: adjust starport if 0 == population
-
-    if (0 == world->population) {
-        world->tech_level = 0;
-    } else {
-        struct dice *dice = dice_alloc_with_mods_capacity(1, 6, 6);
-
-        if ('A' == world->starport) {
-            dice = dice_realloc_add_mod(dice, mod_make('+', 6));
-        } else if ('B' == world->starport) {
-            dice = dice_realloc_add_mod(dice, mod_make('+', 4));
-        } else if ('C' == world->starport) {
-            dice = dice_realloc_add_mod(dice, mod_make('+', 2));
-        } else if ('X' == world->starport) {
-            dice = dice_realloc_add_mod(dice, mod_make('-', 4));
-        }
-
-        dice = dice_realloc_add_mod(dice, mod_make('+', tech_level_size_table[world->size]));
-        dice = dice_realloc_add_mod(dice, mod_make('+', tech_level_atmosphere_table[world->atmosphere]));
-        dice = dice_realloc_add_mod(dice, mod_make('+', tech_level_hydrographics_table[world->hydrographics]));
-        dice = dice_realloc_add_mod(dice, mod_make('+', tech_level_population_table[world->population]));
-        dice = dice_realloc_add_mod(dice, mod_make('+', tech_level_government_table[world->government]));
-
-        world->tech_level = roll_dice(dice, die);
-        free(dice);
-        if (world->tech_level < 0) world->tech_level = 0;
-    }
-
+    world->tech_level = generate_tech_level(world, die);
     world->trade_classifications = sj_world_alloc_trade_classifications(world, &world->trade_classifications_count);
 
     return world;

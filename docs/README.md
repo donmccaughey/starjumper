@@ -10,6 +10,8 @@ Traveller.
 - Book 6: Scouts, pages 21-40
 - Supplement 3: The Spinward Marches, "World Data", pages 36-40
 - Supplement 10: The Solomani Rim, "World Data", pages 43-45
+- Module 3: The Spinward Marches Campaign, page 21
+    * includes government types E and F
 - The Traveller Book, pages 80-85
 - Starter Edition Book 1: Core Rules, pages 43-46
 - Starter Edition Book 2: Charts and Tables, pages 14-15
