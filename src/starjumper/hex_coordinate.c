@@ -16,14 +16,14 @@ sj_hex_coordinate_from_string(char const *string,
     strncpy(horizontal_chars, string, 2);
     errno = 0;
     long horizontal = strtol(horizontal_chars, NULL, 10);
-    if (!horizontal && errno) return false;
+    if ( ! horizontal && errno) return false;
     if (horizontal < 1 || horizontal > 99) return false;
 
     char vertical_chars[3] = {'\0'};
     strncpy(vertical_chars, &string[2], 2);
     errno = 0;
     long vertical = strtol(vertical_chars, NULL, 10);
-    if (!vertical && errno) return false;
+    if ( ! vertical && errno) return false;
     if (vertical < 1 || vertical > 99) return false;
 
     hex_coordinate->horizontal = (int) horizontal;

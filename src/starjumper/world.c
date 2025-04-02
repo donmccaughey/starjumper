@@ -69,7 +69,7 @@ char *
 sj_string_from_world(struct sj_world const *world)
 {
 
-    if (!world) {
+    if ( ! world) {
         return xstrdup("Name               Statistics       Remarks");
     }
 
