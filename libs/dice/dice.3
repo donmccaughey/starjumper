@@ -3,10 +3,12 @@
 .Os
 .Sh NAME
 .Nm dice_alloc ,
+.Nm dice_alloc_init ,
 .Nm dice_alloc_parse ,
 .Nm dice_alloc_with_mods ,
 .Nm dice_alloc_with_mods_capacity ,
 .Nm dice_description_alloc
+.Nm dice_init
 .Nm dice_realloc_add_mod
 .Nm dice_realloc_set_mods_capacity ,
 .Nm die_make_ascending ,
@@ -18,9 +20,9 @@
 .Nm random_die ,
 .Nm roll ,
 .Nm roll_alloc ,
-.Nm roll_alloc_with_die_rolls ,
 .Nm roll_dice ,
 .Nm roll_die ,
+.Nm roll_init ,
 .Nm roll_parse ,
 .Nm roll_total ,
 .Nm roll_with_mod ,
@@ -52,16 +54,20 @@
 .Fn dice_alloc_with_mods_capacity "int count" "int sides" "int mods_capacity"
 .Ft struct dice *
 .Fn dice_alloc_parse "char const *dice_expression"
-.Ft char *
-.Fn dice_description_alloc "struct dice const *dice"
+.Ft struct dice *
+.Fn dice_alloc_init "int count" "int sides" "int mods_capacity" "int mods_count" "struct mod mods[]"
+.Ft void
+.Fn dice_init "struct dice *dice" "int count" "int sides" "int mods_capacity" "int mods_count" "struct mod mods[]"
 .Ft struct dice *
 .Fn dice_realloc_add_mod "struct dice *dice" "struct mod mod"
 .Ft struct dice *
 .Fn dice_realloc_set_mods_capacity "struct dice *dice" "int mods_capacity"
+.Ft char *
+.Fn dice_description_alloc "struct dice const *dice"
 .Ft struct roll *
 .Fn roll_alloc "struct dice const *dice" "struct die die"
 .Ft struct roll *
-.Fn roll_alloc_with_die_rolls "struct dice const *dice" "int die_rolls[]" "int die_rolls_count"
+.Fn roll_init "struct roll *roll" "struct dice const *dice" "struct die die"
 .Ft int
 .Fn roll_total "struct roll const *roll"
 .Ft int
@@ -202,16 +208,12 @@ it returns
 if the dice expression is invalid.
 .Pp
 The
-.Fn dice_description_alloc
-function allocates a string containing the dice expression for a
+.Fn dice_alloc_init
+and
+.Fn dice_init
+functions perform generalized initialization of a
 .Vt dice
-struct.
-.Pp
-Use
-.Fn free
-to deallocate
-.Vt dice
-structs and dice descriptions.
+struct with and without memory allocation.
 .Pp
 The
 .Fn dice_realloc_add_mod
@@ -229,6 +231,18 @@ Both return a pointer to the modified
 struct; the
 .Vt dice
 struct parameter may be invalid on return.
+.Pp
+The
+.Fn dice_description_alloc
+function allocates a string containing the dice expression for a
+.Vt dice
+struct.
+.Pp
+Use
+.Fn free
+to deallocate
+.Vt dice
+structs and dice descriptions.
 .Ss The roll Struct
 A
 .Vt roll
@@ -255,10 +269,14 @@ and a
 .Vt die
 struct respectively.
 The
-.Fn roll_alloc_with_die_rolls
-function allocates a
+.Fn roll_init
+functions generates a new roll given an existing correctly-sized
 .Vt roll
-struct when the die roll values are known.
+struct and a
+.Vt dice
+and
+.Vt die
+struct.
 .Pp
 Use
 .Fn free

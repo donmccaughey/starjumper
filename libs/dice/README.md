@@ -69,15 +69,18 @@ The `dice_alloc_parse()` function allocates a `dice` struct by parsing a dice
 expression like `3d6+2` or `2d8-1x10`; it returns NULL if the dice expression is
 invalid.
 
-The `dice_description_alloc()` function allocates a string containing the dice
-expression for a `dice` struct.
-
-Use `free()` to deallocate `dice` structs and dice descriptions.
+The `dice_alloc_init()` and `dice_init()` functions perform generalized
+initialization of a `dice` struct with and without memory allocation.
 
 The `dice_realloc_add_mod()` and `dice_realloc_set_mods_capacity()` functions
 modify the `mods` array field of a `dice` struct, possibly reallocating the
 `dice` struct in the process.  Both return a pointer to the modified `dice`
 struct; the `dice` struct parameter may be invalid on return.
+
+The `dice_description_alloc()` function allocates a string containing the dice
+expression for a `dice` struct.
+
+Use `free()` to deallocate `dice` structs and dice descriptions.
 
 
 ## The `roll` struct
@@ -88,8 +91,8 @@ containing the values rolled.  The creator of a `roll` struct is responsible for
 ensuring that the referenced `dice` struct lives at least as long as the `roll`.
 
 The `roll_alloc()` function allocates a `roll` struct given a `dice` and a `die`
-struct respectively.  The `roll_alloc_with_die_rolls()` function allocates a
-`roll` struct when the die roll values are known.
+struct respectively.  The `roll_init()` functions generates a new roll given
+an existing correctly-sized `roll` struct and a `dice` and `die` struct.
 
 Use `free()` to deallocate `roll` structs.
 

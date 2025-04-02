@@ -59,8 +59,11 @@ dice_alloc_with_mods_capacity(int count, int sides, int mods_capacity);
 struct dice *
 dice_alloc_parse(char const *dice_expression);
 
-char *
-dice_description_alloc(struct dice const *dice);
+struct dice *
+dice_alloc_init(int count, int sides, int mods_capacity, int mods_count, struct mod mods[]);
+
+void
+dice_init(struct dice *dice, int count, int sides, int mods_capacity, int mods_count, struct mod mods[]);
 
 struct dice *
 dice_realloc_add_mod(struct dice *dice, struct mod mod);
@@ -68,12 +71,15 @@ dice_realloc_add_mod(struct dice *dice, struct mod mod);
 struct dice *
 dice_realloc_set_mods_capacity(struct dice *dice, int mods_capacity);
 
+char *
+dice_description_alloc(struct dice const *dice);
+
 
 struct roll *
 roll_alloc(struct dice const *dice, struct die die);
 
-struct roll *
-roll_alloc_with_die_rolls(struct dice const *dice, int die_rolls[], int die_rolls_count);
+void
+roll_init(struct roll *roll, struct dice const *dice, struct die die);
 
 int
 roll_total(struct roll const *roll);

@@ -9,6 +9,28 @@
 #include <string.h>
 
 
+#define MODS_SIZE(mods_capacity) \
+        (sizeof(struct mod) * mods_capacity)
+
+#define DICE_SIZE(mods_capacity) \
+        (sizeof(struct dice) + MODS_SIZE(mods_capacity))
+
+#define MODS_CAP 4
+
+#define DICE_STORAGE DICE_SIZE(MODS_CAP)
+
+
+#define DIE_ROLLS_SIZE(die_rolls_count) \
+        (sizeof(int) * die_rolls_count)
+
+#define ROLL_SIZE(die_rolls_count) \
+        (sizeof(struct roll) + DIE_ROLLS_SIZE(die_rolls_count))
+
+#define ROLL_CAP 4
+
+#define ROLL_STORAGE ROLL_SIZE(ROLL_CAP)
+
+
 static int
 roll_ascending(int sides, void *state)
 {
@@ -147,46 +169,26 @@ mod_make(char op, int value)
 }
 
 
-static size_t
-dice_size(int mods_capacity)
-{
-    size_t mods_size = sizeof(struct mod) * mods_capacity;
-    return sizeof(struct dice) + mods_size;
-}
-
-
 struct dice *
 dice_alloc(int count, int sides)
 {
     assert(count >= 0);
     assert(sides > 1);
 
-    return dice_alloc_with_mods_capacity(count, sides, 4);
+    return dice_alloc_init(count, sides, MODS_CAP, 0, NULL);
 }
 
 
 struct dice *
 dice_alloc_with_mods(int count, int sides, struct mod mods[], int mods_count)
 {
-    assert(count > 0);
+    assert(count >= 0);
     assert(sides > 1);
     assert(mods_count >= 0);
     assert( ! mods_count || mods);
 
     int mods_capacity = mods_count;
-
-    struct dice *dice = dice_alloc_with_mods_capacity(count, sides, mods_capacity);
-
-    dice->count = count;
-    dice->sides = sides;
-    dice->mods_capacity = mods_capacity;
-    dice->mods_count = mods_count;
-    if (mods_count) {
-        size_t mods_size = sizeof(struct mod) * mods_count;
-        memcpy(dice->mods, mods, mods_size);
-    }
-
-    return dice;
+    return dice_alloc_init(count, sides, mods_capacity, mods_count, mods);
 }
 
 
@@ -197,15 +199,7 @@ dice_alloc_with_mods_capacity(int count, int sides, int mods_capacity)
     assert(sides > 1);
     assert(mods_capacity >= 0);
 
-    struct dice *dice = malloc(dice_size(mods_capacity));
-    if ( ! dice) abort();
-
-    dice->count = count;
-    dice->sides = sides;
-    dice->mods_capacity = mods_capacity;
-    dice->mods_count = 0;
-
-    return dice;
+    return dice_alloc_init(count, sides, mods_capacity, 0, NULL);
 }
 
 
@@ -269,7 +263,44 @@ dice_alloc_parse(char const *dice_expression)
         mods[i++] = mod_make(op, value);
     }
 
-    return dice_alloc_with_mods(count, sides, mods, mods_count);
+    int mods_capacity = mods_count;
+    return dice_alloc_init(count, sides, mods_capacity, mods_count, mods);
+}
+
+
+struct dice *
+dice_alloc_init(int count, int sides, int mods_capacity, int mods_count, struct mod mods[])
+{
+    assert(count >= 0);
+    assert(sides > 1);
+    assert(mods_capacity >= 0);
+    assert(mods_count >= 0);
+    assert(mods_count <= mods_capacity);
+    assert( ! mods_count || mods);
+
+    struct dice *dice = malloc(DICE_SIZE(mods_capacity));
+    if ( ! dice) abort();
+    dice_init(dice, count, sides, mods_capacity, mods_count, mods);
+
+    return dice;
+}
+
+
+void
+dice_init(struct dice *dice, int count, int sides, int mods_capacity, int mods_count, struct mod mods[])
+{
+    assert(count >= 0);
+    assert(sides > 1);
+    assert(mods_capacity >= 0);
+    assert(mods_count >= 0);
+    assert(mods_count <= mods_capacity);
+    assert( ! mods_count || mods);
+
+    dice->count = count;
+    dice->sides = sides;
+    dice->mods_capacity = mods_capacity;
+    dice->mods_count = mods_count;
+    if (mods_count) memcpy(dice->mods, mods, MODS_SIZE(mods_count));
 }
 
 
@@ -284,6 +315,42 @@ digit_count(int n)
         ++count;
     }
     return count;
+}
+
+
+struct dice *
+dice_realloc_add_mod(struct dice *dice, struct mod mod)
+{
+    assert(dice);
+    assert('+' == mod.op || '-' == mod.op || 'x' == mod.op);
+
+    if (dice->mods_count >= dice->mods_capacity) {
+        int mods_capacity = (dice->mods_capacity < 4)
+                ? 4
+                : dice->mods_capacity / 2 * 3;
+        dice = dice_realloc_set_mods_capacity(dice, mods_capacity);
+    }
+    int i = dice->mods_count++;
+    dice->mods[i] = mod;
+    return dice;
+}
+
+
+struct dice *
+dice_realloc_set_mods_capacity(struct dice *dice, int mods_capacity)
+{
+    assert(dice);
+    assert(mods_capacity >= 0);
+
+    dice = realloc(dice, DICE_SIZE(mods_capacity));
+    if ( ! dice) abort();
+
+    dice->mods_capacity = mods_capacity;
+    if (dice->mods_count > mods_capacity) {
+        dice->mods_count = mods_capacity;
+    }
+
+    return dice;
 }
 
 
@@ -327,90 +394,32 @@ dice_description_alloc(struct dice const *dice)
 }
 
 
-struct dice *
-dice_realloc_add_mod(struct dice *dice, struct mod mod)
-{
-    assert(dice);
-    assert('+' == mod.op || '-' == mod.op || 'x' == mod.op);
-
-    if (dice->mods_count >= dice->mods_capacity) {
-        int mods_capacity = (dice->mods_capacity < 4)
-                ? 4
-                : dice->mods_capacity / 2 * 3;
-        dice = dice_realloc_set_mods_capacity(dice, mods_capacity);
-    }
-    int i = dice->mods_count++;
-    dice->mods[i] = mod;
-    return dice;
-}
-
-
-struct dice *
-dice_realloc_set_mods_capacity(struct dice *dice, int mods_capacity)
-{
-    assert(dice);
-    assert(mods_capacity >= 0);
-
-    dice = realloc(dice, dice_size(mods_capacity));
-    if ( ! dice) abort();
-
-    dice->mods_capacity = mods_capacity;
-    if (dice->mods_count > mods_capacity) {
-        dice->mods_count = mods_capacity;
-    }
-
-    return dice;
-}
-
-
-static size_t
-roll_size(int die_rolls_count)
-{
-    size_t die_rolls_size = sizeof(int) * die_rolls_count;
-    return sizeof(struct roll) + die_rolls_size;
-}
-
-
-static void
-make_die_rolls(struct dice const *dice, int die_rolls[], struct die die)
-{
-    for (int i = 0; i < dice->count; ++i) {
-        die_rolls[i] = die.roll(dice->sides, die.state);
-    }
-}
-
-
 struct roll *
 roll_alloc(struct dice const *dice, struct die die)
 {
     assert(dice);
     assert(die.roll);
 
-    int die_rolls[dice->count];
-    make_die_rolls(dice, die_rolls, die);
+    struct roll *roll = malloc(ROLL_SIZE(dice->count));
+    if ( ! roll) abort();
+    roll_init(roll, dice, die);
 
-    return roll_alloc_with_die_rolls(dice, die_rolls, dice->count);
+    return roll;
 }
 
 
-struct roll *
-roll_alloc_with_die_rolls(struct dice const *dice, int die_rolls[], int die_rolls_count)
+void
+roll_init(struct roll *roll, struct dice const *dice, struct die die)
 {
+    assert(roll);
     assert(dice);
-    assert(die_rolls_count >= 0);
-    assert( ! die_rolls_count || die_rolls);
-
-    struct roll *roll = malloc(roll_size(die_rolls_count));
-    if ( ! roll) abort();
+    assert(die.roll);
 
     roll->dice = dice;
-    roll->die_rolls_count = die_rolls_count;
-    if (die_rolls_count) {
-        size_t die_rolls_size = sizeof(int) * die_rolls_count;
-        memcpy(roll->die_rolls, die_rolls, die_rolls_size);
+    roll->die_rolls_count = dice->count;
+    for (int i = 0; i < dice->count; ++i) {
+        roll->die_rolls[i] = roll_die(dice->sides, die);
     }
-
-    return roll;
 }
 
 
@@ -463,9 +472,19 @@ roll_dice(struct dice const *dice, struct die die)
     assert(dice);
     assert(die.roll);
 
-    struct roll *roll = roll_alloc(dice, die);
-    int total = roll_total(roll);
-    free(roll);
+    int total = 0;
+    if (dice->count > ROLL_CAP) {
+        struct roll *roll = roll_alloc(dice, die);
+        total = roll_total(roll);
+        free(roll);
+    } else {
+        union {
+            struct roll roll;
+            char bytes[ROLL_STORAGE];
+        } storage;
+        roll_init(&storage.roll, dice, die);
+        total = roll_total(&storage.roll);
+    }
 
     return total;
 }
@@ -476,6 +495,7 @@ roll(int count, int sides, struct die die)
 {
     assert(count >= 0);
     assert(sides > 1);
+    assert(die.roll);
 
     return roll_with_mods(count, sides, NULL, 0, die);
 }
@@ -486,6 +506,7 @@ roll_with_mod(int count, int sides, struct mod mod, struct die die)
 {
     assert(count >= 0);
     assert(sides > 1);
+    assert(die.roll);
 
     return roll_with_mods(count, sides, &mod, 1, die);
 }
@@ -496,11 +517,22 @@ roll_with_mods(int count, int sides, struct mod mods[], int mods_count, struct d
 {
     assert(count >= 0);
     assert(sides > 1);
+    assert( ! mods_count || mods);
+    assert(die.roll);
 
-    struct dice *dice = dice_alloc_with_mods(count, sides, mods, mods_count);
-
-    int total = roll_dice(dice, die);
-    free(dice);
+    int total = 0;
+    if (mods_count > MODS_CAP) {
+        struct dice *dice = dice_alloc_with_mods(count, sides, mods, mods_count);
+        total = roll_dice(dice, die);
+        free(dice);
+    } else {
+        union {
+            struct dice dice;
+            char bytes[DICE_STORAGE];
+        } storage;
+        dice_init(&storage.dice, count, sides, MODS_CAP, mods_count, mods);
+        total = roll_dice(&storage.dice, die);
+    }
 
     return total;
 }

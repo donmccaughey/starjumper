@@ -561,24 +561,6 @@ test_roll_alloc(void)
 
 
 static void
-test_roll_alloc_with_die_rolls(void)
-{
-    struct dice *dice = dice_alloc(2, 8);
-    int die_rolls[] = { 3, 5 };
-    int die_rolls_count = sizeof(die_rolls) / sizeof(die_rolls[0]);
-    struct roll *roll = roll_alloc_with_die_rolls(dice, die_rolls, die_rolls_count);
-
-    assert(dice == roll->dice);
-    assert(2 == roll->die_rolls_count);
-    assert(3 == roll->die_rolls[0]);
-    assert(5 == roll->die_rolls[1]);
-
-    free(roll);
-    free(dice);
-}
-
-
-static void
 test_roll_total(void)
 {
     int value = 5;
@@ -731,7 +713,6 @@ main(int argc, char *argv[])
     test_dice_realloc_set_mods_capacity_larger();
 
     test_roll_alloc();
-    test_roll_alloc_with_die_rolls();
 
     test_roll_total();
 
