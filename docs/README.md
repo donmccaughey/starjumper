@@ -3,6 +3,7 @@
 Starjumper draws it's primary inspiration from the 1981 edition of Classic
 Traveller.
 
+- Traveller Wiki: https://wiki.travellerrpg.com/Main_Page
 
 ## worldgen
 
@@ -20,3 +21,4 @@ Traveller.
       `2D–7+atmosphere`; the formula `2D–7+size` is incorrect.
     * for the Non-Agricultural trade classification, the correct criteria are
       atmosphere 3–, hydrographics 3–, population 6+.
+- Government types: https://wiki.travellerrpg.com/Government
